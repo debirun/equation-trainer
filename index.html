@@ -271,6 +271,16 @@
   /* 解答欄。左に解答（式）、右にそのとき選んだ方針を書く。
      ノートで式を書いて、右の余白に「両辺を3でわる」と注記する形に合わせている。 */
   .work { margin: 14px 0 0; }
+  /* 出題中は解答欄の高さを抑える。長い解答（レベル1の10問目など）で
+     選択肢が画面の外に出てしまうのを防ぐ。中だけがスクロールする。 */
+  #work { max-height: 30vh; overflow-y: auto; overscroll-behavior: contain; }
+  /* 中がはみ出しているときだけ、下にうっすら影を出して「続きがある」と分かるようにする */
+  .worklimit { position: relative; }
+  .worklimit::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22px;
+    pointer-events: none; border-radius: 0 0 8px 8px;
+    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--card) 92%, transparent));
+  }
   .wrow {
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 38%);
     column-gap: 10px; align-items: baseline;
@@ -696,6 +706,8 @@
   .steps b { color: var(--fg); }
   /* 3択の設定ボタン */
   .pickrow { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .pickrow.row3 { grid-template-columns: repeat(3, 1fr); }
+  .pickrow.row3 button { text-align: center; padding: 10px 4px; font-size: .8rem; }
   .pickrow button {
     font: inherit; font-size: .86rem; font-weight: 700; text-align: left;
     padding: 10px 14px; border-radius: 10px; cursor: pointer;
@@ -789,7 +801,12 @@
     <p class="lead" style="margin-top:14px">
       <b>計算はしません。</b>選ぶのは「次に何をするか」という方針だけです。
     </p>
-    <div class="btnrow" style="margin-top:14px">
+    <div class="pickrow row3" id="soundPick2" style="margin-top:14px">
+      <button data-m="se">🔉 効果音</button>
+      <button data-m="all">🔊 音楽も</button>
+      <button data-m="off">🔇 音なし</button>
+    </div>
+    <div class="btnrow" style="margin-top:12px">
       <button class="primary" id="btnStart">はじめる</button>
       <button class="ghost" id="btnHelp2">使い方をみる</button>
     </div>
@@ -9608,7 +9625,7 @@ const BGM_SETS = {
     bpm: 126,
     roots: [73.42, 73.42, 58.27, 55.00],
     scale: [293.66, 311.13, 349.23, 392.00, 415.30, 440.00],
-    bass: [1, 0, 1, 1, 0, 1, 0, 1], bassWave: "sawtooth", bassDur: 0.28, bassVol: 0.17,
+    bass: [1, 0, 1, 1, 0, 1, 0, 1], bassWave: "sawtooth", bassDur: 0.28, bassVol: 0.12,
     mel:  [0, null, null, 1, null, 0, 4, null],        melWave: "square", melDur: 0.26, melVol: 0.095,
     hat:  [1, 0, 1, 0, 1, 0, 1, 1], hatVol: 0.085,
     padVol: 0.050,
@@ -9682,10 +9699,10 @@ const Sound = {
                          this.tone(494, 0.5, 0.05, "sawtooth", 0.07); break;
       case "confirm":    this.arp([523, 659, 784, 1047, 1319, 1568], 0.07, 0.5, "triangle", 0.2); break;
       // レベル最後の問題（難易度10）はボス。出るときは低く、たおしたときは高く。
-      case "boss":       this.tone(110, 0.55, 0, "sawtooth", 0.10);
-                         this.tone(165, 0.55, 0.05, "sawtooth", 0.07);
-                         this.arp([220, 262, 330], 0.09, 0.42, "square", 0.08); break;
-      case "bossDown":   this.arp([392, 523, 659, 784, 1047, 1319], 0.07, 0.55, "triangle", 0.22); break;
+      case "boss":       this.tone(110, 0.55, 0, "triangle", 0.07);
+                         this.tone(165, 0.55, 0.05, "triangle", 0.045);
+                         this.arp([220, 262, 330], 0.09, 0.42, "triangle", 0.05); break;
+      case "bossDown":   this.arp([392, 523, 659, 784, 1047, 1319], 0.07, 0.55, "triangle", 0.15); break;
       case "wrong":      this.tone(233, 0.20, 0, "triangle", 0.13);
                          this.tone(196, 0.26, 0.10, "triangle", 0.11); break;
       case "timeout":    this.tone(165, 0.35, 0, "sawtooth", 0.09); break;
@@ -9943,6 +9960,7 @@ function rangeNote() {
 
 function renderStart() {
   $("startNote").textContent = rangeNote();
+  renderSoundPick();
   renderHeader();
   show("scStart");
 }
@@ -9965,8 +9983,11 @@ function renderHelp(from) {
 }
 
 function renderSoundPick() {
-  $("soundPick").querySelectorAll("button").forEach(b =>
-    b.classList.toggle("on", b.dataset.m === Sound.mode));
+  ["soundPick", "soundPick2"].forEach(id => {
+    const box = $(id);
+    if (box) box.querySelectorAll("button").forEach(b =>
+      b.classList.toggle("on", b.dataset.m === Sound.mode));
+  });
 }
 
 let forced = null;   // テスト用に直接指定された問題
@@ -10041,6 +10062,11 @@ function workHTML(pendingOp) {
 
 function renderWork(pendingOp) {
   $("work").innerHTML = workHTML(pendingOp);
+  // いま書かれた行が枠の外に出ていたら、見えるところまで送る
+  const w = $("work");
+  const fresh = w.querySelector(".fresh");
+  if (fresh) w.scrollTop = Math.max(0, fresh.offsetTop - w.clientHeight + fresh.offsetHeight + 8);
+  w.parentElement.classList.toggle("worklimit", w.scrollHeight > w.clientHeight + 2);
 }
 
 function renderStep() {
@@ -10814,12 +10840,14 @@ $("btnHelpBack").onclick = () => {
   if (helpBack === "scQuiz" && cur) return show("scQuiz");
   return renderStart();
 };
-$("soundPick").onclick = e => {
+const pickSound = e => {
   const b = e.target.closest("button[data-m]");
   if (!b) return;
   Sound.setMode(b.dataset.m);
   renderSoundPick();
 };
+$("soundPick").onclick = pickSound;
+$("soundPick2").onclick = pickSound;
 $("btnFree").onclick = renderFree;
 $("btnClStats").onclick = () => { flushReveal(); statsBack = "scClear"; renderStats(); };
 $("btnFreeBack").onclick = () => {
