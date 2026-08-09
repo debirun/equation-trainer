@@ -193,8 +193,17 @@
     background: color-mix(in srgb, var(--card) 55%, transparent);
     font-size: .68rem; font-weight: 600; font-variant-numeric: tabular-nums;
   }
+  .cell { position: relative; }
   .cell.done { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); font-weight: 800; }
   .cell.miss { background: var(--ng-bg); border-color: var(--ng); color: var(--ng); font-weight: 800; }
+  /* 色だけだと区別しにくい人がいるので、形でも分かるようにできる。
+     どちらが良いか比べるため、⚙ で切りかえられる（2026-08-09）。 */
+  .shapes .cell.done::before { content: "✓"; position: absolute; top: -1px; right: 2px; font-size: .58rem; }
+  .shapes .cell.miss::before { content: "✕"; position: absolute; top: -1px; right: 2px; font-size: .58rem; }
+  .shapes .jrow.done .jn::after { content: "✓"; font-size: .6rem; margin-left: 1px; }
+  .shapes .jrow.miss .jn::after { content: "✕"; font-size: .6rem; margin-left: 1px; }
+  .shapes .legend i.done::after { content: "✓"; font-size: .55rem; }
+  .shapes .legend i.miss::after { content: "✕"; font-size: .55rem; }
   .cell.now {
     border-color: var(--accent); color: var(--fg); background: var(--accentSoft);
     box-shadow: 0 0 0 2px var(--accentSoft); font-weight: 800;
@@ -565,6 +574,8 @@
 
   /* ── レベルクリアのリザルト ── */
   .clearhead { text-align: center; margin: 22px 0 18px; }
+  .ribbon.warnrib { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
+  .clearhead h1 { font-size: 1.06rem; margin: 6px 0 0; }
   .ribbon {
     display: inline-block; margin: 0 0 6px; padding: 5px 18px; border-radius: 99px;
     background: var(--goldSoft); border: 1px solid var(--gold); color: var(--gold);
@@ -815,6 +826,25 @@
     93%, 100% { transform: translateY(0); }
   }
 
+  /* だれが使うか。記録を分けるためだけに使い、外へは送らない。 */
+  .whobox { margin-top: 14px; display: grid; gap: 8px; }
+  .whorow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .whorow .lab { font-size: .78rem; color: var(--muted); font-weight: 700; }
+  .whopick { display: flex; gap: 6px; flex-wrap: wrap; }
+  .whopick button {
+    padding: 8px 14px; min-height: 40px; border-radius: 99px; cursor: pointer;
+    background: transparent; border: 1px solid var(--line); color: var(--muted);
+    font: inherit; font-size: .84rem; font-weight: 700;
+  }
+  .whopick button.on { border-color: var(--accent); background: var(--accentSoft); color: var(--accent); }
+  .whoadd { display: flex; gap: 6px; }
+  .whoadd input {
+    flex: 1 1 auto; min-width: 0; padding: 9px 12px; border-radius: 10px;
+    background: var(--card); border: 1px solid var(--line); color: var(--fg);
+    font: inherit; font-size: .9rem;
+  }
+  .whoadd input::placeholder { color: var(--muted); }
+
   /* 使い方の手順 */
   .steps { margin: 10px 0 0; padding-left: 1.2em; color: var(--muted); font-size: .86rem; line-height: 1.75; }
   .steps li { margin-bottom: 3px; }
@@ -844,6 +874,32 @@
     .banner { padding: 12px 14px; margin-top: 12px; }
     .picks { gap: 8px; margin-top: 12px; }
     .card { padding: 14px; }
+  }
+
+  /* 先生に見せる1枚（カルテ）。印刷したときに読めることを優先する。 */
+  .chlist { margin: 0; padding-left: 1.1em; font-size: .88rem; line-height: 1.8; }
+  .chart h4 { margin: 14px 0 6px; font-size: .84rem; letter-spacing: .04em; color: var(--muted); }
+  .chart .big { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+  .chart .big div {
+    border: 1px solid var(--line); border-radius: 10px; padding: 9px 6px; text-align: center;
+  }
+  .chart .big b { display: block; font-size: 1.16rem; font-variant-numeric: tabular-nums; }
+  .chart .big span { font-size: .64rem; color: var(--muted); }
+  .chart ul { margin: 0; padding-left: 1.1em; font-size: .86rem; line-height: 1.75; }
+  .chart .none { color: var(--muted); font-size: .84rem; }
+  .chart .lvline {
+    display: grid; grid-template-columns: 58px 1fr auto; gap: 8px; align-items: center;
+    font-size: .8rem; padding: 3px 0;
+  }
+  .chart .lvline i {
+    display: block; height: 8px; border-radius: 99px;
+    background: color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  @media print {
+    .noprint, header, .foot { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .chart .big div { border-color: #999; background: #fff; }
+    .chart .big b, .chart ul, .chart .lvline { color: #000; }
   }
 
   .foot { color: var(--muted); font-size: .76rem; margin-top: 30px; }
@@ -916,6 +972,7 @@
     <p class="lead" style="margin-top:14px">
       <b>計算はしません。</b>選ぶのは「次に何をするか」という方針だけです。
     </p>
+    <div class="whobox" id="whoBox"></div>
     <div class="pickrow row3" id="soundPick2" style="margin-top:14px">
       <button data-m="se">🔉 効果音</button>
       <button data-m="all">🔊 音楽も</button>
@@ -991,6 +1048,17 @@
         <span><i class="now"></i>いまここ</span>
         <span><i></i>まだ</span>
       </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">マスの見た目</h3>
+      <div class="pickrow" id="cellPick">
+        <button data-c="color">色だけ（緑 / 赤）</button>
+        <button data-c="shape">色と形（✓ / ✕ をつける）</button>
+      </div>
+      <p class="lead" style="margin-top:10px">
+        色だけだと区別しにくい人がいます。どちらが見やすいか比べてみてください。
+      </p>
     </div>
 
     <div class="card">
@@ -1086,10 +1154,34 @@
     </div>
   </section>
 
+  <!-- 章の切り上げ。いまの章が早すぎると判断したときだけ出す -->
+  <section id="scChapter" class="hide">
+    <div class="clearhead">
+      <p class="ribbon warnrib">いったん止まりましょう</p>
+      <h1 id="chTitle">この章は、まだ早いかもしれません</h1>
+    </div>
+    <div class="card" id="chWhy"></div>
+    <div class="card" id="chTo"></div>
+    <div class="btnrow">
+      <button class="primary" id="btnChBack">前の章にもどる</button>
+      <button class="ghost" id="btnChGo">このまま続ける</button>
+    </div>
+  </section>
+
   <!-- 記録 -->
   <section id="scStats" class="hide">
     <h1>記録</h1>
-    <p class="lead">想定解答時間は現在すべて推定値です。ここの実測を推定の置き換えに使います。</p>
+
+    <div class="card chart" id="chartCard">
+      <h3 style="margin-top:0">先生に見せる1枚</h3>
+      <div id="chartBody"></div>
+      <div class="btnrow noprint">
+        <button class="ghost" id="btnCopy">文章でコピー</button>
+        <button class="ghost" id="btnPrint">印刷する / PDFにする</button>
+      </div>
+    </div>
+
+    <p class="lead noprint">以下は開発用の記録です。想定解答時間は現在すべて推定値で、ここの実測を置き換えに使います。</p>
 
     <div class="card">
       <h3 style="margin-top:0">つまずきの集計</h3>
@@ -1108,7 +1200,6 @@
 
     <div class="btnrow">
       <button class="primary" id="btnBack">もどる</button>
-      <button class="ghost" id="btnCopy">結果を文章でコピー</button>
       <button class="ghost" id="btnExport">実測データを書き出す(JSON)</button>
     </div>
   </section>
@@ -9235,7 +9326,26 @@ const DATA = {
 /* ------------------------------------------------------------------
    状態
 ------------------------------------------------------------------ */
+/* 記録は名前ごとに分けて持つ。タブレットを何人かで使うと混ざるため
+   （2026-08-09 オーナー指摘）。名前は端末の中だけに置き、外へは送らない。 */
 const KEY = "labs-adaptive-v1";
+const WHO = "labs-adaptive-who";          // 名前の一覧といま選んでいる人
+const keyFor = who => `${KEY}:${who}`;
+
+function loadWho() {
+  try {
+    const raw = localStorage.getItem(WHO);
+    if (raw) {
+      const w = JSON.parse(raw);
+      if (Array.isArray(w.list)) return {list: w.list, cur: w.cur || ""};
+    }
+  } catch (e) {}
+  return {list: [], cur: ""};
+}
+function saveWho(w) {
+  try { localStorage.setItem(WHO, JSON.stringify(w)); } catch (e) {}
+}
+let WHOM = loadWho();
 // 復習をいつ終えるかの規則。2問正解したら本流に戻る。
 // 連続である必要はない（連続を条件にすると復習が長引いてつらい・2026-08-08 オーナー判断）。
 // cap は、いつまでも復習から出られなくなるのを防ぐ上限（達したら理由を表示して戻す）。
@@ -9245,7 +9355,11 @@ const REVIEW_RULE = {count: 2, cap: 10};
    工程より問題、問題より「つまずきの回収」、そして復習中は倍。 */
 const XP = {
   step: 2,              // 工程を1つ正解
-  problem: 20,          // 問題を解き切った
+  // 問題を解き切ったときの経験値。工程が多い問題ほど時間もかかるので、
+  // そのぶん多く配る（2026-08-09 オーナー判断。時間に見合う手ごたえがないと、
+  // 難しい問題に向かう気持ちが続かないため）。
+  problemBase: 10,      // 1問あたりの基本
+  problemPerStep: 5,    // ＋ 工程1つにつき
   chance: 2,            // 復習中は倍（チャンス）
   reviewReturn: 50,     // 復習から本流に復帰できた
   recover: 30,          // つまずいた問題を解き直して回収した
@@ -9286,8 +9400,10 @@ const blank = () => ({
   pace: {},
   goal: null,        // 次のレベルの目標タイム {level, sec, ratio}
   timedNoticed: false,  // 「ここから時間制限」を知らせたか
+  chapterShownAt: 0,    // 章の切り上げを出したときの解答数（続けて出さないため）
   freeReview: false, // 通過したレベルを自分で選んで解いている最中か
   sound: "se",       // 音のモード "se" | "all" | "off"
+  cellStyle: "color",   // マスの見た目 "color"（色だけ）| "shape"（色と形）
 });
 let S = load();
 let cur = null;      // 出題中の問題
@@ -9298,13 +9414,13 @@ let why = "";
 
 function load() {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(WHOM.cur ? keyFor(WHOM.cur) : KEY);
     if (raw) return Object.assign(blank(), JSON.parse(raw));
   } catch (e) { /* localStorage が使えない環境ではメモリのみで動かす */ }
   return blank();
 }
 function save() {
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  try { localStorage.setItem(WHOM.cur ? keyFor(WHOM.cur) : KEY, JSON.stringify(S)); } catch (e) {}
 }
 
 const playable = () => DATA.levels.filter(l => l.steps_done);
@@ -9657,6 +9773,7 @@ const $ = id => document.getElementById(id);
 
 let wrongChoiceText = "";   // 直前に選んでしまった誤答
 let clearPending = 0;       // この結果画面のあとにリザルトを出すレベル
+let chapterPending = null;  // この結果画面のあとに章の切り上げを出すか
 let choiceTimer = null;     // 選択肢を出すまでの待ち
 let hintHTML = "";          // その工程で添える用語の意味
 let stepShownAt = 0, pickShownAt = 0, thinkMs = 0, pickMs = 0;   // 考えた時間と選んだ時間
@@ -9706,7 +9823,7 @@ function levelCleaned(lv) {
   return [...missed].every(id => S.solved.includes(id));
 }
 const show = id => {
-  ["scStart", "scQuiz", "scResult", "scClear", "scStats", "scJump", "scFree", "scHelp"].forEach(s => $(s).classList.toggle("hide", s !== id));
+  ["scStart", "scQuiz", "scResult", "scClear", "scStats", "scJump", "scFree", "scHelp", "scChapter"].forEach(s => $(s).classList.toggle("hide", s !== id));
   window.scrollTo(0, 0);
 };
 const esc = s => String(s).replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c]));
@@ -9786,8 +9903,41 @@ function rangeNote() {
     : `一次方程式のレベル1〜${DATA.levels.length}、全${DATA.levels.reduce((a, l) => a + l.problems.length, 0)}問が出題できます。`;
 }
 
+/* 名前の選択。記録を分けるためだけのもの。 */
+function renderWho() {
+  const box = $("whoBox");
+  const chips = WHOM.list.map(n =>
+    `<button data-who="${esc(n)}" class="${n === WHOM.cur ? "on" : ""}">${esc(n)}</button>`).join("");
+  box.innerHTML =
+    `<div class="whorow"><span class="lab">だれが使う？</span>`
+    + `<span class="whopick" id="whoPick">${chips || '<span class="lab">まだ登録がありません</span>'}</span></div>`
+    + `<div class="whoadd"><input id="whoNew" maxlength="12" placeholder="名前を入れて追加（この端末の中だけ）">`
+    + `<button class="ghost" id="whoAdd">追加</button></div>`;
+  $("whoPick").onclick = e => {
+    const b = e.target.closest("button[data-who]");
+    if (!b || b.dataset.who === WHOM.cur) return;
+    switchWho(b.dataset.who);
+  };
+  $("whoAdd").onclick = () => {
+    const v = ($("whoNew").value || "").trim();
+    if (!v) return;
+    if (!WHOM.list.includes(v)) WHOM.list.push(v);
+    switchWho(v);
+  };
+  $("whoNew").onkeydown = e => { if (e.key === "Enter") $("whoAdd").click(); };
+}
+
+function switchWho(who) {
+  WHOM.cur = who; saveWho(WHOM);
+  S = load(); cur = null;
+  Sound.mode = S.sound || Sound.mode;
+  $("xpNum").textContent = S.xp; renderPl();
+  renderStart();
+}
+
 function renderStart() {
   $("startNote").textContent = rangeNote();
+  renderWho();
   renderSoundPick();
   renderHeader();
   show("scStart");
@@ -9807,7 +9957,15 @@ function renderHelp(from) {
   $("tblLevels").innerHTML = rows.join("");
   $("helpNote").textContent = rangeNote();
   renderSoundPick();
+  applyCellStyle();
   show("scHelp");
+}
+
+function applyCellStyle() {
+  document.body.classList.toggle("shapes", S.cellStyle === "shape");
+  const box = $("cellPick");
+  if (box) box.querySelectorAll("button").forEach(b =>
+    b.classList.toggle("on", b.dataset.c === (S.cellStyle || "color")));
 }
 
 function renderSoundPick() {
@@ -10123,7 +10281,8 @@ function finish(result, errorType) {
 
   rec.gain = [];
   if (result === "correct") {
-    rec.gain.push(["問題クリア", addXp(XP.problem)]);
+    const prize = XP.problemBase + XP.problemPerStep * cur.steps.length;
+    rec.gain.push([`問題クリア（${cur.steps.length}工程）`, addXp(prize)]);
     Sound.play(recovered ? "recover" : "problem");
     if (recovered) rec.gain.push(["つまずきを回収", addXp(XP.recover)]);
   }
@@ -10145,6 +10304,80 @@ function finish(result, errorType) {
   }
   save();
   renderResult(rec);
+}
+
+/* ── 章の切り上げ ─────────────────────────────────
+   分野の中で戻すだけでは足りないときがある。原因が前の章（正負の数・文字と式）に
+   あるとき、いくら一次方程式の中を行き来しても解けるようにならない。
+   そういうときは、いったん止めて前の章へ送り出す（2026-08-09 オーナー方針）。
+
+   判断の材料は2つ。
+     ① 原因が「分野の外」にあるつまずきが積み上がった（統制語彙の back_to_unit）
+     ② 直近がほとんど解けていない（レベルが理解度に合っていない）
+   ①のほうが強い証拠。②は理由が特定できていないぶん弱いので、条件を重くしてある。 */
+const CHAPTER_RULE = {window: 20, outsideHits: 4, recent: 10, misses: 7, cooldown: 20};
+
+function chapterCheck() {
+  if (S.review || S.freeReview) return null;
+  const h = S.history;
+  if (S.chapterShownAt && h.length - S.chapterShownAt < CHAPTER_RULE.cooldown) return null;
+
+  const units = {};
+  const addUnit = id => {
+    const et = DATA.errorTypes[id];
+    if (et && et.back_to_unit) units[et.back_to_unit] = (units[et.back_to_unit] || 0) + 1;
+  };
+  h.slice(-CHAPTER_RULE.window).forEach(r => {
+    addUnit(r.errorType);
+    (r.slips || []).forEach(addUnit);
+  });
+  const outside = Object.values(units).reduce((a, b) => a + b, 0);
+  if (outside >= CHAPTER_RULE.outsideHits) return {reason: "outside", units, outside};
+
+  const recent = h.slice(-CHAPTER_RULE.recent);
+  const misses = recent.filter(r => r.result !== "correct").length;
+  if (recent.length >= CHAPTER_RULE.recent && misses >= CHAPTER_RULE.misses) {
+    return {reason: "misses", misses, units};
+  }
+  return null;
+}
+
+const UNIT_NAME = {
+  "ch1-正負の数": "1章 正の数・負の数",
+  "ch1-正負の数（乗除）": "1章 正の数・負の数（かけ算・わり算）",
+  "ch1-正負の数（四則の順序）": "1章 正の数・負の数（計算の順序）",
+  "ch2-文字と式": "2章 文字と式",
+};
+
+function renderChapter(info) {
+  S.chapterShownAt = S.history.length; save();
+
+  const list = Object.entries(info.units).sort((a, b) => b[1] - a[1]);
+  const top = list[0];
+  $("chWhy").innerHTML = info.reason === "outside"
+    ? `<p style="margin:0 0 8px">直近${CHAPTER_RULE.window}問のうち、`
+      + `<b>原因が前の章にあるつまずきが ${info.outside}回</b>ありました。</p>`
+      + `<ul class="chlist">` + list.map(([u, n]) =>
+          `<li>${esc(UNIT_NAME[u] || u)} … ${n}回</li>`).join("") + `</ul>`
+      + `<p class="lead" style="margin:10px 0 0">`
+      + `一次方程式の中を行き来しても、ここは解けるようになりません。</p>`
+    : `<p style="margin:0 0 8px">直近${CHAPTER_RULE.recent}問のうち`
+      + `<b>${info.misses}問でつまずいています。</b></p>`
+      + `<p class="lead" style="margin:0">いまのレベルが、まだ合っていないようです。`
+      + `前の章にもどると、ここが楽になります。</p>`;
+
+  const to = top ? (UNIT_NAME[top[0]] || top[0]) : "1章 正の数・負の数";
+  $("chTo").innerHTML =
+    `<p style="margin:0 0 4px">戻るところ: <b>${esc(to)}</b></p>`
+    + `<p class="lead" style="margin:0">`
+    + `<b>この章の問題はまだ用意できていません。</b>`
+    + `いまは「このまま続ける」しかできませんが、用意できたら自動でここに移動します。</p>`;
+
+  $("btnChBack").disabled = true;
+  $("btnChBack").textContent = `${to} を学習する（準備中）`;
+  Sound.mood("calm");
+  Sound.play("timeout");
+  show("scChapter");
 }
 
 /* 復習に入る・続ける・出る の判定。すべてアプリが決める（生徒には選ばせない）。 */
@@ -10306,6 +10539,10 @@ function renderResult(rec) {
     pendingCutin = ["復帰！", `ボーナス経験値 +${XP.reviewReturn}`, "back", "confirm"];
   }
   $("btnNext").textContent = S.freeReview ? "復習にもどる" : "次の問題へ";
+
+  // 章そのものが早すぎないか。誤答のあとだけ見る。
+  chapterPending = rec.result === "correct" ? null : chapterCheck();
+  if (chapterPending) $("btnNext").textContent = "つまずきを見なおす";
 
   // レベルクリアの判定（決定事項6: レベルは不可逆）。
   // ここではレベルを上げず、リザルト画面を挟む。上げるのは advanceLevel。
@@ -10621,7 +10858,54 @@ function renderClear(lv) {
 /* ------------------------------------------------------------------
    記録
 ------------------------------------------------------------------ */
+/* 先生に見せる1枚。数字ではなく「何ができて、何でつまずいているか」を先に出す。
+   端末の外にデータを出す手段がないので、印刷／PDF と 文章コピーで渡す。 */
+function renderChart() {
+  const solved = S.solved.length;
+  const oneShot = S.solved.filter(id => {
+    const h = S.history.filter(x => x.problemId === id);
+    return h.length && h[0].result === "correct" && !(h[0].slips || []).length;
+  }).length;
+  const paces = Object.keys(S.pace).map(Number).sort((a, b) => a - b);
+
+  const top = Object.entries(S.errors).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const stuck = top.length
+    ? "<ul>" + top.map(([id, n]) =>
+        `<li><b>${esc(errName(id))}</b> ${n}回<br>`
+        + `<span class="lead">${esc((DATA.errorTypes[id] || {}).description || "")}</span><br>`
+        + `<span class="lead">手がかり: ${esc(errBack(id))}</span></li>`).join("") + "</ul>"
+    : '<p class="none">まだつまずきの記録がありません。</p>';
+
+  const unknown = S.history.filter(h => h.result === "unknown").length;
+  const think = S.history.filter(h => h.thinkMs !== undefined);
+  const tSum = think.reduce((a, h) => a + h.thinkMs, 0);
+  const pSum = think.reduce((a, h) => a + h.pickMs, 0);
+  const ratio = tSum + pSum > 0 ? Math.round(tSum / (tSum + pSum) * 100) : null;
+
+  const lvlines = paces.map(n => {
+    const r = S.pace[n].actual / S.pace[n].est;
+    const w = Math.max(4, Math.min(100, (1.6 - r) / 1.2 * 100));
+    return `<div class="lvline"><span>レベル${n}</span><i style="width:${w.toFixed(0)}%"></i>`
+      + `<span>${r.toFixed(2)}</span></div>`;
+  }).join("") || '<p class="none">まだレベルをクリアしていません。</p>';
+
+  $("chartBody").innerHTML =
+    `<p style="margin:0 0 8px"><b>${esc(WHOM.cur || "（名前なし）")}</b>`
+    + `<span class="lead"> ・ 一次方程式 ・ 到達レベル ${S.reached}</span></p>`
+    + `<div class="big">`
+    + `<div><b>${solved}<span style="font-size:.7rem">/80</span></b><span>解いた問題</span></div>`
+    + `<div><b>${oneShot}</b><span>一発で正解</span></div>`
+    + `<div><b>${ratio === null ? "—" : ratio + "%"}</b><span>考えていた時間の割合</span></div>`
+    + `</div>`
+    + `<h4>つまずいているところ（多い順）</h4>${stuck}`
+    + `<h4>ペース（想定に対する比・低いほど速い）</h4>${lvlines}`
+    + `<h4>そのほか</h4>`
+    + `<ul><li>「わからない」を選んだ回数: ${unknown}回</li>`
+    + `<li>プレイヤーレベル ${plOf(S.xp)}（${S.xp} XP）</li></ul>`;
+}
+
 function renderStats() {
+  renderChart();
   const es = Object.entries(S.errors).sort((a, b) => b[1] - a[1]);
   $("tblErrors").innerHTML = es.length
     ? ['<tr><th>つまずき</th><th>回数</th><th>戻るところ</th></tr>'].concat(
@@ -10767,6 +11051,11 @@ function summaryText() {
     `解いた問題 ${solved}問（うち一発正解 ${first}問）`,
     `プレイヤーレベル ${plOf(S.xp)}（${S.xp} XP）`,
     `ペース（想定に対する比・低いほど速い） ${pace}`,
+    (() => {
+      const th = S.history.filter(h => h.thinkMs !== undefined);
+      const t = th.reduce((a, h) => a + h.thinkMs, 0), q = th.reduce((a, h) => a + h.pickMs, 0);
+      return t + q > 0 ? `考えていた時間の割合 ${Math.round(t / (t + q) * 100)}%` : "考えていた時間の割合 —";
+    })(),
     "つまずき 上位3つ",
     top,
   ].join("\n");
@@ -10819,8 +11108,11 @@ $("btnDunno").onclick = dunno;
 $("btnThink").onclick = () => { showChoices(true); Sound.play("step"); };
 $("btnNext").onclick = () => {
   if (clearPending) { const lv = clearPending; clearPending = 0; return renderClear(lv); }
+  if (chapterPending) { const info = chapterPending; chapterPending = null; return renderChapter(info); }
   return S.freeReview ? renderFree() : startProblem();
 };
+$("btnChGo").onclick = () => startProblem();
+$("btnChBack").onclick = () => startProblem();   // 章ができたらここで移動する
 $("btnStats").onclick = () => { statsBack = ""; renderStats(); };
 $("btnJump").onclick = () => renderJump(S.level);
 $("btnHelp").onclick = () => renderHelp();
@@ -10836,6 +11128,11 @@ const pickSound = e => {
   renderSoundPick();
 };
 $("soundPick").onclick = pickSound;
+$("cellPick").onclick = e => {
+  const b = e.target.closest("button[data-c]");
+  if (!b) return;
+  S.cellStyle = b.dataset.c; save(); applyCellStyle();
+};
 $("soundPick2").onclick = pickSound;
 $("btnFree").onclick = renderFree;
 $("btnClStats").onclick = () => { flushReveal(); statsBack = "scClear"; renderStats(); };
@@ -10851,6 +11148,7 @@ $("btnBack").onclick = () => {
   return cur ? show("scResult") : renderStart();
 };
 $("btnCopy").onclick = copySummary;
+$("btnPrint").onclick = () => window.print();
 $("btnExport").onclick = exportJSON;
 /* 記録を消すのは取り返しがつかないので、2回押させる。
    ブラウザの確認ダイアログは使わない（画面をふさぐし、環境によっては操作を止めてしまう）。 */
@@ -10882,6 +11180,7 @@ document.querySelectorAll("#scHelp .lead").forEach(el => {
 
 $("xpNum").textContent = S.xp;
 renderPl();
+applyCellStyle();
 Sound.mode = S.sound || "se";
 $("btnSound").textContent = {se: "🔉", all: "🔊", off: "🔇"}[Sound.mode];
 renderStart();
