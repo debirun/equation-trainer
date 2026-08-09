@@ -304,10 +304,53 @@
   .work .pending { color: var(--accent); font-size: .7rem; font-weight: 800; }
   .work .pending::before { content: "← "; }
   @media (prefers-reduced-motion: no-preference) {
-    .work .line.fresh, .work .op.fresh { animation: pen .3s ease-out; }
+    .work .line.fresh, .work .op.fresh { animation: pen .95s ease-out; border-radius: 4px; }
   }
-  @keyframes pen { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; } }
-  .prompt { margin: 18px 0 10px; font-weight: 700; }
+  @keyframes pen {
+    0% { opacity: 0; transform: translateY(-4px); }
+    20% { opacity: 1; }
+    0%, 55% { background: color-mix(in srgb, var(--accent) 26%, transparent);
+              box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 26%, transparent); }
+    100% { opacity: 1; background: transparent; box-shadow: 0 0 0 6px transparent; }
+  }
+  .prompt { margin: 10px 0 10px; font-weight: 700; }
+
+  /* いまの式。解答を見に行かなくても、問いの中に式があるようにする。 */
+  .nowline {
+    margin: 16px 0 0; padding: 9px 12px; border-radius: 10px;
+    background: var(--accentSoft); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    font-size: .8rem; color: var(--muted); font-weight: 700;
+    display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  }
+  .nowline b { font-size: 1.06rem; color: var(--fg); font-weight: 800; letter-spacing: .01em; }
+  /* 選択肢に出てくる用語を、そのつど式の上で指す */
+  .sideHint { margin: 12px 0 0; font-size: .74rem; color: var(--muted); font-weight: 700; }
+  .sideHint b { color: var(--accent); }
+
+  /* 式の左辺・右辺の色分け */
+  .work .lhs { color: var(--fg); }
+  .work .rhs { color: color-mix(in srgb, var(--accent) 78%, var(--fg)); }
+
+  /* 選択肢の下に添える言い換え */
+  .choice .also {
+    display: block; margin-top: 3px; font-size: .72rem; font-weight: 600;
+    color: var(--muted); letter-spacing: .01em;
+  }
+  /* 「わからない」。選択肢とは別のものだと分かるように離して置く */
+  button.dunno {
+    display: block; width: 100%; margin-top: 6px; padding: 12px;
+    background: transparent; border: 1px dashed var(--line); border-radius: 12px;
+    color: var(--muted); font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer;
+  }
+  button.dunno:hover { color: var(--fg); border-color: var(--muted); }
+  /* 解答に1行増えたことを見てもらうため、少しだけ選択肢を遅らせて出す */
+  #choices.waiting, .dunno.waiting { opacity: .25; pointer-events: none; }
+  #choices, .dunno { transition: opacity .25s ease-out; }
+
+  /* 用語の一覧 */
+  .glos { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: .86rem; }
+  .glos dt { font-weight: 800; white-space: nowrap; }
+  .glos dd { margin: 0; color: var(--muted); }
 
   /* ── 押せるもの ── */
   button.choice {
@@ -829,7 +872,12 @@
         <li>まちがえたら<b>そこで止まります</b>。解説はしません。どこに戻るかだけ示します</li>
       </ol>
       <p class="lead">
-        時間切れがあります。想定時間の2〜3倍で打ち切ります。粘っても時間の記録が取れなくなるためです。
+        <b>レベル1と2に時間制限はありません。</b>レベル3から時間切れがあり、
+        想定時間の2〜3倍で打ち切ります。粘っても時間の記録が取れなくなるためです。
+      </p>
+      <p class="lead">
+        方針が思いつかないときは <b>「わからない」</b> を押してください。当てずっぽうより役に立ちます。
+        正しい方針を見せたあと、<b>同じ問題をもう一度</b>出します。
       </p>
     </div>
 
@@ -841,6 +889,18 @@
         （${REVIEW_RULE.count}問正解できたら元のレベルへ）。
       </p>
       <p class="lead">選べるのは「どの分野を学習するか」と、通過したレベルの<b>復習</b>だけです。</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">ことばの意味</h3>
+      <dl class="glos">
+        <dt>左辺（さへん）</dt><dd>= の <b>左</b>がわ</dd>
+        <dt>右辺（うへん）</dt><dd>= の <b>右</b>がわ</dd>
+        <dt>両辺（りょうへん）</dt><dd>左辺と右辺の<b>両方</b></dd>
+        <dt>係数（けいすう）</dt><dd>文字の<b>前にかけてある数</b>。3x の 3</dd>
+        <dt>定数項（ていすうこう）</dt><dd>文字のついていない数。x + 5 の 5</dd>
+        <dt>移項（いこう）</dt><dd>符号を変えて反対がわへうつすこと</dd>
+      </dl>
     </div>
 
     <div class="card">
@@ -904,8 +964,11 @@
     <div class="card">
       <p class="q" id="qText"></p>
       <div class="work" id="work"></div>
+      <p class="sideHint hide" id="sideHint"></p>
+      <p class="nowline hide" id="nowLine"></p>
       <p class="prompt" id="sPrompt"></p>
       <div id="choices"></div>
+      <button class="dunno" id="btnDunno">わからない</button>
     </div>
     <div class="why" id="whyBox"></div>
   </section>
@@ -9463,6 +9526,7 @@ const blank = () => ({
   // レベルごとのペース。{実測秒, 想定秒, 一発正解数}。想定に対する比だけがレベルをまたいで比べられる。
   pace: {},
   goal: null,        // 次のレベルの目標タイム {level, sec, ratio}
+  timedNoticed: false,  // 「ここから時間制限」を知らせたか
   freeReview: false, // 通過したレベルを自分で選んで解いている最中か
   sound: "se",       // 音のモード "se" | "all" | "off"
 });
@@ -9834,6 +9898,8 @@ const $ = id => document.getElementById(id);
 
 let wrongChoiceText = "";   // 直前に選んでしまった誤答
 let clearPending = 0;       // この結果画面のあとにリザルトを出すレベル
+let choiceTimer = null;     // 選択肢を出すまでの待ち
+let repeatSame = null;      // 「わからない」のあと、もう一度出す問題
 let statsBack = "";         // 記録から「もどる」で帰る先
 let gainBuf = 0, gainTimer = null;
 function addXp(base, why) {
@@ -9994,7 +10060,10 @@ let forced = null;   // テスト用に直接指定された問題
 
 function startProblem() {
   let p;
-  if (forced) {
+  if (repeatSame) {
+    p = repeatSame; repeatSame = null;
+    why = "「わからない」を選んだ問題です。正しい方針を見たので、今度は自分で選んでみてください。";
+  } else if (forced) {
     p = forced; forced = null;
     why = `テスト用に ${disp(p.id)} を直接開きました（本番にはない操作です）。`;
   } else {
@@ -10034,7 +10103,17 @@ function writeStep(step, opText) {
    スラッシュで折り返す。式の途中で改行されるのを防ぐため。 */
 function lineHTML(text) {
   const parts = String(text).split(" / ");
-  return parts.map((t, i) => `<span class="ln${i ? " cont" : ""}">${esc(t)}</span>`).join("");
+  return parts.map((t, i) => `<span class="ln${i ? " cont" : ""}">${sides(t)}</span>`).join("");
+}
+
+/* 「= の左が左辺、右が右辺」を色で示す。用語を説明せずに、指して伝えるため。
+   = がちょうど1つで、文中に左辺/右辺と書かれていない行だけを分ける。 */
+function sides(t) {
+  const str = String(t);
+  if ((str.match(/=/g) || []).length !== 1 || /左辺|右辺/.test(str)) return esc(str);
+  const i = str.indexOf("=");
+  return `<span class="lhs">${esc(str.slice(0, i))}</span>=`
+    + `<span class="rhs">${esc(str.slice(i + 1))}</span>`;
 }
 
 function workHTML(pendingOp) {
@@ -10115,19 +10194,64 @@ function renderStep() {
   renderWork(cur.has_work ? "ここで方針を選ぶ" : null);
   $("whyBox").innerHTML = `<b>なぜこの問題が出たか</b><br>${esc(why)}`;
 
+  // いま解答の最後にある式を、問いのすぐ上にも出す。
+  // 解答を見に行かずに選択肢だけを見てしまう、という試用での指摘への対応
+  //（2026-08-09）。式が問いの中にあれば、見に行かなくても目に入る。
+  const lastLine = [...work].reverse().find(w => w.kind === "line");
+  const nl = $("nowLine");
+  if (cur.has_work && lastLine && /=/.test(lastLine.text) && lastLine.text.length <= 26) {
+    nl.innerHTML = `<span>いまの式</span><b>${sides(lastLine.text)}</b>`;
+    nl.classList.remove("hide");
+  } else {
+    nl.classList.add("hide");
+  }
+
+  // 選択肢に用語が出てきたら、そのつど式の上で指す
+  const words = s.choices.map(c => c.text).join(" ");
+  const hint = $("sideHint");
+  const bits = [];
+  if (/左辺/.test(words)) bits.push("<b>左辺</b>＝ = の左がわ");
+  if (/右辺/.test(words)) bits.push("<b>右辺</b>＝ = の右がわ");
+  if (/両辺/.test(words)) bits.push("<b>両辺</b>＝ 左と右の両方");
+  if (/係数/.test(words)) bits.push("<b>係数</b>＝ 文字の前の数");
+  if (bits.length) { hint.innerHTML = bits.join(" ／ "); hint.classList.remove("hide"); }
+  else hint.classList.add("hide");
+
   const box = $("choices");
   box.innerHTML = "";
   for (const c of shuffle(s.choices)) {
     const b = document.createElement("button");
     b.className = "choice";
-    b.textContent = c.text;
+    const also = alsoFor(c.text);
+    b.innerHTML = esc(c.text) + (also ? `<span class="also">＝ ${esc(also)}</span>` : "");
     b.onclick = () => answer(c);
     box.appendChild(b);
+  }
+
+  // 解答に行が増えた直後だけ、選択肢を少し遅らせて出す。
+  // 書かれたものを見る間をつくるため。
+  clearTimeout(choiceTimer);
+  const justWrote = stepIdx > 0;
+  box.classList.toggle("waiting", justWrote);
+  $("btnDunno").classList.toggle("waiting", justWrote);
+  if (justWrote) {
+    choiceTimer = setTimeout(() => {
+      box.classList.remove("waiting");
+      $("btnDunno").classList.remove("waiting");
+    }, 550);
+  }
+
+  // レベル3に入ったところで、時間制限が始まることを1回だけ知らせる
+  if (stepIdx === 0 && isTimed(cur) && !S.timedNoticed && !S.review && !S.freeReview) {
+    S.timedNoticed = true; save();
+    cutin("ここから時間制限", "レベル3からは時間切れがあります", "reach");
+    Sound.play("reach");
   }
 }
 
 function startTimer() {
   stopTimer();
+  if (!isTimed(cur)) { $("timerBar").classList.add("hide"); return; }   // レベル1・2は時間制限なし
   const bar = $("timerBar");
   bar.classList.remove("hide");
   const limit = cur.timeout_seconds * 1000;
@@ -10146,6 +10270,23 @@ function stopTimer() {
 }
 
 /* 決定事項2: 間違えた時点で止める。それ以降は解かせない。 */
+/* 「わからない」。当てずっぽうと区別して記録する。
+   方針を間違えたのか、方針そのものを持っていないのかは別のことなので
+   （2026-08-09 試用での要望）。経験値は入らず、正しい方針を見せて、
+   同じ問題をもう一度出す（答えを見て素通りできないように）。 */
+function dunno() {
+  if (cur.has_work) {
+    work.forEach(w => w.fresh = false);
+    work.push({kind: "bad", text: "わからない", fresh: true});
+  }
+  wrongChoiceText = "わからない";
+  Sound.play("wrong");
+  // もう一度出すのは1回だけ。2回続けて「わからない」なら、そこで足踏みさせない。
+  const twice = S.history.some(h => h.problemId === cur.id && h.result === "unknown");
+  repeatSame = twice ? null : cur;
+  finish("unknown", null);
+}
+
 function answer(choice) {
   if (choice.correct) {
     Sound.play(S.review ? "stepChance" : "step");
@@ -10279,6 +10420,23 @@ function renderResult(rec) {
     if (bossKill) { Sound.play("bossDown"); Sound.mood("calm"); }
     detail.innerHTML = `<p style="margin:0">答え: <b>${esc(cur.answer)}</b></p>`
       + (lastOne ? `<p class="lead" style="margin:8px 0 0">このレベルの最終問題です。次でレベルが上がります。</p>` : "");
+  } else if (rec.result === "unknown") {
+    const step = cur.steps[(rec.failedStep || 1) - 1] || {};
+    const right = (step.choices || []).find(c => c.correct);
+    banner.className = "banner miss";
+    banner.innerHTML = `<h2>ここで止まった</h2>`
+      + `<p class="sub">工程${rec.failedStep}で「わからない」を選びました。</p>`;
+    picks.innerHTML = right
+      ? `<div class="pick right"><span class="tag"><span class="mark">✓</span>正しかった方針</span>`
+        + `<span class="txt">${esc(right.text)}</span></div>` : "";
+    detail.innerHTML =
+      `<p style="margin:0 0 4px"><b>当てずっぽうを押さなかったのは正しい判断です。</b></p>`
+      + `<p class="lead" style="margin:0">分からないことが分かっている、というのは記録として役に立ちます。</p>`
+      + `<div class="fixbox"><span class="tag">このあと</span><p>${
+        repeatSame
+          ? "同じ問題をもう一度出します。いまの方針を、自分の手で選んでみてください。"
+          : "この問題は2回目なので、次の問題に進みます。あとで復習から解き直せます。"
+      }</p></div>`;
   } else if (rec.result === "timeout") {
     banner.className = "banner warn";
     banner.innerHTML = `<h2>時間切れ</h2>`
@@ -10406,6 +10564,27 @@ function clearStats(lv) {
 }
 
 const mmss = sec => `${Math.floor(sec / 60)}分${String(Math.round(sec % 60)).padStart(2, "0")}秒`;
+
+/* 問題がどのレベルのものか（id から取る） */
+const lvOf = p => Number(String(p.id).match(/^L(\d+)/)[1]);
+
+/* 時間制限はレベル3から。1・2は「解き方を覚える段」なので、急かさない。
+   （2026-08-09 オーナー判断。実際の中1が時間切れになったため） */
+const TIMED_FROM = 3;
+const isTimed = p => lvOf(p) >= TIMED_FROM;
+
+/* 選択肢の言い換え。生徒が普段使っている言い方と、選択肢の言葉が一致しない
+   ことがあるため（2026-08-09 試用で判明）。
+   正解にも誤答にも同じように付ける「操作の言いかえ」だけを置く。
+   「〜のため」のような理由は書かない（正誤の手がかりになってしまう）。 */
+const SAY_ALSO = [
+  [/移項/, "符号を変えて反対がわへうつす"],
+  [/分配法則/, "かっこをひらく"],
+  [/分母をはら|通分/, "分数をなくす"],
+  [/同類項/, "同じ種類のものをまとめる"],
+  [/係数/, "文字の前にかけてある数"],
+];
+const alsoFor = t => (SAY_ALSO.find(([re]) => re.test(t)) || [])[1] || "";
 
 /* ペースの推移。想定に対する比を、レベル順に並べる。低いほど速い＝棒が高い。
    レベルが変わっても比べられる唯一の指標なので、上達はここに出る。 */
@@ -10669,7 +10848,7 @@ function renderStats() {
         })).join("")
     : '<tr><td>まだありません</td></tr>';
 
-  const label = {correct: "正解", wrong: "つまずき", timeout: "時間切れ"};
+  const label = {correct: "正解", wrong: "つまずき", timeout: "時間切れ", unknown: "わからない"};
   $("tblHistory").innerHTML = S.history.length
     ? ['<tr><th>問題</th><th>結果</th><th>工程</th><th>秒</th></tr>'].concat(
         S.history.slice().reverse().map(h =>
@@ -10828,6 +11007,7 @@ document.addEventListener("pointerdown", unlockSound);
 document.addEventListener("keydown", unlockSound);
 
 $("btnStart").onclick = startProblem;
+$("btnDunno").onclick = dunno;
 $("btnNext").onclick = () => {
   if (clearPending) { const lv = clearPending; clearPending = 0; return renderClear(lv); }
   return S.freeReview ? renderFree() : startProblem();
