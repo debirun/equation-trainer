@@ -1094,6 +1094,11 @@
     </div>
 
     <div class="card">
+      <h3 style="margin-top:0">記録の送信</h3>
+      <p class="lead" style="margin-top:0" id="syncNote"></p>
+    </div>
+
+    <div class="card">
       <h3 style="margin-top:0">検証用</h3>
       <p class="lead" style="margin-top:0">本番では出さない項目です。</p>
       <div class="btnrow">
@@ -1248,7 +1253,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 17:28
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 17:35
   </p>
 </div>
 
@@ -9348,6 +9353,23 @@ const DATA = {
 ------------------------------------------------------------------ */
 /* 記録は名前ごとに分けて持つ。タブレットを何人かで使うと混ざるため
    （2026-08-09 オーナー指摘）。名前は端末の中だけに置き、外へは送らない。 */
+/* ── 記録の自動送信 ───────────────────────────────
+   生徒が何も押さなくても、記録が先生の手元に集まるようにするための設定。
+   受け皿は Supabase（無料枠）。ここが空のあいだは何も送らない（いまの状態）。
+
+   埋めるのは2つだけ。
+     url … プロジェクトのURL   例 https://xxxx.supabase.co
+     key … anon public キー
+   このキーは「書き込みだけ」に絞って使う（読み取りは先生の端末で別に鍵を入れる）。
+   通信に失敗しても解くことに影響は出さない。オフラインでも普通に使えて、
+   次につながったときにまとめて送る。 */
+const SYNC = {
+  url: "",
+  key: "",
+  table: "records",
+  minIntervalMs: 20000,     // 送りすぎない
+};
+
 const KEY = "labs-adaptive-v1";
 const WHO = "labs-adaptive-who";          // 名前の一覧といま選んでいる人
 const keyFor = who => `${KEY}:${who}`;
@@ -9980,6 +10002,7 @@ function renderHelp(from) {
   $("tblLevels").innerHTML = rows.join("");
   $("helpNote").textContent = rangeNote();
   renderWho("whoBox2");
+  renderSyncNote();
   renderSoundPick();
   applyCellStyle();
   show("scHelp");
@@ -10327,6 +10350,7 @@ function finish(result, errorType) {
     Sound.play("clean");
   }
   save();
+  syncNow();
   renderResult(rec);
 }
 
@@ -10896,6 +10920,69 @@ function toDoFor(errId) {
     + `<span class="lead">（${esc(errBack(errId))}）</span>`;
 }
 
+/* ── 送信 ───────────────────────────────────── */
+let syncTimer = null, syncLast = 0, syncState = "off";
+
+function syncPayload() {
+  const think = S.history.filter(h => h.thinkMs !== undefined);
+  const tSum = think.reduce((a, h) => a + h.thinkMs, 0);
+  const pSum = think.reduce((a, h) => a + h.pickMs, 0);
+  return {
+    version: 1,
+    level: S.level, reached: S.reached,
+    solved: S.solved.length, solvedIds: S.solved,
+    oneShot: S.solved.filter(id => {
+      const h = S.history.filter(x => x.problemId === id);
+      return h.length && h[0].result === "correct" && !(h[0].slips || []).length;
+    }).length,
+    xp: S.xp, pl: plOf(S.xp),
+    errors: S.errors,
+    pace: S.pace,
+    spentSec: Math.round(S.history.reduce((a, h) => a + (h.elapsedMs || 0), 0) / 1000),
+    thinkRatio: tSum + pSum > 0 ? Math.round(tSum / (tSum + pSum) * 100) : null,
+    unknownCount: S.history.filter(h => h.result === "unknown").length,
+    // 直近200問ぶんだけ。全部送ると大きくなりすぎる。
+    history: S.history.slice(-200),
+  };
+}
+
+function syncNow(force) {
+  if (!SYNC.url || !SYNC.key || !WHOM.cur) { syncState = "off"; return; }
+  const now = Date.now();
+  if (!force && now - syncLast < SYNC.minIntervalMs) return;
+  syncLast = now;
+  const body = [{
+    name: WHOM.cur,
+    payload: syncPayload(),
+    updated_at: new Date().toISOString(),
+  }];
+  fetch(`${SYNC.url}/rest/v1/${SYNC.table}`, {
+    method: "POST",
+    headers: {
+      "apikey": SYNC.key,
+      "Authorization": `Bearer ${SYNC.key}`,
+      "Content-Type": "application/json",
+      "Prefer": "resolution=merge-duplicates",
+    },
+    body: JSON.stringify(body),
+  }).then(r => {
+    syncState = r.ok ? "ok:" + new Date().toTimeString().slice(0, 5) : "ng:" + r.status;
+    renderSyncNote();
+  }).catch(() => { syncState = "ng:通信できず"; renderSyncNote(); });
+}
+
+/* 送信のたびに知らせる必要はないが、⚙で状態が見えるようにしておく */
+function renderSyncNote() {
+  const el = $("syncNote");
+  if (!el) return;
+  el.textContent = !SYNC.url || !SYNC.key
+    ? "いまは送信していません（受け皿が未設定）。記録はこの端末の中だけにあります。"
+    : !WHOM.cur ? "名前を選ぶと送信します。"
+    : syncState.startsWith("ok") ? `送信ずみ（${syncState.slice(3)}）`
+    : syncState.startsWith("ng") ? `送れませんでした（${syncState.slice(3)}）。次に自動でやり直します。`
+    : "送信の準備ができています。";
+}
+
 /* 先生に見せる1枚。数字ではなく「何ができて、何でつまずいているか」を先に出す。
    端末の外にデータを出す手段がないので、印刷／PDF と 文章コピーで渡す。 */
 function renderChart() {
@@ -11162,6 +11249,10 @@ const unlockSound = () => {
     document.removeEventListener("keydown", unlockSound);
   }
 };
+// 閉じるときに取りこぼさないよう、もう一度送る
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") syncNow(true);
+});
 document.addEventListener("pointerdown", unlockSound);
 document.addEventListener("keydown", unlockSound);
 
