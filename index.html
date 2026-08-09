@@ -1253,7 +1253,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 17:35
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 18:22
   </p>
 </div>
 
@@ -9357,16 +9357,19 @@ const DATA = {
    生徒が何も押さなくても、記録が先生の手元に集まるようにするための設定。
    受け皿は Supabase（無料枠）。ここが空のあいだは何も送らない（いまの状態）。
 
-   埋めるのは2つだけ。
-     url … プロジェクトのURL   例 https://xxxx.supabase.co
-     key … anon public キー
-   このキーは「書き込みだけ」に絞って使う（読み取りは先生の端末で別に鍵を入れる）。
-   通信に失敗しても解くことに影響は出さない。オフラインでも普通に使えて、
-   次につながったときにまとめて送る。 */
+   ここに載せる key は公開してよいもの。テーブルには直接触れないようにしてあり、
+   できるのは save_record という窓口を呼ぶことだけ。
+     ・読み取り  … できない（他人の記録は見えない）
+     ・直接の書き込み … できない
+     ・削除      … できない
+   先生が読むときは、この鍵ではなく別の鍵を自分の端末に入れる。
+
+   通信に失敗しても解くことには影響させない。オフラインでも普通に使えて、
+   次につながったときに送る。 */
 const SYNC = {
-  url: "",
-  key: "",
-  table: "records",
+  url: "https://pwuiwdodwohvvulabchz.supabase.co",
+  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3dWl3ZG9kd29odnZ1bGFiY2h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNjIzNzksImV4cCI6MjEwMTgzODM3OX0.53njwDalFWzQOdainJYEHpiIsTdn3eRztKWYH9iaGOQ",
+  fn: "save_record",
   minIntervalMs: 20000,     // 送りすぎない
 };
 
@@ -10951,20 +10954,14 @@ function syncNow(force) {
   const now = Date.now();
   if (!force && now - syncLast < SYNC.minIntervalMs) return;
   syncLast = now;
-  const body = [{
-    name: WHOM.cur,
-    payload: syncPayload(),
-    updated_at: new Date().toISOString(),
-  }];
-  fetch(`${SYNC.url}/rest/v1/${SYNC.table}`, {
+  fetch(`${SYNC.url}/rest/v1/rpc/${SYNC.fn}`, {
     method: "POST",
     headers: {
       "apikey": SYNC.key,
       "Authorization": `Bearer ${SYNC.key}`,
       "Content-Type": "application/json",
-      "Prefer": "resolution=merge-duplicates",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({p_name: WHOM.cur, p_payload: syncPayload()}),
   }).then(r => {
     syncState = r.ok ? "ok:" + new Date().toTimeString().slice(0, 5) : "ng:" + r.status;
     renderSyncNote();
@@ -10977,7 +10974,7 @@ function renderSyncNote() {
   if (!el) return;
   el.textContent = !SYNC.url || !SYNC.key
     ? "いまは送信していません（受け皿が未設定）。記録はこの端末の中だけにあります。"
-    : !WHOM.cur ? "名前を選ぶと送信します。"
+    : !WHOM.cur ? "名前を選ぶと、記録が自動で先生に届くようになります。"
     : syncState.startsWith("ok") ? `送信ずみ（${syncState.slice(3)}）`
     : syncState.startsWith("ng") ? `送れませんでした（${syncState.slice(3)}）。次に自動でやり直します。`
     : "送信の準備ができています。";
