@@ -887,6 +887,12 @@
   .chart .big span { font-size: .64rem; color: var(--muted); }
   .chart ul { margin: 0; padding-left: 1.1em; font-size: .86rem; line-height: 1.75; }
   .chart .none { color: var(--muted); font-size: .84rem; }
+  .chart .todo {
+    display: block; margin-top: 3px; padding: 5px 9px; border-radius: 8px;
+    background: var(--accentSoft); border-left: 2px solid var(--accent);
+    font-size: .8rem; line-height: 1.6;
+  }
+  .chart .todo b { color: var(--accent); }
   .chart .lvline {
     display: grid; grid-template-columns: 58px 1fr auto; gap: 8px; align-items: center;
     font-size: .8rem; padding: 3px 0;
@@ -1184,6 +1190,7 @@
       <h3 style="margin-top:0">先生に見せる1枚</h3>
       <div id="chartBody"></div>
       <div class="btnrow noprint">
+        <button class="ghost" id="btnSend">送る（LINEなど）</button>
         <button class="ghost" id="btnCopy">文章でコピー</button>
         <button class="ghost" id="btnPrint">印刷する / PDFにする</button>
       </div>
@@ -1193,6 +1200,11 @@
 
     <div class="card">
       <h3 style="margin-top:0">つまずきの集計</h3>
+      <p class="lead" style="margin-top:0">
+        <code>E-ORDER-02</code> のような記号は、<b>つまずきの種類につけた整理番号</b>です。
+        同じ間違いに必ず同じ番号がつくので、別の問題で出ても同じものだと分かります。
+        生徒の画面には出しません（この開発用の表だけ）。
+      </p>
       <div class="scroll"><table id="tblErrors"></table></div>
     </div>
 
@@ -1236,7 +1248,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 17:14
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 17:28
   </p>
 </div>
 
@@ -10859,6 +10871,31 @@ function renderClear(lv) {
 /* ------------------------------------------------------------------
    記録
 ------------------------------------------------------------------ */
+/* そのつまずきに対して、次に解くべき問題を出す。
+   まだ解けていない問題のうち、その誤りが選択肢に入っているものを選ぶ。
+   原因が分野の外（1章・2章）にあるときは、まだ問題がないのでそこは正直に書く。 */
+function toDoFor(errId) {
+  const et = DATA.errorTypes[errId] || {};
+  if (et.back_to_unit) {
+    return `解くべきところ: <b>${esc(UNIT_NAME[et.back_to_unit] || et.back_to_unit)}</b>`
+      + `<br><span class="lead">この章の問題はこのアプリにまだありません。`
+      + `教科書やワークでこの単元を1周してから、ここに戻ってください。</span>`;
+  }
+  const lv = et.back_to_level;
+  const pool = lv ? poolOf(lv) : [];
+  const hit = pool.filter(p =>
+    (p.steps || []).some(st => st.choices.some(c => c.error_type === errId)));
+  // まだ解けていないものを先に、なければ解きなおし用に解いたものも出す
+  const undone = hit.filter(p => !S.solved.includes(p.id));
+  const picks = (undone.length ? undone : hit).slice(0, 3);
+  if (!picks.length) {
+    return `解くべきところ: <b>${esc(errBack(errId))}</b>`;
+  }
+  return `解くべき問題: ` + picks.map(p =>
+    `<b>${disp(p.id)}</b>`).join("、")
+    + `<span class="lead">（${esc(errBack(errId))}）</span>`;
+}
+
 /* 先生に見せる1枚。数字ではなく「何ができて、何でつまずいているか」を先に出す。
    端末の外にデータを出す手段がないので、印刷／PDF と 文章コピーで渡す。 */
 function renderChart() {
@@ -10874,7 +10911,7 @@ function renderChart() {
     ? "<ul>" + top.map(([id, n]) =>
         `<li><b>${esc(errName(id))}</b> ${n}回<br>`
         + `<span class="lead">${esc((DATA.errorTypes[id] || {}).description || "")}</span><br>`
-        + `<span class="lead">手がかり: ${esc(errBack(id))}</span></li>`).join("") + "</ul>"
+        + `<span class="todo">${toDoFor(id)}</span></li>`).join("") + "</ul>"
     : '<p class="none">まだつまずきの記録がありません。</p>';
 
   const unknown = S.history.filter(h => h.result === "unknown").length;
@@ -11066,7 +11103,24 @@ function summaryText() {
     })(),
     "つまずき 上位3つ",
     top,
+    "",
+    "次に解くとよい問題",
+    Object.entries(S.errors).sort((a, b) => b[1] - a[1]).slice(0, 3)
+      .map(([id]) => "  " + errName(id) + " → "
+        + toDoFor(id).replace(/<br\s*\/?>/g, " ／ ").replace(/<[^>]+>/g, "")
+            .replace(/\s+/g, " ").trim()).join("\n") || "  なし",
   ].join("\n");
+}
+
+/* 端末の共有メニューに渡す。スマホなら1タップでLINEやメールに載る。
+   サーバーを持たないので、記録を外に出す手段はいまのところこれだけ。 */
+function sendSummary() {
+  const text = summaryText();
+  if (navigator.share) {
+    navigator.share({title: "一次方程式の記録", text}).catch(() => {});
+    return;
+  }
+  copySummary();
 }
 
 function copySummary() {
@@ -11155,6 +11209,7 @@ $("btnBack").onclick = () => {
   if (statsBack) { const to = statsBack; statsBack = ""; return show(to); }
   return cur ? show("scResult") : renderStart();
 };
+$("btnSend").onclick = sendSummary;
 $("btnCopy").onclick = copySummary;
 $("btnPrint").onclick = () => window.print();
 $("btnExport").onclick = exportJSON;
