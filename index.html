@@ -281,7 +281,8 @@
     box-shadow: 0 1px 0 color-mix(in srgb, #fff 6%, transparent) inset,
                 0 8px 24px -18px rgba(0,0,0,.7);
   }
-  .q { font-size: 1.16rem; font-weight: 700; margin: 0; text-wrap: balance; }
+  .q { font-size: 1.16rem; font-weight: 700; margin: 0; line-height: 1.55; }
+  .nb { white-space: nowrap; }
   /* 準備問題（ことばと式を合わせる）であることを示す小さな札 */
   .modeTag {
     display: inline-block; margin: 0 0 8px; padding: 3px 10px; border-radius: 99px;
@@ -302,8 +303,9 @@
     pointer-events: none; border-radius: 0 0 8px 8px;
     background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--card) 92%, transparent));
   }
+  /* 左に解答、右にそのとき選んだ方針。式のほうを優先して広く取る。 */
   .wrow {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 38%);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 32%);
     column-gap: 10px; align-items: baseline;
   }
   .wleft {
@@ -871,6 +873,10 @@
     header button.ghost { padding: 9px 12px; min-height: 38px; font-size: .8rem; }
     .snd { font-size: 1.2rem; padding: 6px 4px; }
     h1 { font-size: 1.24rem; }
+    /* 小さい画面では問題文を少し詰めて、1行に収まりやすくする */
+    .q { font-size: 1.02rem; }
+    .work .line { font-size: 1rem; }
+    .work .op, .work .opbad { font-size: .66rem; }
     .lv { font-size: .82rem; }
     .cell { font-size: .72rem; }
     .btnrow button { min-height: 44px; }
@@ -913,6 +919,16 @@
     body { background: #fff; color: #000; }
     .card, .chart .big div { border-color: #999; background: #fff; }
     .chart .big b, .chart ul, .chart .lvline { color: #000; }
+  }
+
+  /* 新しい版のお知らせ。解いている最中に画面を奪わないよう、下にそっと出す。 */
+  .updchip {
+    position: fixed; left: 50%; transform: translateX(-50%); z-index: 40;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    padding: 10px 16px; border-radius: 99px; cursor: pointer;
+    background: var(--accent); color: #fff; border: 0;
+    font: inherit; font-size: .8rem; font-weight: 800;
+    box-shadow: 0 8px 24px -10px rgba(0,0,0,.7);
   }
 
   .foot { color: var(--muted); font-size: .76rem; margin-top: 30px; }
@@ -1129,6 +1145,8 @@
     </div>
   </section>
 
+  <button class="updchip hide" id="updateChip"></button>
+
   <!-- チャンスのカットイン。予告・煽り・確定の3段で出す。 -->
   <div class="cutin hide" id="cutin" aria-hidden="true">
     <div class="ci"><div class="cifig" id="cutinFig"></div>
@@ -1295,7 +1313,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 19:24
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-09 19:30</span>
   </p>
 </div>
 
@@ -9516,6 +9534,22 @@ const poolOf = n => (levelOf(n) || {problems: []}).problems;
 const byId = id => DATA.levels.flatMap(l => l.problems).find(p => p.id === id);
 const errName = id => (DATA.errorTypes[id] || {}).name || id;
 // 生徒に見せる問題番号は「1-2」の形にする（L1-02 という書き方は伝わりにくい）
+/* 式のまとまり（2x + 1 = 5 など）が途中で折り返されると読みにくいので、
+   ひとかたまりとして扱う。長すぎるものは、はみ出すより折り返すほうがよいので対象外。
+   2026-08-09 実機で「方程式 2x」／「+ 1 = 5」と割れていたため。 */
+function nb(raw) {
+  const re = /[0-9A-Za-z(][0-9A-Za-z\s+\-=×÷().,]*[0-9A-Za-z)]/g;
+  let out = "", last = 0, m;
+  while ((m = re.exec(String(raw)))) {
+    out += esc(String(raw).slice(last, m.index));
+    const seg = m[0];
+    out += (seg.length <= 18 && /[+\-=×÷]/.test(seg))
+      ? `<span class="nb">${esc(seg)}</span>` : esc(seg);
+    last = m.index + seg.length;
+  }
+  return out + esc(String(raw).slice(last));
+}
+
 const disp = id => String(id).replace(/^L(\d+)-0?(\d+)$/, "$1-$2");
 const errBack = id => (DATA.errorTypes[id] || {}).back_to || "";
 
@@ -10123,10 +10157,10 @@ function lineHTML(text) {
    = がちょうど1つで、文中に左辺/右辺と書かれていない行だけを分ける。 */
 function sides(t) {
   const str = String(t);
-  if ((str.match(/=/g) || []).length !== 1 || /左辺|右辺/.test(str)) return esc(str);
+  if ((str.match(/=/g) || []).length !== 1 || /左辺|右辺/.test(str)) return nb(str);
   const i = str.indexOf("=");
-  return `<span class="lhs">${esc(str.slice(0, i))}</span>=`
-    + `<span class="rhs">${esc(str.slice(i + 1))}</span>`;
+  return `<span class="lhs">${nb(str.slice(0, i))}</span>=`
+    + `<span class="rhs">${nb(str.slice(i + 1))}</span>`;
 }
 
 function workHTML(pendingOp) {
@@ -10227,7 +10261,7 @@ function renderStep() {
     gb.classList.add("hide");
   }
   $("modeTag").classList.toggle("hide", cur.mode !== "input");
-  $("qText").textContent = cur.question;
+  $("qText").innerHTML = nb(cur.question);
   $("sPrompt").textContent = `工程${s.step_no}: ${s.prompt}`;
   renderWork(cur.has_work ? "ここで方針を選ぶ" : null);
   $("whyBox").innerHTML = `<b>なぜこの問題が出たか</b><br>${esc(why)}`;
@@ -10248,7 +10282,7 @@ function renderStep() {
     const b = document.createElement("button");
     b.className = "choice";
     const also = alsoFor(c.text);
-    b.innerHTML = esc(c.text) + (also ? `<span class="also">＝ ${esc(also)}</span>` : "");
+    b.innerHTML = nb(c.text) + (also ? `<span class="also">＝ ${esc(also)}</span>` : "");
     b.onclick = () => answer(c, b);
     box.appendChild(b);
   }
@@ -10510,7 +10544,7 @@ function renderResult(rec) {
   const sec = (rec.elapsedMs / 1000).toFixed(1);
 
   // 問題文とそこまでの解答は、判定画面でもそのまま残す（確認しやすいように）
-  $("rText").textContent = cur.question;
+  $("rText").innerHTML = nb(cur.question);
   $("rWork").innerHTML = cur.has_work ? workBody() : "";
 
   const banner = $("resultBanner");
@@ -11342,6 +11376,34 @@ function exportJSON() {
 $("btnSound").onclick = () =>
   Sound.setMode({se: "all", all: "off", off: "se"}[Sound.mode]);
 // 最初のタップで音を使えるようにする（ブラウザの制約）
+/* ── 新しい版が出ていないか見に行く ──────────────────
+   スマホは配信元の指示で最大10分ぶん古いHTMLを持ち続ける。直したのに
+   反映されない、が起きるので、こちらから確かめる（2026-08-09 オーナー指摘）。
+   置いてあるファイルを毎回取り直して、フッターの版を比べるだけ。
+   スタート画面にいるときは黙って開き直し、解いている最中は知らせるだけにする。 */
+const MY_STAMP = ($("stampText") || {}).textContent || "";
+
+function checkUpdate() {
+  if (!MY_STAMP) return;
+  fetch(location.pathname + "?_=" + Date.now(), {cache: "no-store"})
+    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(html => {
+      const m = html.match(/id="stampText">([^<]+)</);
+      if (!m || m[1] === MY_STAMP) return;
+      const onStart = !$("scStart").classList.contains("hide");
+      if (onStart) { location.replace(location.pathname + "?v=" + encodeURIComponent(m[1])); return; }
+      const el = $("updateChip");
+      el.textContent = `新しい版があります（${m[1]}）・押すと更新`;
+      el.classList.remove("hide");
+      el.onclick = () => location.replace(location.pathname + "?v=" + encodeURIComponent(m[1]));
+    })
+    .catch(() => {});
+}
+checkUpdate();
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") checkUpdate();
+});
+
 // 音は最初の操作まで鳴らせない決まりがある。実際に動き出すまで、毎回試す。
 const unlockSound = () => {
   Sound.unlock();
