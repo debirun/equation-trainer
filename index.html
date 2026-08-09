@@ -283,6 +283,9 @@
   }
   .q { font-size: 1.16rem; font-weight: 700; margin: 0; line-height: 1.55; }
   .nb { white-space: nowrap; }
+  /* かけるの記号。文字の x と見分けやすくするため、細く小さく置く。 */
+  .mul { color: var(--muted); font-weight: 400; font-size: .82em; padding: 0 .08em; }
+  sup { font-size: .66em; vertical-align: super; line-height: 0; }
   /* 準備問題（ことばと式を合わせる）であることを示す小さな札 */
   .modeTag {
     display: inline-block; margin: 0 0 8px; padding: 3px 10px; border-radius: 99px;
@@ -777,7 +780,14 @@
     grid-area: 1 / 1; opacity: 0; text-align: center;
     font-size: 1.16rem; font-weight: 800; letter-spacing: .01em;
   }
-  .pline b { color: var(--accent); }
+  /* 文字の x と、かけるの記号 × が見分けにくい（2026-08-10 オーナー指摘）。
+     文字は斜体で大きく、記号は細く小さくして、役割の違いを見た目で分ける。 */
+  .pline b {
+    color: var(--accent); font-style: italic; font-weight: 800;
+    font-size: 1.25em; padding: 0 .04em;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+  .pline .mul { color: var(--muted); font-weight: 400; font-size: .8em; padding: 0 .12em; }
   .pline.p3 { font-size: 1.5rem; color: var(--ok); }
   .pline.p3 b { color: var(--ok); }
   @media (prefers-reduced-motion: no-preference) {
@@ -1049,7 +1059,7 @@
              3章の絵と違って座標の計算が要らないよう、3行を順に見せるだけにしてある。 -->
         <div class="phrase">
           <div class="pline p1">1本 80円のペンを <b>x</b> 本</div>
-          <div class="pline p2">80 × <b>x</b></div>
+          <div class="pline p2">80 <span class="mul">×</span> <b>x</b></div>
           <div class="pline p3">80<b>x</b></div>
         </div>
         <div class="mate">
@@ -1411,7 +1421,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 02:48</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 02:56</span>
   </p>
 </div>
 
@@ -13247,7 +13257,17 @@ function nb(raw) {
       ? `<span class="nb">${esc(seg)}</span>` : esc(seg);
     last = m.index + seg.length;
   }
-  return out + esc(String(raw).slice(last));
+  // かけるの記号は控えめに。文字の x と紛れないようにするため。
+  return mulSpan(out + esc(String(raw).slice(last)));
+}
+
+/* 見た目を整えるだけの処理。式の意味は変えない。
+   ・× ÷ は細く小さく（文字の x と見分けるため）
+   ・^2 は右上に小さく（x^2 のまま出ていたのを直した。2026-08-10） */
+function mulSpan(html) {
+  return html
+    .replace(/[×÷]/g, m => `<span class="mul">${m}</span>`)
+    .replace(/\^(\d+)/g, (_, n) => `<sup>${n}</sup>`);
 }
 
 const disp = id => String(id).replace(/^L(\d+)-0?(\d+)$/, "$1-$2");
