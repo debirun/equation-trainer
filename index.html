@@ -1051,6 +1051,14 @@
     </div>
 
     <div class="card">
+      <h3 style="margin-top:0">だれが使う？</h3>
+      <div class="whobox" id="whoBox2"></div>
+      <p class="lead" style="margin-top:10px">
+        記録は名前ごとに分かれます。名前はこの端末の中だけに置き、外へは送りません。
+      </p>
+    </div>
+
+    <div class="card">
       <h3 style="margin-top:0">マスの見た目</h3>
       <div class="pickrow" id="cellPick">
         <button data-c="color">色だけ（緑 / 赤）</button>
@@ -1228,7 +1236,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中）
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 17:14
   </p>
 </div>
 
@@ -9904,35 +9912,38 @@ function rangeNote() {
 }
 
 /* 名前の選択。記録を分けるためだけのもの。 */
-function renderWho() {
-  const box = $("whoBox");
+function renderWho(id) {
+  const box = $(id || "whoBox");
+  if (!box) return;
   const chips = WHOM.list.map(n =>
     `<button data-who="${esc(n)}" class="${n === WHOM.cur ? "on" : ""}">${esc(n)}</button>`).join("");
   box.innerHTML =
     `<div class="whorow"><span class="lab">だれが使う？</span>`
-    + `<span class="whopick" id="whoPick">${chips || '<span class="lab">まだ登録がありません</span>'}</span></div>`
-    + `<div class="whoadd"><input id="whoNew" maxlength="12" placeholder="名前を入れて追加（この端末の中だけ）">`
-    + `<button class="ghost" id="whoAdd">追加</button></div>`;
-  $("whoPick").onclick = e => {
+    + `<span class="whopick">${chips || '<span class="lab">まだ登録がありません</span>'}</span></div>`
+    + `<div class="whoadd"><input maxlength="12" placeholder="名前を入れて追加（この端末の中だけ）">`
+    + `<button class="ghost">追加</button></div>`;
+  const pick = box.querySelector(".whopick"), inp = box.querySelector("input"), add = box.querySelector(".ghost");
+  pick.onclick = e => {
     const b = e.target.closest("button[data-who]");
     if (!b || b.dataset.who === WHOM.cur) return;
     switchWho(b.dataset.who);
   };
-  $("whoAdd").onclick = () => {
-    const v = ($("whoNew").value || "").trim();
+  add.onclick = () => {
+    const v = (inp.value || "").trim();
     if (!v) return;
     if (!WHOM.list.includes(v)) WHOM.list.push(v);
     switchWho(v);
   };
-  $("whoNew").onkeydown = e => { if (e.key === "Enter") $("whoAdd").click(); };
+  inp.onkeydown = e => { if (e.key === "Enter") add.click(); };
 }
 
 function switchWho(who) {
   WHOM.cur = who; saveWho(WHOM);
+  const inHelp = !$("scHelp").classList.contains("hide");
   S = load(); cur = null;
   Sound.mode = S.sound || Sound.mode;
-  $("xpNum").textContent = S.xp; renderPl();
-  renderStart();
+  $("xpNum").textContent = S.xp; renderPl(); applyCellStyle();
+  if (inHelp) { renderHelp(helpBack); } else { renderStart(); }
 }
 
 function renderStart() {
@@ -9956,6 +9967,7 @@ function renderHelp(from) {
   }
   $("tblLevels").innerHTML = rows.join("");
   $("helpNote").textContent = rangeNote();
+  renderWho("whoBox2");
   renderSoundPick();
   applyCellStyle();
   show("scHelp");
@@ -10311,11 +10323,10 @@ function finish(result, errorType) {
    あるとき、いくら一次方程式の中を行き来しても解けるようにならない。
    そういうときは、いったん止めて前の章へ送り出す（2026-08-09 オーナー方針）。
 
-   判断の材料は2つ。
-     ① 原因が「分野の外」にあるつまずきが積み上がった（統制語彙の back_to_unit）
-     ② 直近がほとんど解けていない（レベルが理解度に合っていない）
-   ①のほうが強い証拠。②は理由が特定できていないぶん弱いので、条件を重くしてある。 */
-const CHAPTER_RULE = {window: 20, outsideHits: 4, recent: 10, misses: 7, cooldown: 20};
+   判断は「原因が分野の外にあるつまずき（back_to_unit）が積み上がったか」だけで行う。
+   2026-08-09 オーナー判断。「直近が解けていない」という条件も考えたが採らない。
+   理由が特定できていない切り上げは、生徒にも先生にも説明できないため。 */
+const CHAPTER_RULE = {window: 20, outsideHits: 4, cooldown: 20};
 
 function chapterCheck() {
   if (S.review || S.freeReview) return null;
@@ -10332,13 +10343,7 @@ function chapterCheck() {
     (r.slips || []).forEach(addUnit);
   });
   const outside = Object.values(units).reduce((a, b) => a + b, 0);
-  if (outside >= CHAPTER_RULE.outsideHits) return {reason: "outside", units, outside};
-
-  const recent = h.slice(-CHAPTER_RULE.recent);
-  const misses = recent.filter(r => r.result !== "correct").length;
-  if (recent.length >= CHAPTER_RULE.recent && misses >= CHAPTER_RULE.misses) {
-    return {reason: "misses", misses, units};
-  }
+  if (outside >= CHAPTER_RULE.outsideHits) return {units, outside};
   return null;
 }
 
@@ -10354,17 +10359,13 @@ function renderChapter(info) {
 
   const list = Object.entries(info.units).sort((a, b) => b[1] - a[1]);
   const top = list[0];
-  $("chWhy").innerHTML = info.reason === "outside"
-    ? `<p style="margin:0 0 8px">直近${CHAPTER_RULE.window}問のうち、`
-      + `<b>原因が前の章にあるつまずきが ${info.outside}回</b>ありました。</p>`
-      + `<ul class="chlist">` + list.map(([u, n]) =>
-          `<li>${esc(UNIT_NAME[u] || u)} … ${n}回</li>`).join("") + `</ul>`
-      + `<p class="lead" style="margin:10px 0 0">`
-      + `一次方程式の中を行き来しても、ここは解けるようになりません。</p>`
-    : `<p style="margin:0 0 8px">直近${CHAPTER_RULE.recent}問のうち`
-      + `<b>${info.misses}問でつまずいています。</b></p>`
-      + `<p class="lead" style="margin:0">いまのレベルが、まだ合っていないようです。`
-      + `前の章にもどると、ここが楽になります。</p>`;
+  $("chWhy").innerHTML =
+    `<p style="margin:0 0 8px">直近${CHAPTER_RULE.window}問のうち、`
+    + `<b>原因が前の章にあるつまずきが ${info.outside}回</b>ありました。</p>`
+    + `<ul class="chlist">` + list.map(([u, n]) =>
+        `<li>${esc(UNIT_NAME[u] || u)} … ${n}回</li>`).join("") + `</ul>`
+    + `<p class="lead" style="margin:10px 0 0">`
+    + `一次方程式の中を行き来しても、ここは解けるようになりません。</p>`;
 
   const to = top ? (UNIT_NAME[top[0]] || top[0]) : "1章 正の数・負の数";
   $("chTo").innerHTML =
@@ -10881,6 +10882,11 @@ function renderChart() {
   const tSum = think.reduce((a, h) => a + h.thinkMs, 0);
   const pSum = think.reduce((a, h) => a + h.pickMs, 0);
   const ratio = tSum + pSum > 0 ? Math.round(tSum / (tSum + pSum) * 100) : null;
+  // 取り組んだ時間。まちがえた回や「わからない」も含む、実際に画面に向かっていた時間。
+  const spent = Math.round(S.history.reduce((a, h) => a + (h.elapsedMs || 0), 0) / 1000);
+  const hhmm = spent >= 3600
+    ? `${Math.floor(spent / 3600)}時間${Math.floor(spent % 3600 / 60)}分`
+    : `${Math.floor(spent / 60)}分${String(spent % 60).padStart(2, "0")}秒`;
 
   const lvlines = paces.map(n => {
     const r = S.pace[n].actual / S.pace[n].est;
@@ -10895,12 +10901,14 @@ function renderChart() {
     + `<div class="big">`
     + `<div><b>${solved}<span style="font-size:.7rem">/80</span></b><span>解いた問題</span></div>`
     + `<div><b>${oneShot}</b><span>一発で正解</span></div>`
-    + `<div><b>${ratio === null ? "—" : ratio + "%"}</b><span>考えていた時間の割合</span></div>`
+    + `<div><b style="font-size:1rem">${hhmm}</b><span>取り組んだ時間</span></div>`
     + `</div>`
     + `<h4>つまずいているところ（多い順）</h4>${stuck}`
     + `<h4>ペース（想定に対する比・低いほど速い）</h4>${lvlines}`
     + `<h4>そのほか</h4>`
-    + `<ul><li>「わからない」を選んだ回数: ${unknown}回</li>`
+    + `<ul><li>考えていた時間の割合: ${ratio === null ? "—" : ratio + "%"}`
+    + `<span class="lead">（選択肢を見る前に考えていた割合。低いと、考えずに選んでいる）</span></li>`
+    + `<li>「わからない」を選んだ回数: ${unknown}回</li>`
     + `<li>プレイヤーレベル ${plOf(S.xp)}（${S.xp} XP）</li></ul>`;
 }
 
