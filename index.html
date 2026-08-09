@@ -1384,7 +1384,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 02:20</span>
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 02:37</span>
   </p>
 </div>
 
@@ -1398,6 +1398,7 @@ const DATA = {
    "back_to": "レベル1（方程式と解の意味）",
    "back_to_level": 1,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-MEAN-02": {
@@ -1407,6 +1408,7 @@ const DATA = {
    "back_to": "レベル1（方程式と解の意味）",
    "back_to_level": 1,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-MEAN-03": {
@@ -1416,6 +1418,7 @@ const DATA = {
    "back_to": "レベル1（方程式と解の意味）",
    "back_to_level": 1,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-MEAN-04": {
@@ -1425,6 +1428,7 @@ const DATA = {
    "back_to": "レベル1（方程式と解の意味）",
    "back_to_level": 1,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-SUB-01": {
@@ -1434,6 +1438,7 @@ const DATA = {
    "back_to": "レベル1（代入のしかた）",
    "back_to_level": 1,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-SUB-02": {
@@ -1443,6 +1448,7 @@ const DATA = {
    "back_to": "正の数・負の数（1章）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {},
    "back_to_unit": "ch1-正負の数"
   },
   "E-EXPR-01": {
@@ -1452,6 +1458,12 @@ const DATA = {
    "back_to": "文字と式（2章）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {
+    "ch2": {
+     "level": 2,
+     "label": "レベル2（文字式の表し方）"
+    }
+   },
    "back_to_unit": "ch2-文字と式"
   },
   "E-EXPR-02": {
@@ -1461,7 +1473,73 @@ const DATA = {
    "back_to": "文字と式（2章）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {
+    "ch2": {
+     "level": 4,
+     "label": "レベル4（一次式の加法・減法）"
+    }
+   },
    "back_to_unit": "ch2-文字と式"
+  },
+  "E-EXPR-03": {
+   "name": "積の書き方の誤り",
+   "description": "a × 3 を a3 と書く、×を省かない、1x の 1 を省かないなど、 かけ算を文字式で書くときの約束に従えていない。",
+   "fix": "数を前に、文字はアルファベット順に。×は書かず、1 は省く。",
+   "back_to": "レベル2（文字式の表し方）",
+   "back_to_level": 2,
+   "back_to_chapter": "ch2",
+   "also": {},
+   "back_to_unit": null
+  },
+  "E-EXPR-04": {
+   "name": "商の書き方の誤り",
+   "description": "x ÷ 4 を 4/x としたり 4x としたりする。わり算を分数の形で書くときに、 どちらが分子でどちらが分母かを取りちがえる。",
+   "fix": "わられる数が分子、わる数が分母。x ÷ 4 なら x が上。",
+   "back_to": "レベル2（文字式の表し方）",
+   "back_to_level": 2,
+   "back_to_chapter": "ch2",
+   "also": {},
+   "back_to_unit": null
+  },
+  "E-EXPR-05": {
+   "name": "累乗の書き方の誤り",
+   "description": "a × a × a を 3a と書く、a3 と書くなど、同じ文字のかけ算を 個数のかけ算と取りちがえる。",
+   "fix": "同じ文字のかけ算は、右上に個数を小さく書く。3a は a が3つ分のたし算。",
+   "back_to": "レベル2（文字式の表し方）",
+   "back_to_level": 2,
+   "back_to_chapter": "ch2",
+   "also": {},
+   "back_to_unit": null
+  },
+  "E-REL-01": {
+   "name": "等式の読み取りの誤り",
+   "description": "左辺・右辺がどこを指すのか、何と何が等しいのかを取りちがえる。 「〜になる」を等号にせずに、ただつないでしまうこともここに入れる。",
+   "fix": "= の左が左辺、右が右辺。文章の「〜になる」「〜でした」が = にあたる。",
+   "back_to": "レベル6（関係を表す式）",
+   "back_to_level": 6,
+   "back_to_chapter": "ch2",
+   "also": {},
+   "back_to_unit": null
+  },
+  "E-REL-02": {
+   "name": "不等号の向き・ふくむかどうかの誤り",
+   "description": "「以上・以下」（その数をふくむ）と「より大きい・より小さい・未満」 （その数をふくまない）を取りちがえる。向きそのものを逆にすることもある。",
+   "fix": "「以上・以下」は ≧ ≦（その数をふくむ）。「より大きい・より小さい」は > <（ふくまない）。",
+   "back_to": "レベル6（関係を表す式）",
+   "back_to_level": 6,
+   "back_to_chapter": "ch2",
+   "also": {},
+   "back_to_unit": null
+  },
+  "E-EXPR-06": {
+   "name": "項や係数の読み取りの誤り",
+   "description": "「項」「係数」がその式のどこを指すのかが分かっていない。 3x + 5 の係数を 5 と答える、2x - 7 の項を 2x と 7（符号なし）と答えるなど。",
+   "fix": "係数は文字の前にかけてある数。項はたし算で分けたひとかたまり（符号ごと）。",
+   "back_to": "レベル4（一次式の加法・減法）",
+   "back_to_level": 4,
+   "back_to_chapter": "ch2",
+   "also": {},
+   "back_to_unit": null
   },
   "E-PROP-01": {
    "name": "逆の操作を選ぶ",
@@ -1470,6 +1548,7 @@ const DATA = {
    "back_to": "レベル2（等式の性質）",
    "back_to_level": 2,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-PROP-02": {
@@ -1479,6 +1558,7 @@ const DATA = {
    "back_to": "レベル2（等式の性質）",
    "back_to_level": 2,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-PROP-03": {
@@ -1488,6 +1568,7 @@ const DATA = {
    "back_to": "レベル2（等式の性質）",
    "back_to_level": 2,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-PROP-04": {
@@ -1497,6 +1578,7 @@ const DATA = {
    "back_to": "レベル2（等式の性質）",
    "back_to_level": 2,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-PROP-05": {
@@ -1506,6 +1588,7 @@ const DATA = {
    "back_to": "レベル2（等式の性質）",
    "back_to_level": 2,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-ORDER-01": {
@@ -1515,6 +1598,7 @@ const DATA = {
    "back_to": "レベル2（等式の性質を2回使って解く）",
    "back_to_level": 2,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-ORDER-02": {
@@ -1524,6 +1608,7 @@ const DATA = {
    "back_to": "正の数・負の数（四則の混じった計算）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {},
    "back_to_unit": "ch1-正負の数（四則の順序）"
   },
   "E-CALC-01": {
@@ -1533,6 +1618,7 @@ const DATA = {
    "back_to": "正の数・負の数（1章）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {},
    "back_to_unit": "ch1-正負の数"
   },
   "E-CALC-02": {
@@ -1542,6 +1628,7 @@ const DATA = {
    "back_to": "なし（同じレベルで反復）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {},
    "back_to_unit": null
   },
   "E-CALC-03": {
@@ -1551,6 +1638,7 @@ const DATA = {
    "back_to": "正の数・負の数（乗除）",
    "back_to_level": null,
    "back_to_chapter": null,
+   "also": {},
    "back_to_unit": "ch1-正負の数（乗除）"
   },
   "E-TRANS-01": {
@@ -1560,6 +1648,7 @@ const DATA = {
    "back_to": "レベル3（移項の基本）",
    "back_to_level": 3,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-TRANS-02": {
@@ -1569,6 +1658,7 @@ const DATA = {
    "back_to": "レベル3（移項の基本）",
    "back_to_level": 3,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-TRANS-03": {
@@ -1578,6 +1668,7 @@ const DATA = {
    "back_to": "レベル3（移項の基本）",
    "back_to_level": 3,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-DIST-01": {
@@ -1587,6 +1678,7 @@ const DATA = {
    "back_to": "レベル4（かっこのある方程式）",
    "back_to_level": 4,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-DIST-02": {
@@ -1596,6 +1688,7 @@ const DATA = {
    "back_to": "レベル4（かっこのある方程式）",
    "back_to_level": 4,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-DEC-01": {
@@ -1605,6 +1698,7 @@ const DATA = {
    "back_to": "レベル4（小数のある方程式）",
    "back_to_level": 4,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-DEC-02": {
@@ -1614,6 +1708,7 @@ const DATA = {
    "back_to": "レベル4（小数のある方程式）",
    "back_to_level": 4,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-FRAC-01": {
@@ -1623,6 +1718,7 @@ const DATA = {
    "back_to": "レベル4（分数のある方程式）",
    "back_to_level": 4,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-FRAC-02": {
@@ -1632,6 +1728,7 @@ const DATA = {
    "back_to": "レベル4（分数のある方程式）",
    "back_to_level": 4,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-RATIO-01": {
@@ -1641,6 +1738,7 @@ const DATA = {
    "back_to": "レベル5（比と比例式）",
    "back_to_level": 5,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-RATIO-02": {
@@ -1650,6 +1748,7 @@ const DATA = {
    "back_to": "レベル5（比と比例式）",
    "back_to_level": 5,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-RATIO-03": {
@@ -1659,6 +1758,7 @@ const DATA = {
    "back_to": "レベル5（比と比例式）",
    "back_to_level": 5,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-WORD-01": {
@@ -1668,6 +1768,7 @@ const DATA = {
    "back_to": "レベル6（文章題の立式）",
    "back_to_level": 6,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-WORD-02": {
@@ -1677,6 +1778,12 @@ const DATA = {
    "back_to": "レベル6（文章題の立式）",
    "back_to_level": 6,
    "back_to_chapter": "ch3",
+   "also": {
+    "ch2": {
+     "level": 1,
+     "label": "レベル1（数量を文字で表す）"
+    }
+   },
    "back_to_unit": null
   },
   "E-WORD-03": {
@@ -1686,6 +1793,7 @@ const DATA = {
    "back_to": "レベル6（解の吟味）",
    "back_to_level": 6,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-WORD-04": {
@@ -1695,6 +1803,7 @@ const DATA = {
    "back_to": "レベル6（解の吟味）",
    "back_to_level": 6,
    "back_to_chapter": "ch3",
+   "also": {},
    "back_to_unit": null
   },
   "E-WORD-05": {
@@ -1704,6 +1813,12 @@ const DATA = {
    "back_to": "レベル8（速さの問題）",
    "back_to_level": 8,
    "back_to_chapter": "ch3",
+   "also": {
+    "ch2": {
+     "level": 1,
+     "label": "レベル1（数量を文字で表す）"
+    }
+   },
    "back_to_unit": null
   }
  },
@@ -1721,8 +1836,3373 @@ const DATA = {
    "chapter_no": 2,
    "title": "文字と式",
    "textbook": "p.62-80",
-   "ready": false,
-   "levels": []
+   "ready": true,
+   "levels": [
+    {
+     "level": 1,
+     "title": "数量を文字で表す",
+     "textbook": "p.62-66",
+     "steps_done": true,
+     "problems": [
+      {
+       "id": "L1-01",
+       "difficulty": 1,
+       "question": "「x より 5 大きい数」を式にすると、どれですか。",
+       "answer": "x + 5",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "「x より 5 大きい数」を表す式はどれですか。",
+         "writes": [
+          "x より 5 大きい数 = x + 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x + 5",
+           "correct": true
+          },
+          {
+           "text": "5x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x - 5",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "5 - x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-02",
+       "difficulty": 2,
+       "question": "1個 120円のりんごを x 個買います。式 120x は何を表していますか。",
+       "answer": "りんご x 個の代金",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "120x が表しているのはどれですか。",
+         "writes": [
+          "120x は、りんご x 個の代金"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "りんご x 個の代金",
+           "correct": true
+          },
+          {
+           "text": "りんごを 120個買ったときの代金",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "りんご1個の値段より 120円高い値段",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "りんごと 120円のものを買ったときの代金",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-03",
+       "difficulty": 3,
+       "question": "x 円出して 300円のものを買いました。おつりを表す式はどれですか。",
+       "answer": "x - 300",
+       "estimated_seconds": 30,
+       "mode": "input",
+       "timeout_seconds": 75,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "おつりを表す式はどれですか。",
+         "writes": [
+          "おつり = x - 300"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x - 300",
+           "correct": true
+          },
+          {
+           "text": "300 - x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x + 300",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "300x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-04",
+       "difficulty": 4,
+       "question": "1個 a 円のパンを 3個買いました。代金を a を使った式で表しなさい。",
+       "answer": "3a",
+       "estimated_seconds": 30,
+       "mode": null,
+       "timeout_seconds": 75,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "代金をどう表しますか。",
+         "writes": [
+          "代金 = 3a"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1個の値段に個数をかける",
+           "correct": true
+          },
+          {
+           "text": "1個の値段に個数をたす",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "個数を1個の値段でわる",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-05",
+       "difficulty": 5,
+       "question": "1本 x 円のジュースを 6本買って、1000円出しました。おつりを x を使った式で表しなさい。",
+       "answer": "1000 - 6x",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、ジュース 6本の代金をどう表しますか。",
+         "writes": [
+          "ジュース6本の代金 = 6x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1本の値段 x に 6 をかけて 6x",
+           "correct": true
+          },
+          {
+           "text": "1本の値段 x に 6 をたして x + 6",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "6 を x でわって 6 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、おつりをどう表しますか。",
+         "writes": [
+          "おつり = 1000 - 6x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "出したお金から代金をひいて 1000 - 6x",
+           "correct": true
+          },
+          {
+           "text": "代金から出したお金をひいて 6x - 1000",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "出したお金と代金をたして 1000 + 6x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-06",
+       "difficulty": 6,
+       "question": "縦 a cm、横 b cm の長方形があります。まわりの長さを a と b を使った式で表しなさい。",
+       "answer": "2a + 2b",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まわりの長さは、何をたしたものですか。",
+         "writes": [
+          "まわりの長さ = 縦2つ分 + 横2つ分"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "縦2つ分と横2つ分",
+           "correct": true
+          },
+          {
+           "text": "縦1つ分と横1つ分",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "縦と横をかけたもの",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "それを式にすると、どうなりますか。",
+         "writes": [
+          "まわりの長さ = 2a + 2b"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2a + 2b",
+           "correct": true
+          },
+          {
+           "text": "a + b",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "ab",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "2ab",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-07",
+       "difficulty": 7,
+       "question": "x 円の品物を 2割引きで買いました。代金を x を使った式で表しなさい。",
+       "answer": "0.8x",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 125,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2割引きにすると、もとの何倍になりますか。",
+         "writes": [
+          "2割引き = もとの 0.8倍"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1 から 0.2 をひいて 0.8倍",
+           "correct": true
+          },
+          {
+           "text": "0.2倍",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "2倍",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "1.2倍",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "代金を式にすると、どうなりますか。",
+         "writes": [
+          "代金 = 0.8x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "0.8x",
+           "correct": true
+          },
+          {
+           "text": "x - 0.8",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "0.8 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-08",
+       "difficulty": 8,
+       "question": "分速 80m で x 分歩きました。進んだ道のりを km で表す式を書きなさい。",
+       "answer": "80x/1000",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、進んだ道のりを m で表すとどうなりますか。",
+         "writes": [
+          "道のり = 80x（m）"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分速に時間をかけて 80x",
+           "correct": true
+          },
+          {
+           "text": "分速を時間でわって 80 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "時間を分速でわって x ÷ 80",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "km に直すには、どうしますか。",
+         "writes": [
+          "道のり = 80x/1000（km）"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1000でわる",
+           "correct": true
+          },
+          {
+           "text": "1000をかける",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "100でわる",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-09",
+       "difficulty": 9,
+       "question": "男子が x 人、女子は男子より 3人多いクラスがあります。クラス全体の人数を x を使った式で表しなさい。",
+       "answer": "2x + 3",
+       "estimated_seconds": 60,
+       "mode": null,
+       "timeout_seconds": 150,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、女子の人数を x を使って表すとどうなりますか。",
+         "writes": [
+          "女子 = x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "男子より 3人多いので x + 3",
+           "correct": true
+          },
+          {
+           "text": "男子より 3人多いので 3x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "男子より 3人多いので x - 3",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "クラス全体の人数は、何をたしたものですか。",
+         "writes": [
+          "全体 = x + (x + 3)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "男子と女子をたす",
+           "correct": true
+          },
+          {
+           "text": "男子と女子をかける",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "女子から男子をひく",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "同じ文字どうしをまとめると、どうなりますか。",
+         "writes": [
+          "全体 = 2x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x + 3",
+           "correct": true
+          },
+          {
+           "text": "x + 3",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "2x + 3x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "5x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-10",
+       "difficulty": 10,
+       "question": "1冊 x 円のノートを 5冊買い、200円の箱に入れてもらいました。全部で1割引きになったときの代金を、x を使った式で表しなさい。",
+       "answer": "0.9(5x + 200)",
+       "estimated_seconds": 75,
+       "mode": null,
+       "timeout_seconds": 190,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、ノート 5冊の代金をどう表しますか。",
+         "writes": [
+          "ノート5冊 = 5x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1冊の値段に 5 をかけて 5x",
+           "correct": true
+          },
+          {
+           "text": "1冊の値段に 5 をたして x + 5",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "5 を x でわって 5 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、箱を入れた合計をどう表しますか。",
+         "writes": [
+          "合計 = 5x + 200"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ノートの代金に 200 をたして 5x + 200",
+           "correct": true
+          },
+          {
+           "text": "ノートの代金に 200 をかけて 200 × 5x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "ノートの代金から 200 をひいて 5x - 200",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "1割引きは、どこにかかりますか。",
+         "writes": [
+          "代金 = 0.9(5x + 200)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "合計全体にかかるので、かっこをつけて 0.9(5x + 200)",
+           "correct": true
+          },
+          {
+           "text": "ノートの代金だけにかかるので 0.9 × 5x + 200",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "箱の代金だけにかかるので 5x + 0.9 × 200",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "1割ぶんをひくので 5x + 200 - 0.1",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "level": 2,
+     "title": "文字式の表し方",
+     "textbook": "p.67-70",
+     "steps_done": true,
+     "problems": [
+      {
+       "id": "L2-01",
+       "difficulty": 1,
+       "question": "a × 3 を、文字式の書き方で表すとどうなりますか。",
+       "answer": "3a",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "a × 3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "書きかえた式はどれですか。",
+         "writes": [
+          "3a"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3a",
+           "correct": true
+          },
+          {
+           "text": "a3",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "a + 3",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "a × 3 のまま",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-02",
+       "difficulty": 2,
+       "question": "式 5x は、もともとどんな式でしたか。",
+       "answer": "5 × x",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "5x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "5x が表しているのはどれですか。",
+         "writes": [
+          "5x = 5 × x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "5 × x",
+           "correct": true
+          },
+          {
+           "text": "5 + x",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "50 + x",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "5 ÷ x",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-03",
+       "difficulty": 3,
+       "question": "x ÷ 4 を、文字式の書き方で表すとどうなりますか。",
+       "answer": "x/4",
+       "estimated_seconds": 30,
+       "mode": "input",
+       "timeout_seconds": 75,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "x ÷ 4",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "書きかえた式はどれですか。",
+         "writes": [
+          "x/4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x/4",
+           "correct": true
+          },
+          {
+           "text": "4/x",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "4x",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "x - 4",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-04",
+       "difficulty": 4,
+       "question": "b × a × 2 を、文字式の書き方で表しなさい。",
+       "answer": "2ab",
+       "estimated_seconds": 35,
+       "mode": null,
+       "timeout_seconds": 85,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "b × a × 2",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "書く順番はどうしますか。",
+         "writes": [
+          "2ab"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数を前に書き、文字はアルファベット順にする",
+           "correct": true
+          },
+          {
+           "text": "出てきた順にそのまま書く",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "文字を前に、数をうしろに書く",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-05",
+       "difficulty": 5,
+       "question": "a × a × a を、文字式の書き方で表しなさい。",
+       "answer": "a^3",
+       "estimated_seconds": 35,
+       "mode": null,
+       "timeout_seconds": 85,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "a × a × a",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "同じ文字のかけ算は、どう書きますか。",
+         "writes": [
+          "a^3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "右上に個数を小さく書いて a^3",
+           "correct": true
+          },
+          {
+           "text": "個数を前に書いて 3a",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "たし算にして a + a + a",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-06",
+       "difficulty": 6,
+       "question": "1 × x を、文字式の書き方で表しなさい。",
+       "answer": "x",
+       "estimated_seconds": 35,
+       "mode": null,
+       "timeout_seconds": 85,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "1 × x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "1 はどうしますか。",
+         "writes": [
+          "x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "省いて x と書く",
+           "correct": true
+          },
+          {
+           "text": "そのまま 1x と書く",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "たして x + 1 と書く",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-07",
+       "difficulty": 8,
+       "question": "a × 3 + b ÷ 2 を、文字式の書き方で表しなさい。",
+       "answer": "3a + b/2",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "a × 3 + b ÷ 2",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、a × 3 の部分をどう書きますか。",
+         "writes": [
+          "3a + b ÷ 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3a",
+           "correct": true
+          },
+          {
+           "text": "a3",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "a + 3",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、b ÷ 2 の部分をどう書きますか。",
+         "writes": [
+          "3a + b/2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "b/2",
+           "correct": true
+          },
+          {
+           "text": "2/b",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "2b",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-08",
+       "difficulty": 7,
+       "question": "(x + 3) × 4 を、文字式の書き方で表しなさい。",
+       "answer": "4(x + 3)",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "(x + 3) × 4",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "どう書きますか。",
+         "writes": [
+          "4(x + 3)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこはそのままにして、数を前に出し 4(x + 3)",
+           "correct": true
+          },
+          {
+           "text": "(x + 3)4",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "4x + 3",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "x + 3 × 4",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-09",
+       "difficulty": 9,
+       "question": "x × x × y × 5 を、文字式の書き方で表しなさい。",
+       "answer": "5x^2y",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "x × x × y × 5",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、同じ文字のかけ算をどう書きますか。",
+         "writes": [
+          "x^2 × y × 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x^2",
+           "correct": true
+          },
+          {
+           "text": "2x",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "x2",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、全体の順番をどうしますか。",
+         "writes": [
+          "5x^2y"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数を前に、文字はアルファベット順にして 5x^2y",
+           "correct": true
+          },
+          {
+           "text": "出てきた順のまま x^2y5",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "文字を前に、数をうしろにして x^2y × 5",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-10",
+       "difficulty": 10,
+       "question": "a ÷ 3 × b - 1 × c を、文字式の書き方で表しなさい。",
+       "answer": "ab/3 - c",
+       "estimated_seconds": 70,
+       "mode": null,
+       "timeout_seconds": 180,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "a ÷ 3 × b - 1 × c",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、a ÷ 3 の部分をどう書きますか。",
+         "writes": [
+          "a/3 × b - 1 × c"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "a/3",
+           "correct": true
+          },
+          {
+           "text": "3/a",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "3a",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、b とのかけ算をどう書きますか。",
+         "writes": [
+          "ab/3 - 1 × c"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分子に b をかけて ab/3",
+           "correct": true
+          },
+          {
+           "text": "分母に b をかけて a/3b",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "分数の横に置いて a/3 b",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後に、1 × c の部分をどう書きますか。",
+         "writes": [
+          "ab/3 - c"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1 を省いて c",
+           "correct": true
+          },
+          {
+           "text": "そのまま 1c",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "c + 1",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "level": 3,
+     "title": "式の値（代入）",
+     "textbook": "p.71-73",
+     "steps_done": true,
+     "problems": [
+      {
+       "id": "L3-01",
+       "difficulty": 1,
+       "question": "3x の x に 4 を代入すると、式はどうなりますか。",
+       "answer": "3 × 4",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "3x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "代入したあとの式はどれですか。",
+         "writes": [
+          "3 × 4 = 12"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3 × 4",
+           "correct": true
+          },
+          {
+           "text": "3 + 4",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "34",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "3 ÷ 4",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-02",
+       "difficulty": 2,
+       "question": "5x の左辺を 5 × 2 に変えました。何をしましたか。",
+       "answer": "10",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "5x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は何をしたものですか。",
+         "writes": [
+          "5 × 2 = 10"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x に 2 を代入した",
+           "correct": true
+          },
+          {
+           "text": "x に 5 を代入した",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          },
+          {
+           "text": "5 と x をたした",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "両辺を 5 でわった",
+           "correct": false,
+           "error_type": "E-MEAN-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-03",
+       "difficulty": 3,
+       "question": "2x + 1 の x に -3 を代入すると、式はどうなりますか。",
+       "answer": "2 × (-3) + 1",
+       "estimated_seconds": 35,
+       "mode": "input",
+       "timeout_seconds": 85,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "2x + 1",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "代入したあとの式はどれですか。",
+         "writes": [
+          "2 × (-3) + 1 = -5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2 × (-3) + 1",
+           "correct": true
+          },
+          {
+           "text": "2 × 3 + 1",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "2 - 3 + 1",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "2 × (-3 + 1)",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-04",
+       "difficulty": 4,
+       "question": "x = 5 のとき、4x の値を求めなさい。",
+       "answer": "20",
+       "estimated_seconds": 30,
+       "mode": null,
+       "timeout_seconds": 75,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "4x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "4 × 5 = 20"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x に 5 を代入する",
+           "correct": true
+          },
+          {
+           "text": "4 に 5 をたす",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "4 を 5 でわる",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-05",
+       "difficulty": 5,
+       "question": "x = -2 のとき、3x の値を求めなさい。",
+       "answer": "-6",
+       "estimated_seconds": 35,
+       "mode": null,
+       "timeout_seconds": 85,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "3x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "3 × (-2) = -6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x にかっこをつけて (-2) を代入する",
+           "correct": true
+          },
+          {
+           "text": "符号をとって 2 を代入する",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "3 から 2 をひく",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-06",
+       "difficulty": 6,
+       "question": "x = 3 のとき、2x - 5 の値を求めなさい。",
+       "answer": "1",
+       "estimated_seconds": 40,
+       "mode": null,
+       "timeout_seconds": 100,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "2x - 5",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "2 × 3 - 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x に 3 を代入する",
+           "correct": true
+          },
+          {
+           "text": "2 と 5 をひいて 2x - 5 を -3x とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、どの順で計算しますか。",
+         "writes": [
+          "2 × 3 - 5 = 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かけ算を先に計算する",
+           "correct": true
+          },
+          {
+           "text": "左から順に、3 - 5 を先に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          },
+          {
+           "text": "ひき算を先に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-07",
+       "difficulty": 7,
+       "question": "x = -4 のとき、x/2 + 3 の値を求めなさい。",
+       "answer": "1",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "x/2 + 3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "(-4)/2 + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分子の x に (-4) を代入する",
+           "correct": true
+          },
+          {
+           "text": "分母に (-4) を代入する",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          },
+          {
+           "text": "符号をとって 4 を代入する",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、どの順で計算しますか。",
+         "writes": [
+          "(-4)/2 + 3 = 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "わり算を先に計算する",
+           "correct": true
+          },
+          {
+           "text": "左から順に、2 + 3 を先に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-08",
+       "difficulty": 8,
+       "question": "x = -3 のとき、x^2 の値を求めなさい。",
+       "answer": "9",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 125,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "x^2",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "(-3)^2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこをつけて (-3)^2 とする",
+           "correct": true
+          },
+          {
+           "text": "かっこをつけずに -3^2 とする",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "符号をとって 3^2 とする",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "(-3)^2 は何を表していますか。",
+         "writes": [
+          "(-3) × (-3) = 9"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "(-3) を 2回かける",
+           "correct": true
+          },
+          {
+           "text": "(-3) に 2 をかける",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "(-3) を 2回たす",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-09",
+       "difficulty": 9,
+       "question": "x = 2 のとき、3x^2 - x の値を求めなさい。",
+       "answer": "10",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "3x^2 - x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "3x^2 の 2乗は、どこにかかっていますか。",
+         "writes": [
+          "3 × 2^2 - 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x だけにかかっている",
+           "correct": true
+          },
+          {
+           "text": "3x 全体にかかっている",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "3 だけにかかっている",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、どの順で計算しますか。",
+         "writes": [
+          "3 × 4 - 2 = 10"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "累乗 → かけ算 → ひき算の順",
+           "correct": true
+          },
+          {
+           "text": "左から順に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          },
+          {
+           "text": "ひき算を先に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-10",
+       "difficulty": 10,
+       "question": "x = -2 のとき、-x^2 + 4x の値を求めなさい。",
+       "answer": "-12",
+       "estimated_seconds": 75,
+       "mode": null,
+       "timeout_seconds": 190,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "-x^2 + 4x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "-x^2 の 2乗は、どこにかかっていますか。",
+         "writes": [
+          "-(-2)^2 + 4 × (-2)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x だけにかかる。2乗してから符号を変える",
+           "correct": true
+          },
+          {
+           "text": "-x 全体にかかる",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "符号は関係ないので、そのまま 2乗する",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、4x の部分に何を代入しますか。",
+         "writes": [
+          "-4 + 4 × (-2)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこをつけて 4 × (-2) とする",
+           "correct": true
+          },
+          {
+           "text": "符号をとって 4 × 2 とする",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "4 - 2 とする",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後に、どの順で計算しますか。",
+         "writes": [
+          "-4 + (-8) = -12"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "累乗とかけ算を先に、たし算をあとに",
+           "correct": true
+          },
+          {
+           "text": "左から順に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          },
+          {
+           "text": "たし算を先に計算する",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "level": 4,
+     "title": "一次式の加法・減法",
+     "textbook": "p.74-76",
+     "steps_done": true,
+     "problems": [
+      {
+       "id": "L4-01",
+       "difficulty": 1,
+       "question": "式 3x + 5 で、x の係数はどれですか。",
+       "answer": "3x + 5",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "3x + 5",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "x の係数はどれですか。",
+         "writes": [
+          "3x + 5 の x の係数は 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3（文字の前にかけてある数）",
+           "correct": true
+          },
+          {
+           "text": "5（文字のついていない数）",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          },
+          {
+           "text": "x",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          },
+          {
+           "text": "3x",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-02",
+       "difficulty": 2,
+       "question": "式 2x - 7 を、たし算の形に分けると、いくつの項に分かれますか。",
+       "answer": "2x - 7",
+       "estimated_seconds": 30,
+       "mode": "input",
+       "timeout_seconds": 75,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "2x - 7",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2x - 7 の項はどれとどれですか。",
+         "writes": [
+          "2x - 7 の項は 2x と -7"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x と -7",
+           "correct": true
+          },
+          {
+           "text": "2x と 7",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          },
+          {
+           "text": "2 と x と 7",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          },
+          {
+           "text": "2x - 7 でひとつ",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-03",
+       "difficulty": 3,
+       "question": "3x + 2x を 5x に変えました。何をしましたか。",
+       "answer": "5x",
+       "estimated_seconds": 30,
+       "mode": "input",
+       "timeout_seconds": 75,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "3x + 2x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は何をしたものですか。",
+         "writes": [
+          "5x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "同じ文字の項どうしをまとめた（係数をたした）",
+           "correct": true
+          },
+          {
+           "text": "3 と 2 をかけた",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "x を 2回かけた",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-04",
+       "difficulty": 4,
+       "question": "4x - x を計算しなさい。",
+       "answer": "3x",
+       "estimated_seconds": 30,
+       "mode": null,
+       "timeout_seconds": 75,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "4x - x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "x の係数はいくつですか。",
+         "writes": [
+          "4x - 1x = 3x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1（省かれているだけ）",
+           "correct": true
+          },
+          {
+           "text": "0（数がないので）",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "x（文字そのもの）",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-05",
+       "difficulty": 5,
+       "question": "2x + 3 + 4x を計算しなさい。",
+       "answer": "6x + 3",
+       "estimated_seconds": 35,
+       "mode": null,
+       "timeout_seconds": 85,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "2x + 3 + 4x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まとめられるのは、どれとどれですか。",
+         "writes": [
+          "6x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x と 4x（同じ文字の項どうし）",
+           "correct": true
+          },
+          {
+           "text": "2x と 3（となりどうし）",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "3 と 4x（となりどうし）",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "全部まとめて 9x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-06",
+       "difficulty": 6,
+       "question": "5x - 2 - 3x + 6 を計算しなさい。",
+       "answer": "2x + 4",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "5x - 2 - 3x + 6",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、文字の項をまとめると、どうなりますか。",
+         "writes": [
+          "2x - 2 + 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "5x と -3x をまとめて 2x",
+           "correct": true
+          },
+          {
+           "text": "5x と 3x をたして 8x",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "5x と -2 をまとめて 3x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、数の項をまとめると、どうなりますか。",
+         "writes": [
+          "2x + 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "-2 と +6 をまとめて +4",
+           "correct": true
+          },
+          {
+           "text": "-2 と +6 をまとめて -8",
+           "correct": false,
+           "error_type": "E-CALC-01"
+          },
+          {
+           "text": "2x とまとめて 6x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-07",
+       "difficulty": 7,
+       "question": "(3x + 2) + (x - 5) を計算しなさい。",
+       "answer": "4x - 3",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 125,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "(3x + 2) + (x - 5)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かっこを外すと、中の符号はどうなりますか。",
+         "writes": [
+          "3x + 2 + x - 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "前が + なので、そのまま",
+           "correct": true
+          },
+          {
+           "text": "前が + でも、すべて逆になる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "うしろのかっこの中だけ逆になる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、まとめると、どうなりますか。",
+         "writes": [
+          "4x - 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字は 3x と x、数は +2 と -5 をそれぞれまとめる",
+           "correct": true
+          },
+          {
+           "text": "全部たして 4x + 7 とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "となりどうしをまとめる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-08",
+       "difficulty": 8,
+       "question": "(5x + 1) - (2x + 4) を計算しなさい。",
+       "answer": "3x - 3",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "(5x + 1) - (2x + 4)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かっこを外すと、中の符号はどうなりますか。",
+         "writes": [
+          "5x + 1 - 2x - 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "前が - なので、中の符号がすべて変わる",
+           "correct": true
+          },
+          {
+           "text": "前が - でも、そのまま",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "最初の項の符号だけ変わる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、まとめると、どうなりますか。",
+         "writes": [
+          "3x - 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字は 5x と -2x、数は +1 と -4 をそれぞれまとめる",
+           "correct": true
+          },
+          {
+           "text": "文字も数も全部たす",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "となりどうしをまとめる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-09",
+       "difficulty": 9,
+       "question": "x/2 + x/3 を計算しなさい。",
+       "answer": "5x/6",
+       "estimated_seconds": 60,
+       "mode": null,
+       "timeout_seconds": 150,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "x/2 + x/3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この式は、方程式のように分母をはらってよいですか。",
+         "writes": [
+          "3x/6 + 2x/6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "だめ。等式ではないので、通分してまとめる",
+           "correct": true
+          },
+          {
+           "text": "よい。両辺に 6 をかける",
+           "correct": false,
+           "error_type": "E-MEAN-03"
+          },
+          {
+           "text": "よい。分母を消して x + x とする",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、まとめると、どうなりますか。",
+         "writes": [
+          "5x/6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分子どうしをたして 5x/6",
+           "correct": true
+          },
+          {
+           "text": "分子も分母もたして 2x/5",
+           "correct": false,
+           "error_type": "E-FRAC-01"
+          },
+          {
+           "text": "分母をたして 5x/5",
+           "correct": false,
+           "error_type": "E-FRAC-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-10",
+       "difficulty": 10,
+       "question": "(4x - 3) - (x - 7) + 2x を計算しなさい。",
+       "answer": "5x + 4",
+       "estimated_seconds": 75,
+       "mode": null,
+       "timeout_seconds": 190,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "(4x - 3) - (x - 7) + 2x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、かっこを外すと、中の符号はどうなりますか。",
+         "writes": [
+          "4x - 3 - x + 7 + 2x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "- のついたかっこの中だけ、符号がすべて変わる",
+           "correct": true
+          },
+          {
+           "text": "どちらのかっこも符号が変わる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "どちらのかっこもそのまま",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、文字の項をまとめると、どうなりますか。",
+         "writes": [
+          "5x - 3 + 7"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "4x と -x と 2x をまとめて 5x",
+           "correct": true
+          },
+          {
+           "text": "4x と x と 2x をたして 7x",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "-x は文字がないので 4x と 2x だけまとめる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後に、数の項をまとめると、どうなりますか。",
+         "writes": [
+          "5x + 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "-3 と +7 をまとめて +4",
+           "correct": true
+          },
+          {
+           "text": "-3 と +7 をまとめて -10",
+           "correct": false,
+           "error_type": "E-CALC-01"
+          },
+          {
+           "text": "5x とまとめて 9x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "level": 5,
+     "title": "一次式と数の乗法・除法",
+     "textbook": "p.77-79",
+     "steps_done": true,
+     "problems": [
+      {
+       "id": "L5-01",
+       "difficulty": 1,
+       "question": "2(x + 3) のかっこを外すと、どうなりますか。",
+       "answer": "2x + 6",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "2(x + 3)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かっこを外した式はどれですか。",
+         "writes": [
+          "2x + 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x + 6",
+           "correct": true
+          },
+          {
+           "text": "2x + 3",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "2x - 6",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "2 + x + 3",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-02",
+       "difficulty": 2,
+       "question": "3(x - 2) を 3x - 6 に変えました。何をしましたか。",
+       "answer": "3x - 6",
+       "estimated_seconds": 30,
+       "mode": "input",
+       "timeout_seconds": 75,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "3(x - 2)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は何をしたものですか。",
+         "writes": [
+          "3x - 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3 を、かっこの中の x と -2 の両方にかけた",
+           "correct": true
+          },
+          {
+           "text": "3 を x にだけかけた",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "3 と x をたして、2 をひいた",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-03",
+       "difficulty": 3,
+       "question": "(6x + 9) ÷ 3 を計算すると、どうなりますか。",
+       "answer": "2x + 3",
+       "estimated_seconds": 35,
+       "mode": "input",
+       "timeout_seconds": 85,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "(6x + 9) ÷ 3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "計算した式はどれですか。",
+         "writes": [
+          "2x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x + 3",
+           "correct": true
+          },
+          {
+           "text": "2x + 9",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "6x + 3",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "2x - 3",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-04",
+       "difficulty": 4,
+       "question": "4x × 3 を計算しなさい。",
+       "answer": "12x",
+       "estimated_seconds": 30,
+       "mode": null,
+       "timeout_seconds": 75,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "4x × 3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "何と何をかけますか。",
+         "writes": [
+          "12x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "係数どうしをかけて、文字はそのまま",
+           "correct": true
+          },
+          {
+           "text": "文字にも 3 をかけて 12x^2 とする",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "4 と 3 をたして 7x とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-05",
+       "difficulty": 5,
+       "question": "6x ÷ 2 を計算しなさい。",
+       "answer": "3x",
+       "estimated_seconds": 30,
+       "mode": null,
+       "timeout_seconds": 75,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "6x ÷ 2",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "何を 2 でわりますか。",
+         "writes": [
+          "3x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "係数だけをわって、文字はそのまま",
+           "correct": true
+          },
+          {
+           "text": "文字もわって 3 とする",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          },
+          {
+           "text": "6 と 2 をひいて 4x とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-06",
+       "difficulty": 6,
+       "question": "-2(x - 4) のかっこを外しなさい。",
+       "answer": "-2x + 8",
+       "estimated_seconds": 40,
+       "mode": null,
+       "timeout_seconds": 100,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "-2(x - 4)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かっこの前が負のとき、中の符号はどうなりますか。",
+         "writes": [
+          "-2x + 8"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "すべて変わる",
+           "correct": true
+          },
+          {
+           "text": "そのまま",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "最初の項だけ変わる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-07",
+       "difficulty": 7,
+       "question": "3(2x + 1) - 4x を計算しなさい。",
+       "answer": "2x + 3",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 125,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "3(2x + 1) - 4x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "6x + 3 - 4x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこを外す（3 を 2x と 1 の両方にかける）",
+           "correct": true
+          },
+          {
+           "text": "先に 6x と 4x をまとめる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          },
+          {
+           "text": "3 を 2x にだけかける",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "2x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字の項どうしをまとめる",
+           "correct": true
+          },
+          {
+           "text": "3 と 4x をまとめる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "全部たして 5x とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-08",
+       "difficulty": 8,
+       "question": "(8x - 12) ÷ 4 + 3 を計算しなさい。",
+       "answer": "2x",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "(8x - 12) ÷ 4 + 3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "2x - 3 + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこの中の両方を 4 でわる",
+           "correct": true
+          },
+          {
+           "text": "8x だけを 4 でわる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "先に -12 と +3 をまとめる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "2x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数の項どうしをまとめる",
+           "correct": true
+          },
+          {
+           "text": "2x と -3 をまとめる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "2x と +3 をまとめて 5x とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-09",
+       "difficulty": 9,
+       "question": "2(3x - 1) - 3(x - 2) を計算しなさい。",
+       "answer": "3x + 4",
+       "estimated_seconds": 65,
+       "mode": null,
+       "timeout_seconds": 165,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "2(3x - 1) - 3(x - 2)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、前のかっこを外すとどうなりますか。",
+         "writes": [
+          "6x - 2 - 3(x - 2)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2 を 3x と -1 の両方にかけて 6x - 2",
+           "correct": true
+          },
+          {
+           "text": "2 を 3x にだけかけて 6x - 1",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "2 と 3x をたして 5x - 1",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、うしろのかっこを外すとどうなりますか。",
+         "writes": [
+          "6x - 2 - 3x + 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "-3 を x と -2 の両方にかけて -3x + 6",
+           "correct": true
+          },
+          {
+           "text": "-3 を x にだけかけて -3x - 2",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "符号は変えずに -3x - 6",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後にまとめると、どうなりますか。",
+         "writes": [
+          "3x + 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字は 6x と -3x、数は -2 と +6 をそれぞれまとめる",
+           "correct": true
+          },
+          {
+           "text": "となりどうしをまとめる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "全部たして 7x とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-10",
+       "difficulty": 10,
+       "question": "(x + 2)/3 × 6 - 2(x - 1) を計算しなさい。",
+       "answer": "6",
+       "estimated_seconds": 80,
+       "mode": null,
+       "timeout_seconds": 200,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "(x + 2)/3 × 6 - 2(x - 1)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、(x + 2)/3 × 6 はどうなりますか。",
+         "writes": [
+          "2(x + 2) - 2(x - 1)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "6 ÷ 3 = 2 なので、2(x + 2)",
+           "correct": true
+          },
+          {
+           "text": "分子にも分母にも 6 をかけて (6x + 12)/18",
+           "correct": false,
+           "error_type": "E-FRAC-01"
+          },
+          {
+           "text": "分母だけ消して x + 2",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、2つのかっこを外すとどうなりますか。",
+         "writes": [
+          "2x + 4 - 2x + 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "うしろのかっこは前が負なので、中の符号がすべて変わる",
+           "correct": true
+          },
+          {
+           "text": "どちらのかっこもそのまま外す",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "どちらのかっこも符号が変わる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後にまとめると、どうなりますか。",
+         "writes": [
+          "6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x と -2x が消えて、4 + 2 = 6 だけが残る",
+           "correct": true
+          },
+          {
+           "text": "2x と -2x をまとめて 4x になる",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "文字が消えるのはおかしいので、まとめない",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "level": 6,
+     "title": "関係を表す式（等式と不等式）",
+     "textbook": "p.80",
+     "steps_done": true,
+     "problems": [
+      {
+       "id": "L6-01",
+       "difficulty": 1,
+       "question": "等式 3x + 1 = 10 の左辺はどれですか。",
+       "answer": "3x + 1 = 10",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺はどれですか。",
+         "writes": [
+          "3x + 1 = 10 の左辺は 3x + 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3x + 1（= の左がわ）",
+           "correct": true
+          },
+          {
+           "text": "10（= の右がわ）",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "3x + 1 = 10（式ぜんぶ）",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "3x（文字のある項）",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-02",
+       "difficulty": 2,
+       "question": "「x に 4 をたすと 9 になる」を式にすると、どれですか。",
+       "answer": "x + 4 = 9",
+       "estimated_seconds": 25,
+       "mode": "input",
+       "timeout_seconds": 65,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "式にすると、どれですか。",
+         "writes": [
+          "x + 4 = 9"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x + 4 = 9",
+           "correct": true
+          },
+          {
+           "text": "x + 4 + 9",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "x = 4 + 9",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x + 9 = 4",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-03",
+       "difficulty": 3,
+       "question": "「x は 5 以下である」を式にすると、どれですか。",
+       "answer": "x ≦ 5",
+       "estimated_seconds": 30,
+       "mode": "input",
+       "timeout_seconds": 75,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "式にすると、どれですか。",
+         "writes": [
+          "x ≦ 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x ≦ 5（5 もふくむ）",
+           "correct": true
+          },
+          {
+           "text": "x < 5（5 はふくまない）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "x ≧ 5",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "x = 5",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-04",
+       "difficulty": 4,
+       "question": "1個 80円のりんごを x 個買うと、代金は 400円でした。この関係を等式で表しなさい。",
+       "answer": "80x = 400",
+       "estimated_seconds": 40,
+       "mode": null,
+       "timeout_seconds": 100,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、代金を x を使って表すとどうなりますか。",
+         "writes": [
+          "代金 = 80x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "80x",
+           "correct": true
+          },
+          {
+           "text": "80 + x",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "400 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、何と何が等しいですか。",
+         "writes": [
+          "80x = 400"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "代金と 400円",
+           "correct": true
+          },
+          {
+           "text": "りんごの数と 400",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "80 と 400",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-05",
+       "difficulty": 5,
+       "question": "x 円の品物を買って 1000円出すと、おつりは 250円でした。この関係を等式で表しなさい。",
+       "answer": "1000 - x = 250",
+       "estimated_seconds": 45,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、おつりを x を使って表すとどうなりますか。",
+         "writes": [
+          "おつり = 1000 - x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1000 - x",
+           "correct": true
+          },
+          {
+           "text": "x - 1000",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "1000 + x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、何と何が等しいですか。",
+         "writes": [
+          "1000 - x = 250"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "おつりと 250円",
+           "correct": true
+          },
+          {
+           "text": "品物のねだんと 250円",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "1000円と 250円",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-06",
+       "difficulty": 6,
+       "question": "1本 x 円のペンを 3本買うと、代金は 500円より安くなりました。この関係を不等式で表しなさい。",
+       "answer": "3x < 500",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 125,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、代金を x を使って表すとどうなりますか。",
+         "writes": [
+          "代金 = 3x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3x",
+           "correct": true
+          },
+          {
+           "text": "x + 3",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "500 ÷ 3",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "「500円より安い」を、どの記号で表しますか。",
+         "writes": [
+          "3x < 500"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "< （500 はふくまない）",
+           "correct": true
+          },
+          {
+           "text": "≦ （500 もふくむ）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "> （500 より大きい）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-07",
+       "difficulty": 7,
+       "question": "男子 x 人と女子 12人のクラスの人数は、35人以下です。この関係を不等式で表しなさい。",
+       "answer": "x + 12 ≦ 35",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 125,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、クラスの人数を x を使って表すとどうなりますか。",
+         "writes": [
+          "クラスの人数 = x + 12"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x + 12",
+           "correct": true
+          },
+          {
+           "text": "12x",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "x - 12",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "「35人以下」を、どの記号で表しますか。",
+         "writes": [
+          "x + 12 ≦ 35"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "≦ （35 もふくむ）",
+           "correct": true
+          },
+          {
+           "text": "< （35 はふくまない）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "≧ （35 以上）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-08",
+       "difficulty": 9,
+       "question": "1個 a 円のケーキを 4個と、200円の箱を買うと、代金は 1400円でした。この関係を等式で表しなさい。",
+       "answer": "4a + 200 = 1400",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、ケーキ 4個の代金をどう表しますか。",
+         "writes": [
+          "ケーキ4個 = 4a"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "4a",
+           "correct": true
+          },
+          {
+           "text": "a + 4",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "1400 ÷ 4",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、全部の代金をどう表しますか。",
+         "writes": [
+          "代金 = 4a + 200"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ケーキの代金に箱の 200 をたして 4a + 200",
+           "correct": true
+          },
+          {
+           "text": "ケーキの代金に 200 をかけて 200 × 4a",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "ケーキの代金から 200 をひいて 4a - 200",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後に、何と何が等しいですか。",
+         "writes": [
+          "4a + 200 = 1400"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "全部の代金と 1400円",
+           "correct": true
+          },
+          {
+           "text": "ケーキの代金と 1400円",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "箱の代金と 1400円",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-09",
+       "difficulty": 8,
+       "question": "式 4x = y は何を表していますか。1本 4円の針金 x m の重さが y g であるとき、正しい読み方を選びなさい。",
+       "answer": "4x = y",
+       "estimated_seconds": 55,
+       "mode": null,
+       "timeout_seconds": 140,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺の 4x は何を表していますか。",
+         "writes": [
+          "左辺 4x は、針金 x m の重さ"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "針金 x m の重さ",
+           "correct": true
+          },
+          {
+           "text": "針金の長さ",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "1m あたりの重さ",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "この等式は、全体として何を表していますか。",
+         "writes": [
+          "4x = y は、x m の重さが y g であること"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x m の重さが y g であること",
+           "correct": true
+          },
+          {
+           "text": "x m の長さが y m であること",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "重さ y g のときの値段",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-10",
+       "difficulty": 10,
+       "question": "1冊 x 円のノートを 5冊買って 1000円出したとき、おつりは 100円以上ありました。この関係を不等式で表しなさい。",
+       "answer": "1000 - 5x ≧ 100",
+       "estimated_seconds": 75,
+       "mode": null,
+       "timeout_seconds": 190,
+       "textbook": "p.80",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、ノート 5冊の代金をどう表しますか。",
+         "writes": [
+          "ノート5冊 = 5x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "5x",
+           "correct": true
+          },
+          {
+           "text": "x + 5",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "1000 ÷ 5",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、おつりをどう表しますか。",
+         "writes": [
+          "おつり = 1000 - 5x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "出したお金から代金をひいて 1000 - 5x",
+           "correct": true
+          },
+          {
+           "text": "代金から出したお金をひいて 5x - 1000",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "出したお金と代金をたして 1000 + 5x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "「100円以上」を、どの記号で表しますか。",
+         "writes": [
+          "1000 - 5x ≧ 100"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "≧ （100 もふくむ）",
+           "correct": true
+          },
+          {
+           "text": "> （100 はふくまない）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "≦ （100 以下）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "ch3",
@@ -9735,7 +13215,21 @@ function nb(raw) {
 }
 
 const disp = id => String(id).replace(/^L(\d+)-0?(\d+)$/, "$1-$2");
-const errBack = id => (DATA.errorTypes[id] || {}).back_to || "";
+/* 戻り先。同じ誤りでも、いまの章によって戻る場所が変わることがある。
+   「ことばと式の対応の誤り」は、2章で踏めば2章レベル1、3章なら3章レベル6。 */
+const errAlso = id => ((DATA.errorTypes[id] || {}).also || {})[S.chapter];
+const errBack = id => {
+  const a = errAlso(id);
+  return a ? a.label : ((DATA.errorTypes[id] || {}).back_to || "");
+};
+const errBackLevel = id => {
+  const a = errAlso(id);
+  return a ? a.level : (DATA.errorTypes[id] || {}).back_to_level;
+};
+const errBackChapter = id => {
+  const a = errAlso(id);
+  return a ? S.chapter : (DATA.errorTypes[id] || {}).back_to_chapter;
+};
 
 /* ------------------------------------------------------------------
    次の問題を決める（このシステムの心臓部）
@@ -10759,12 +14253,13 @@ function updateReview(rec) {
     if (rec.result === "correct") P.review.correct++;
 
     // 復習中にもっと前が原因の誤りが出たら、そこまで下りる
-    if (rec.result === "wrong" && et.back_to_level && et.back_to_level < P.review.level) {
+    const bl = errBackLevel(rec.errorType);
+    if (rec.result === "wrong" && bl && bl < P.review.level) {
       const from = P.review.level;
-      P.review = {level: et.back_to_level, errorType: rec.errorType, correct: 0, seen: 0,
+      P.review = {level: bl, errorType: rec.errorType, correct: 0, seen: 0,
                   returnTo: P.review.returnTo, lastId: null};
-      P.level = et.back_to_level;
-      return {type: "deeper", from, to: et.back_to_level};
+      P.level = bl;
+      return {type: "deeper", from, to: bl};
     }
     if (P.review.correct >= REVIEW_RULE.count) {
       const to = P.review.returnTo, n = P.review.seen;
@@ -10782,11 +14277,12 @@ function updateReview(rec) {
   if (rec.result !== "wrong") return null;
 
   // 原因が下のレベルにある → そこへ戻る（分野の中なので混ざらない）
-  if (et.back_to_level && et.back_to_level < P.level) {
-    P.review = {level: et.back_to_level, errorType: rec.errorType, correct: 0, seen: 0,
+  const bl2 = errBackLevel(rec.errorType);
+  if (bl2 && bl2 < P.level) {
+    P.review = {level: bl2, errorType: rec.errorType, correct: 0, seen: 0,
                 returnTo: P.level, lastId: null};
-    P.level = et.back_to_level;
-    return {type: "start", to: et.back_to_level, from: P.review.returnTo};
+    P.level = bl2;
+    return {type: "start", to: bl2, from: P.review.returnTo};
   }
   // 原因がこの分野の外にある → 本来はそこへ戻すべきだが、まだ問題がない
   if (et.back_to_unit) return {type: "unit", unit: et.back_to_unit};
@@ -11243,14 +14739,14 @@ function toDoFor(errId, solvedIds) {
   const done = solvedIds || P.solved;
   const et = DATA.errorTypes[errId] || {};
   // 戻り先の章が別なら、そちらの問題を探す
-  const chId = et.back_to_chapter || S.chapter;
+  const chId = errBackChapter(errId) || S.chapter;
   const ch = DATA.chapters.find(c => c.id === chId);
   if (et.back_to_unit) {
     return `解くべきところ: <b>${esc(UNIT_NAME[et.back_to_unit] || et.back_to_unit)}</b>`
       + `<br><span class="lead">この章の問題はこのアプリにまだありません。`
       + `教科書やワークでこの単元を1周してから、ここに戻ってください。</span>`;
   }
-  const lv = et.back_to_level;
+  const lv = errBackLevel(errId);
   const lvObj = ch && ch.levels.find(l => l.level === lv);
   const pool = lvObj ? lvObj.problems : [];
   const hit = pool.filter(p =>
