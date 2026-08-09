@@ -1203,8 +1203,14 @@
     <h1>先生用 — みんなの記録</h1>
     <div class="card" id="teachGate">
       <p class="lead" style="margin-top:0">合言葉を入れてください。この端末の中だけに保存します。</p>
+      <!-- パスワード欄にすると、iOSで日本語キーボードに切りかえられない。
+           ひらがなの合言葉が打てなくなるので、ふつうの入力欄にしてある。
+           そのぶん画面に見えるので、隠すボタンを付けた（2026-08-09）。 -->
       <div class="whoadd">
-        <input id="teachPass" type="password" placeholder="合言葉">
+        <input id="teachPass" type="text" inputmode="text"
+               autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+               placeholder="合言葉（ひらがなでも大丈夫）">
+        <button class="ghost" id="teachHide" title="入力した文字を隠す">隠す</button>
         <button class="ghost" id="teachGo">見る</button>
       </div>
       <p class="lead" id="teachMsg" style="margin:10px 0 0"></p>
@@ -1284,7 +1290,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 18:30
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 18:37
   </p>
 </div>
 
@@ -11401,6 +11407,11 @@ $("teachGo").onclick = () => {
   loadTeacher(v);
 };
 $("teachPass").onkeydown = e => { if (e.key === "Enter") $("teachGo").click(); };
+$("teachHide").onclick = () => {
+  const el = $("teachPass"), hide = el.type === "text";
+  el.type = hide ? "password" : "text";
+  $("teachHide").textContent = hide ? "表示" : "隠す";
+};
 $("teachReload").onclick = () => loadTeacher(teachPass());
 $("teachForget").onclick = () => {
   try { localStorage.removeItem(PASSKEY); } catch (e) {}
