@@ -323,9 +323,10 @@
     color: var(--ng); font-size: .7rem; line-height: 1.45; font-weight: 700;
     text-decoration: line-through; text-decoration-thickness: 1px;
   }
+  .work .opbad { padding: 2px 0 0; font-size: .78rem; }
   .work .opbad::before { content: "✕ "; text-decoration: none; display: inline-block; }
-  .work .pending { color: var(--accent); font-size: .7rem; font-weight: 800; }
-  .work .pending::before { content: "← "; }
+  .work .pending { color: var(--accent); font-size: .72rem; font-weight: 800; padding: 2px 0 0; }
+  .work .pending::before { content: "↓ "; }
   @media (prefers-reduced-motion: no-preference) {
     .work .line.fresh, .work .op.fresh { animation: pen .95s ease-out; border-radius: 4px; }
   }
@@ -438,6 +439,27 @@
   .banner.miss .sub { color: var(--muted); }
   .banner.warn { background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn); }
   .banner .sub { color: inherit; opacity: .88; font-size: .9rem; }
+
+  /* 解いたあとの振り返り。式 → 使った手 を並べる。 */
+  /* 式を上、その式に対して使った手を下に置く。横に並べると、狭い画面で
+     方針の文が1文字ずつ折り返されてしまう（2026-08-09 実機で判明）。 */
+  .usedbox { margin: 0 0 10px; }
+  .useline { margin-bottom: 9px; font-size: .84rem; }
+  .useline:last-child { margin-bottom: 0; }
+  .uhead { display: flex; align-items: baseline; gap: 8px; }
+  .uhead .n {
+    flex: none; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+    background: color-mix(in srgb, var(--ok) 22%, transparent);
+    font-size: .64rem; font-weight: 800;
+  }
+  /* クラス名は .eq にしないこと。スタート画面の動く絵が .eq を
+     position:absolute; width:0 で使っているので衝突する（2026-08-09 にはまった）。 */
+  .uhead .ueq {
+    min-width: 0; font-weight: 800; font-variant-numeric: tabular-nums;
+    white-space: nowrap; overflow-x: auto; overscroll-behavior-x: contain;
+  }
+  .useline .op { margin: 1px 0 0 28px; font-weight: 700; opacity: .92; line-height: 1.5; }
+  .useline .op::before { content: "→ "; opacity: .6; }
 
   /* ── えらんだ方針パネル（自分が選んだ手 と 正しかった手を並べる） ── */
   .picks { display: grid; gap: 10px; margin-top: 16px; }
@@ -718,27 +740,27 @@
      ③ 3 が真下へ落ち、そのまま真横に動いて 15 の真下に入る。15 は真上へ動いて分子になる
      ④ 分数が消えて 5 になり、x の枠が緑になる（x = 5） */
   .stage { position: relative; height: 104px; margin-bottom: 8px; }
-  .eq {
+  .stage .eq {
     position: absolute; left: 50%; top: 24px; width: 0; height: 1.6em;
     font-size: 1.5rem; font-weight: 800; letter-spacing: 0;
     font-variant-numeric: tabular-nums;
   }
-  .eq .t { position: absolute; top: 0; white-space: nowrap; }
-  .eq .t3  { left: -4.71em; }
-  .eq .tx {
+  .stage .eq .t { position: absolute; top: 0; white-space: nowrap; }
+  .stage .eq .t3  { left: -4.71em; }
+  .stage .eq .tx {
     left: -3.99em; top: -2px; padding: 0 .3em; border-radius: 8px;
     border: 2px dashed color-mix(in srgb, var(--accent) 65%, transparent);
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     color: color-mix(in srgb, var(--fg) 45%, transparent);
   }
-  .eq .tp5 { left: -2.49em; }
-  .eq .tm5 { left: -2.49em; opacity: 0; color: var(--warn); }
-  .eq .teq { left: -0.33em; z-index: 2; }
-  .eq .t20 { left: 0.95em; }
-  .eq .t15 { left: 0.95em; opacity: 0; }
-  .eq .t5  { left: 0.95em; opacity: 0; color: var(--ok); }
+  .stage .eq .tp5 { left: -2.49em; }
+  .stage .eq .tm5 { left: -2.49em; opacity: 0; color: var(--warn); }
+  .stage .eq .teq { left: -0.33em; z-index: 2; }
+  .stage .eq .t20 { left: 0.95em; }
+  .stage .eq .t15 { left: 0.95em; opacity: 0; }
+  .stage .eq .t5  { left: 0.95em; opacity: 0; color: var(--ok); }
   /* 分数の線。15 の真ん中（+1.6em）にそろえる */
-  .eq .tbar {
+  .stage .eq .tbar {
     left: .91em; top: .84em; width: 1.4em; height: 2px;
     background: currentColor; opacity: 0; border-radius: 2px;
   }
@@ -751,20 +773,20 @@
   .mate .mo { stroke: var(--bg); stroke-width: 1.5; stroke-linecap: round; }
 
   @media (prefers-reduced-motion: no-preference) {
-    .eq .t3  { animation: a3  9s infinite; }
-    .eq .tx  { animation: ax  9s infinite; }
-    .eq .tp5 { animation: ap5 9s infinite; }
-    .eq .tm5 { animation: am5 9s infinite; }
-    .eq .t20 { animation: a20 9s infinite; }
-    .eq .t15 { animation: a15 9s infinite; }
-    .eq .tbar{ animation: abar 9s infinite; }
-    .eq .t5  { animation: a5  9s infinite; }
+    .stage .eq .t3  { animation: a3  9s infinite; }
+    .stage .eq .tx  { animation: ax  9s infinite; }
+    .stage .eq .tp5 { animation: ap5 9s infinite; }
+    .stage .eq .tm5 { animation: am5 9s infinite; }
+    .stage .eq .t20 { animation: a20 9s infinite; }
+    .stage .eq .t15 { animation: a15 9s infinite; }
+    .stage .eq .tbar{ animation: abar 9s infinite; }
+    .stage .eq .t5  { animation: a5  9s infinite; }
     .mate    { animation: matehop 9s infinite; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .eq .t3, .eq .tp5, .eq .tm5, .eq .t20, .eq .t15, .eq .tbar { opacity: 0; }
-    .eq .tx { transform: translateX(1.72em); border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
-    .eq .t5 { opacity: 1; }
+    .stage .eq .t3, .eq .tp5, .eq .tm5, .eq .t20, .eq .t15, .eq .tbar { opacity: 0; }
+    .stage .eq .tx { transform: translateX(1.72em); border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
+    .stage .eq .t5 { opacity: 1; }
   }
 
   /* ① + 5 は = の真上まで真横に動いて消える */
@@ -1239,7 +1261,8 @@
       <p class="lead" id="teachMsg" style="margin:10px 0 0"></p>
     </div>
     <div id="teachList"></div>
-    <div class="card hide" id="teachOne"></div>
+    <!-- 自分の記録とまったく同じ見た目にする（chart を掛け忘れて違って見えていた） -->
+    <div class="card chart hide" id="teachOne"></div>
     <div class="btnrow">
       <button class="primary" id="teachBack">もどる</button>
       <button class="ghost hide" id="teachReload">読み直す</button>
@@ -1313,7 +1336,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-09 19:30</span>
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-09 19:53</span>
   </p>
 </div>
 
@@ -9899,6 +9922,7 @@ let choiceTimer = null;     // 選択肢を出すまでの待ち
 let hintHTML = "";          // その工程で添える用語の意味
 let stepShownAt = 0, pickShownAt = 0, thinkMs = 0, pickMs = 0;   // 考えた時間と選んだ時間
 let stepSlips = 0, problemSlips = [];   // その工程・その問題での「1回目の誤答」
+let chosen = [];   // その問題で選んだ手。{そのときの式, 選んだ方針}
 let repeatSame = null;      // 「わからない」のあと、もう一度出す問題
 let statsBack = "";         // 記録から「もどる」で帰る先
 let gainBuf = 0, gainTimer = null;
@@ -10119,7 +10143,7 @@ function startProblem() {
   cur = p;
   stepIdx = 0;
   startedAt = Date.now();
-  thinkMs = 0; pickMs = 0; problemSlips = [];
+  thinkMs = 0; pickMs = 0; problemSlips = []; chosen = [];
   resetWork();
   renderHeader();
   renderStep();
@@ -10164,25 +10188,23 @@ function sides(t) {
 }
 
 function workHTML(pendingOp) {
-  // 1行につき1行ぶんの枠を作り、方針は「その式のあと何をしたか」として
-  // 直前の式の行に並べる。まとめて置くと、どの式に対する方針かが分からなくなる。
-  const rows = [];
+  // 解答は式だけを縦に並べる。選んだ方針は右に添えない
+  //（2026-08-09 オーナー判断。判定画面の「この問題でつかった方針」でまとめて振り返る）。
+  // まちがえて止まったときだけ、選んだ手をその場に残す。どこで止まったかを見せるため。
+  let html = "";
   for (const w of work) {
-    if (w.kind === "line") rows.push({line: w, op: null});
-    else if (rows.length && !rows[rows.length - 1].op) rows[rows.length - 1].op = w;
-    else rows.push({line: null, op: w});
+    if (w.kind === "line") {
+      html += `<div class="wrow solo"><div class="wleft">`
+        + `<div class="line${w.fresh ? " fresh" : ""}">${lineHTML(w.text)}</div></div></div>`;
+    } else if (w.kind === "bad") {
+      html += `<div class="wrow solo"><div class="wleft">`
+        + `<div class="opbad${w.fresh ? " fresh" : ""}">${esc(w.text)}</div></div></div>`;
+    }
   }
-  // 方針が付かない行は、右の欄を作らず横幅いっぱいに使う（式が途中で折り返すのを避ける）
-  const cell = (left, right) =>
-    right
-      ? `<div class="wrow"><div class="wleft">${left}</div><div class="wright">${right}</div></div>`
-      : `<div class="wrow solo"><div class="wleft">${left}</div></div>`;
-  let html = rows.map(r => cell(
-    r.line ? `<div class="line${r.line.fresh ? " fresh" : ""}">${lineHTML(r.line.text)}</div>` : "",
-    r.op ? `<div class="${r.op.kind === "bad" ? "opbad" : "op"}`
-           + `${r.op.fresh ? " fresh" : ""}">${esc(r.op.text)}</div>` : ""
-  )).join("");
-  if (pendingOp) html += cell("", `<div class="pending">${esc(pendingOp)}</div>`);
+  if (pendingOp) {
+    html += `<div class="wrow solo"><div class="wleft">`
+      + `<div class="pending">${esc(pendingOp)}</div></div></div>`;
+  }
   return html;
 }
 
@@ -10345,6 +10367,9 @@ function answer(choice, btn) {
     Sound.play(S.review ? "stepChance" : "step");
     // 押しまちがいで拾い直したぶんは経験値に入れない（一発正解ボーナスも付かない）
     if (!stepSlips) addXp(XP.step);
+    // あとで「この問題でつかった方針」を組み立てるため、式と手をセットで残す
+    const before = [...work].reverse().find(w => w.kind === "line");
+    chosen.push({before: before ? before.text : "", text: choice.text});
     if (cur.has_work) writeStep(cur.steps[stepIdx], choice.text);
     if (stepIdx + 1 < cur.steps.length) { stepIdx++; return renderStep(); }
     return finish("correct", null);
@@ -10557,7 +10582,16 @@ function renderResult(rec) {
     const bossKill = lastOne && !rec.review && !S.review && !S.freeReview;
     banner.className = "banner ok";
     const slipped = (rec.slips || []).filter(Boolean).length;
+    // 解いたあとに、使った手を式とならべて振り返る。
+    // 「こういうときは、この手を使う」を1問ごとに整理するためのパネル
+    //（2026-08-09 オーナー案。解答の右に方針を添えるのはやめて、ここにまとめた）。
+    const used = chosen.map((c, i) =>
+      `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
+      + `<span class="ueq">${c.before ? lineHTML(c.before) : "はじめに"}</span></div>`
+      + `<div class="op">${nb(c.text)}</div></div>`).join("");
     banner.innerHTML = `<h2>${bossKill ? "ボスをたおした" : "x に近づいた"}</h2>`
+      + (used ? `<p class="sub" style="margin-bottom:8px">この問題でつかった方針</p>`
+                + `<div class="usedbox">${used}</div>` : "")
       + `<p class="sub">${sec}秒（想定 ${rec.estimatedSec}秒）`
       + `${slipped ? " ・ 途中で1回えらび直したので、一発正解にはなりません" : ""}</p>`
       + (bossKill ? `<div class="bossdown">${BOSS_SVG}</div>` : "");
