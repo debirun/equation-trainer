@@ -1376,10 +1376,10 @@ const DATA = {
     {
      "id": "L1-01",
      "difficulty": 1,
-     "question": "x = 2 は、方程式 x + 3 = 5 の解ですか。",
-     "answer": "解である",
+     "question": "2x + 1 = 7 の x に 3 を代入すると、左辺はどうなりますか。",
+     "answer": "x = 3 は解である",
      "estimated_seconds": 30,
-     "mode": null,
+     "mode": "input",
      "timeout_seconds": 75,
      "textbook": "p.82-85",
      "has_work": true,
@@ -1387,55 +1387,31 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "代入したあとの左辺はどれですか。",
        "writes": [
-        "左辺 = 2 + 3 = 5",
-        "右辺 = 5"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "左辺の x に 2 を代入して計算する",
-         "correct": true
-        },
-        {
-         "text": "右辺の 5 に 2 を代入する",
-         "correct": false,
-         "error_type": "E-SUB-01"
-        },
-        {
-         "text": "両辺から 3 をひいて x を求める",
-         "correct": false,
-         "error_type": "E-MEAN-02"
-        },
-        {
-         "text": "左辺と右辺をたす",
-         "correct": false,
-         "error_type": "E-MEAN-03"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "どう判断しますか。",
-       "writes": [
-        "両辺が等しいので、x = 2 は解である"
+        "左辺 = 2 × 3 + 1 = 7",
+        "右辺 = 7 なので、x = 3 は解である"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "両辺の値が等しいので、x = 2 は解である",
+         "text": "2 × 3 + 1",
          "correct": true
         },
         {
-         "text": "両辺の値は等しいが、x が残っていないので解ではない",
+         "text": "2 + 3 + 1",
          "correct": false,
-         "error_type": "E-MEAN-01"
+         "error_type": "E-EXPR-01"
         },
         {
-         "text": "代入しただけでは、解かどうかは決められない",
+         "text": "2 × (3 + 1)",
          "correct": false,
-         "error_type": "E-MEAN-01"
+         "error_type": "E-ORDER-02"
+        },
+        {
+         "text": "2x + 3",
+         "correct": false,
+         "error_type": "E-SUB-01"
         }
        ]
       }
@@ -1444,10 +1420,10 @@ const DATA = {
     {
      "id": "L1-02",
      "difficulty": 2,
-     "question": "x = 4 は、方程式 x - 1 = 2 の解ですか。",
-     "answer": "解ではない",
+     "question": "3x = 12 の左辺を 3 × 4 に変えました。何をしましたか。",
+     "answer": "x = 4 は解である",
      "estimated_seconds": 30,
-     "mode": null,
+     "mode": "input",
      "timeout_seconds": 75,
      "textbook": "p.82-85",
      "has_work": true,
@@ -1455,50 +1431,31 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "この変形は何をしたものですか。",
        "writes": [
-        "左辺 = 4 - 1 = 3",
-        "右辺 = 2"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "左辺の x に 4 を代入して計算する",
-         "correct": true
-        },
-        {
-         "text": "右辺の 2 に 4 を代入する",
-         "correct": false,
-         "error_type": "E-SUB-01"
-        },
-        {
-         "text": "両辺に 1 をたして x を求める",
-         "correct": false,
-         "error_type": "E-MEAN-02"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "どう判断しますか。",
-       "writes": [
-        "両辺がちがうので、x = 4 は解ではない"
+        "左辺 = 3 × 4 = 12",
+        "右辺 = 12 なので、x = 4 は解である"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "両辺の値がちがうので、x = 4 は解ではない",
+         "text": "x に 4 を代入した",
          "correct": true
         },
         {
-         "text": "値が近いので、x = 4 は解である",
+         "text": "x に 3 を代入した",
          "correct": false,
-         "error_type": "E-MEAN-03"
+         "error_type": "E-SUB-01"
         },
         {
-         "text": "左辺を 2 になおせばよいので、x = 4 は解である",
+         "text": "両辺を 3 でわった",
          "correct": false,
-         "error_type": "E-MEAN-01"
+         "error_type": "E-MEAN-02"
+        },
+        {
+         "text": "3 と x をたして 3 + 4 とした",
+         "correct": false,
+         "error_type": "E-EXPR-01"
         }
        ]
       }
@@ -5057,11 +5014,11 @@ const DATA = {
     {
      "id": "L6-01",
      "difficulty": 1,
-     "question": "ある数に 5 を加えると 12 になります。ある数を求めなさい。",
-     "answer": "ある数は 7",
-     "estimated_seconds": 55,
-     "mode": null,
-     "timeout_seconds": 140,
+     "question": "ある数を x とします。「x より 5 大きい数」を式にすると、どれですか。",
+     "answer": "x + 5",
+     "estimated_seconds": 25,
+     "mode": "input",
+     "timeout_seconds": 65,
      "textbook": "p.94-100",
      "has_work": true,
      "no_op_label": true,
@@ -5069,79 +5026,30 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "何を x とおきますか。",
+       "prompt": "「x より 5 大きい数」を表す式はどれですか。",
        "writes": [
-        "ある数を x とする"
+        "x より 5 大きい数 = x + 5"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "求める「ある数」を x とする",
+         "text": "x + 5",
          "correct": true
         },
         {
-         "text": "文章に最初に出てくる 5 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        },
-        {
-         "text": "答えになる 12 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "文章を等式にすると、どうなりますか。",
-       "writes": [
-        "x + 5 = 12"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "x + 5 = 12",
-         "correct": true
-        },
-        {
-         "text": "x - 5 = 12",
+         "text": "5x",
          "correct": false,
          "error_type": "E-WORD-02"
         },
         {
-         "text": "5x = 12",
+         "text": "x - 5",
          "correct": false,
          "error_type": "E-WORD-02"
         },
         {
-         "text": "x + 12 = 5",
+         "text": "5 - x",
          "correct": false,
          "error_type": "E-WORD-02"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "この方程式を解きます。まず何をしますか。",
-       "writes": [
-        "x = 7",
-        "ある数は 7"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "+5 を右辺に移項する",
-         "correct": true
-        },
-        {
-         "text": "+5 を、符号を変えずにそのまま右辺に書く",
-         "correct": false,
-         "error_type": "E-TRANS-01"
-        },
-        {
-         "text": "x を右辺に移項する",
-         "correct": false,
-         "error_type": "E-TRANS-03"
         }
        ]
       }
@@ -5150,11 +5058,11 @@ const DATA = {
     {
      "id": "L6-02",
      "difficulty": 2,
-     "question": "ある数を 3 倍すると 18 になります。ある数を求めなさい。",
-     "answer": "ある数は 6",
-     "estimated_seconds": 55,
-     "mode": null,
-     "timeout_seconds": 140,
+     "question": "ある数を x とします。式 3x + 2 は、次のどれを表していますか。",
+     "answer": "x を 3倍して 2 をたした数",
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
      "textbook": "p.94-100",
      "has_work": true,
      "no_op_label": true,
@@ -5162,79 +5070,30 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "何を x とおきますか。",
+       "prompt": "3x + 2 が表しているのはどれですか。",
        "writes": [
-        "ある数を x とする"
+        "3x + 2 は、x を 3倍して 2 をたした数"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "求める「ある数」を x とする",
+         "text": "x を 3倍して 2 をたした数",
          "correct": true
         },
         {
-         "text": "文章に最初に出てくる 3 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        },
-        {
-         "text": "18 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "文章を等式にすると、どうなりますか。",
-       "writes": [
-        "3x = 18"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "3x = 18",
-         "correct": true
-        },
-        {
-         "text": "x + 3 = 18",
+         "text": "x に 3 をたして 2 をかけた数",
          "correct": false,
          "error_type": "E-WORD-02"
         },
         {
-         "text": "18x = 3",
+         "text": "x を 3倍して 2 をひいた数",
          "correct": false,
          "error_type": "E-WORD-02"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "この方程式を解きます。何をしますか。",
-       "writes": [
-        "x = 6",
-        "ある数は 6"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "両辺を 3 でわる",
-         "correct": true
         },
         {
-         "text": "両辺を 18 でわる",
+         "text": "x と 3 と 2 をたした数",
          "correct": false,
-         "error_type": "E-PROP-04"
-        },
-        {
-         "text": "3 を右辺に移項する",
-         "correct": false,
-         "error_type": "E-PROP-02"
-        },
-        {
-         "text": "両辺に 3 をかける",
-         "correct": false,
-         "error_type": "E-PROP-01"
+         "error_type": "E-EXPR-01"
         }
        ]
       }
@@ -6269,11 +6128,11 @@ const DATA = {
     {
      "id": "L7-01",
      "difficulty": 1,
-     "question": "色紙を 1 人に 6 枚ずつ配ると 4 枚余ります。色紙は全部で 40 枚です。何人に配りますか。",
-     "answer": "6人",
-     "estimated_seconds": 90,
-     "mode": null,
-     "timeout_seconds": 225,
+     "question": "子どもが x 人います。1人に 4個ずつ配ると 3個あまりました。あめの数を式にすると、どれですか。",
+     "answer": "4x + 3",
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
      "textbook": "p.94-100",
      "has_work": true,
      "no_op_label": true,
@@ -6281,103 +6140,30 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "何を x とおきますか。",
+       "prompt": "あめの数を表す式はどれですか。",
        "writes": [
-        "配る人数を x 人とする"
+        "あめの数 = 4x + 3"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "求める人数を x 人とする",
+         "text": "4x + 3",
          "correct": true
         },
         {
-         "text": "色紙の全部の枚数 40 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        },
-        {
-         "text": "1人あたりの枚数 6 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "色紙の全部の枚数を x で表して、等式にするとどうなりますか。",
-       "writes": [
-        "6x + 4 = 40"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "6x + 4 = 40",
-         "correct": true
-        },
-        {
-         "text": "6x - 4 = 40",
+         "text": "4x - 3",
          "correct": false,
          "error_type": "E-WORD-02"
         },
         {
-         "text": "6x = 40 + 4",
+         "text": "3x + 4",
          "correct": false,
          "error_type": "E-WORD-02"
         },
         {
-         "text": "6(x + 4) = 40",
+         "text": "4 + x + 3",
          "correct": false,
-         "error_type": "E-WORD-02"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "この方程式を解きます。まず何をしますか。",
-       "writes": [
-        "6x = 36"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "+4 を右辺に移項する",
-         "correct": true
-        },
-        {
-         "text": "+4 を、符号を変えずにそのまま右辺に書く",
-         "correct": false,
-         "error_type": "E-TRANS-01"
-        },
-        {
-         "text": "両辺を 6 でわる",
-         "correct": false,
-         "error_type": "E-ORDER-01"
-        }
-       ]
-      },
-      {
-       "step_no": 4,
-       "prompt": "次に何をしますか。",
-       "writes": [
-        "x = 6",
-        "6人"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "両辺を 6 でわる",
-         "correct": true
-        },
-        {
-         "text": "両辺を 36 でわる",
-         "correct": false,
-         "error_type": "E-PROP-04"
-        },
-        {
-         "text": "6 を右辺に移項する",
-         "correct": false,
-         "error_type": "E-PROP-02"
+         "error_type": "E-EXPR-01"
         }
        ]
       }
@@ -6386,11 +6172,11 @@ const DATA = {
     {
      "id": "L7-02",
      "difficulty": 2,
-     "question": "あめを 1 人に 5 個ずつ配ると 2 個足りません。あめは全部で 23 個です。子どもは何人いますか。",
-     "answer": "5人",
-     "estimated_seconds": 95,
-     "mode": null,
-     "timeout_seconds": 240,
+     "question": "子どもが x 人います。式 5x - 2 は、次のどれを表していますか。",
+     "answer": "1人に 5個ずつ配ると 2個たりないときの、あめの数",
+     "estimated_seconds": 35,
+     "mode": "input",
+     "timeout_seconds": 85,
      "textbook": "p.94-100",
      "has_work": true,
      "no_op_label": true,
@@ -6398,103 +6184,25 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "何を x とおきますか。",
+       "prompt": "5x - 2 が表しているのはどれですか。",
        "writes": [
-        "子どもの人数を x 人とする"
+        "5x - 2 は、1人に 5個ずつ配ると 2個たりないときの、あめの数"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "求める子どもの人数を x 人とする",
+         "text": "1人に 5個ずつ配ると 2個たりないときの、あめの数",
          "correct": true
         },
         {
-         "text": "あめの全部の数 23 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        },
-        {
-         "text": "1人あたりの個数 5 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "あめの全部の数を x で表して、等式にするとどうなりますか。",
-       "writes": [
-        "5x - 2 = 23"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "5x - 2 = 23",
-         "correct": true
-        },
-        {
-         "text": "5x + 2 = 23",
+         "text": "1人に 5個ずつ配ると 2個あまるときの、あめの数",
          "correct": false,
          "error_type": "E-WORD-02"
         },
         {
-         "text": "5x = 23 - 2",
+         "text": "1人に 2個ずつ配ると 5個たりないときの、あめの数",
          "correct": false,
          "error_type": "E-WORD-02"
-        },
-        {
-         "text": "5(x - 2) = 23",
-         "correct": false,
-         "error_type": "E-WORD-02"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "この方程式を解きます。まず何をしますか。",
-       "writes": [
-        "5x = 25"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "-2 を右辺に移項する",
-         "correct": true
-        },
-        {
-         "text": "-2 を、符号を変えずにそのまま右辺に書く",
-         "correct": false,
-         "error_type": "E-TRANS-01"
-        },
-        {
-         "text": "両辺を 5 でわる",
-         "correct": false,
-         "error_type": "E-ORDER-01"
-        }
-       ]
-      },
-      {
-       "step_no": 4,
-       "prompt": "次に何をしますか。",
-       "writes": [
-        "x = 5",
-        "5人"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "両辺を 5 でわる",
-         "correct": true
-        },
-        {
-         "text": "両辺を 25 でわる",
-         "correct": false,
-         "error_type": "E-PROP-04"
-        },
-        {
-         "text": "5 を右辺に移項する",
-         "correct": false,
-         "error_type": "E-PROP-02"
         }
        ]
       }
@@ -7852,11 +7560,11 @@ const DATA = {
     {
      "id": "L8-01",
      "difficulty": 1,
-     "question": "分速 70m で 12 分歩きました。進んだ道のりは何 m ですか。",
-     "answer": "840m",
-     "estimated_seconds": 45,
-     "mode": null,
-     "timeout_seconds": 115,
+     "question": "時速 4km で x 時間歩きました。進んだ道のりを式にすると、どれですか。",
+     "answer": "4x",
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
      "textbook": "p.94-100",
      "has_work": true,
      "no_op_label": true,
@@ -7864,54 +7572,28 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "何を x とおきますか。",
+       "prompt": "道のりを表す式はどれですか。",
        "writes": [
-        "進んだ道のりを x m とする"
+        "道のり = 4x"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "求める道のりを x m とする",
+         "text": "4x",
          "correct": true
         },
         {
-         "text": "速さ 70 を x とする",
+         "text": "4 + x",
          "correct": false,
-         "error_type": "E-WORD-01"
+         "error_type": "E-EXPR-01"
         },
         {
-         "text": "時間 12 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "道のり・速さ・時間の関係を使って、等式にするとどうなりますか。",
-       "writes": [
-        "x = 70 × 12",
-        "x = 840",
-        "840m"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "x = 70 × 12（道のり = 速さ × 時間）",
-         "correct": true
-        },
-        {
-         "text": "x = 70 ÷ 12",
+         "text": "x ÷ 4",
          "correct": false,
          "error_type": "E-WORD-05"
         },
         {
-         "text": "x = 12 ÷ 70",
-         "correct": false,
-         "error_type": "E-WORD-05"
-        },
-        {
-         "text": "x = 70 + 12",
+         "text": "4 ÷ x",
          "correct": false,
          "error_type": "E-WORD-05"
         }
@@ -7922,11 +7604,11 @@ const DATA = {
     {
      "id": "L8-02",
      "difficulty": 2,
-     "question": "分速 60m で歩いて 900m 進みました。何分歩きましたか。",
-     "answer": "15分",
-     "estimated_seconds": 70,
-     "mode": null,
-     "timeout_seconds": 175,
+     "question": "式 12 ÷ x は、次のどれを表していますか。",
+     "answer": "12km を 時速 x km で進むのにかかる時間",
+     "estimated_seconds": 35,
+     "mode": "input",
+     "timeout_seconds": 85,
      "textbook": "p.94-100",
      "has_work": true,
      "no_op_label": true,
@@ -7934,99 +7616,25 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "何を x とおきますか。",
+       "prompt": "12 ÷ x が表しているのはどれですか。",
        "writes": [
-        "歩いた時間を x 分とする"
+        "12 ÷ x は、12km を 時速 x km で進むのにかかる時間"
        ],
        "show_op": false,
        "choices": [
         {
-         "text": "求める時間を x 分とする",
+         "text": "12km を 時速 x km で進むのにかかる時間",
          "correct": true
         },
         {
-         "text": "道のり 900 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        },
-        {
-         "text": "速さ 60 を x とする",
-         "correct": false,
-         "error_type": "E-WORD-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "進んだ道のりを x で表すと、どうなりますか。",
-       "writes": [
-        "進んだ道のりは 60x m"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "60x",
-         "correct": true
-        },
-        {
-         "text": "60 ÷ x",
+         "text": "時速 12km で x 時間進んだときの道のり",
          "correct": false,
          "error_type": "E-WORD-05"
         },
         {
-         "text": "x ÷ 60",
+         "text": "12km を x 時間で進んだときの速さ",
          "correct": false,
          "error_type": "E-WORD-05"
-        },
-        {
-         "text": "60 + x",
-         "correct": false,
-         "error_type": "E-WORD-05"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "等式にすると、どうなりますか。",
-       "writes": [
-        "その道のりが 900m なので",
-        "60x = 900"
-       ],
-       "show_op": false,
-       "choices": [
-        {
-         "text": "その道のりが 900m なので、60x = 900",
-         "correct": true
-        },
-        {
-         "text": "速さと道のりの合計なので、60 + x = 900",
-         "correct": false,
-         "error_type": "E-WORD-05"
-        }
-       ]
-      },
-      {
-       "step_no": 4,
-       "prompt": "この方程式を解きます。何をしますか。",
-       "writes": [
-        "x = 15",
-        "15分"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "両辺を 60 でわる",
-         "correct": true
-        },
-        {
-         "text": "両辺を 900 でわる",
-         "correct": false,
-         "error_type": "E-PROP-04"
-        },
-        {
-         "text": "60 を右辺に移項する",
-         "correct": false,
-         "error_type": "E-PROP-02"
         }
        ]
       }
