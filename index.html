@@ -1110,6 +1110,36 @@
     </div>
 
     <div class="card">
+      <h3 style="margin-top:0">文字の大きさ</h3>
+      <div class="pickrow row3" id="fontPick">
+        <button data-f="s">小さめ</button>
+        <button data-f="m">ふつう</button>
+        <button data-f="l">大きめ</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">色づかい</h3>
+      <div class="pickrow row3" id="themePick">
+        <button data-t="auto">端末に合わせる</button>
+        <button data-t="light">明るい</button>
+        <button data-t="dark">暗い</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">残り時間のバー</h3>
+      <div class="pickrow row3" id="timerPick">
+        <button data-s="on">出す</button>
+        <button data-s="off">出さない</button>
+      </div>
+      <p class="lead" style="margin-top:10px">
+        バーを消しても、<b>時間切れそのものは働きます</b>（レベル3から）。
+        時間が見えると気になってしまう人のための設定です。
+      </p>
+    </div>
+
+    <div class="card">
       <h3 style="margin-top:0">マスの見た目</h3>
       <div class="pickrow" id="cellPick">
         <button data-c="color">色だけ（緑 / 赤）</button>
@@ -1336,7 +1366,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-09 19:53</span>
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 01:51</span>
   </p>
 </div>
 
@@ -9532,6 +9562,9 @@ const blank = () => ({
   freeReview: false, // 通過したレベルを自分で選んで解いている最中か
   sound: "se",       // 音のモード "se" | "all" | "off"
   cellStyle: "color",   // マスの見た目 "color"（色だけ）| "shape"（色と形）
+  fontScale: "m",       // 文字の大きさ "s" | "m" | "l"
+  theme: "auto",        // 色づかい "auto"（端末に合わせる）| "light" | "dark"
+  showTimer: true,      // 残り時間のバーを出すか（時間切れ自体は働く）
 });
 let S = load();
 let cur = null;      // 出題中の問題
@@ -10079,7 +10112,7 @@ function switchWho(who) {
   const inHelp = !$("scHelp").classList.contains("hide");
   S = load(); cur = null;
   Sound.mode = S.sound || Sound.mode;
-  $("xpNum").textContent = S.xp; renderPl(); applyCellStyle();
+  $("xpNum").textContent = S.xp; renderPl(); applyCellStyle(); applyLook();
   if (inHelp) { renderHelp(helpBack); } else { renderStart(); }
 }
 
@@ -10108,7 +10141,25 @@ function renderHelp(from) {
   renderSyncNote();
   renderSoundPick();
   applyCellStyle();
+  applyLook();
   show("scHelp");
+}
+
+/* 見た目の設定をまとめて反映する。
+   大きさの指定はすべて rem なので、html の基準を変えれば全部そろって変わる。 */
+const FONT_SCALE = {s: "92%", m: "100%", l: "112%"};
+function applyLook() {
+  document.documentElement.style.fontSize = FONT_SCALE[S.fontScale] || "100%";
+  if (S.theme === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", S.theme);
+  const bar = $("timerBar");
+  if (bar && S.showTimer === false) bar.classList.add("hide");
+  [["fontPick", "f", S.fontScale || "m"], ["themePick", "t", S.theme || "auto"],
+   ["timerPick", "s", S.showTimer === false ? "off" : "on"]].forEach(([id, at, val]) => {
+    const box = $(id);
+    if (box) box.querySelectorAll("button").forEach(b =>
+      b.classList.toggle("on", b.dataset[at] === val));
+  });
 }
 
 function applyCellStyle() {
@@ -10326,7 +10377,8 @@ function startTimer() {
   stopTimer();
   if (!isTimed(cur)) { $("timerBar").classList.add("hide"); return; }   // レベル1・2は時間制限なし
   const bar = $("timerBar");
-  bar.classList.remove("hide");
+  // 「出さない」設定でも打ち切りは働く。見せるかどうかだけの違い。
+  bar.classList.toggle("hide", S.showTimer === false);
   const limit = cur.timeout_seconds * 1000;
   timerId = setInterval(() => {
     const left = limit - (Date.now() - startedAt);
@@ -11478,6 +11530,21 @@ const pickSound = e => {
   renderSoundPick();
 };
 $("soundPick").onclick = pickSound;
+$("fontPick").onclick = e => {
+  const b = e.target.closest("button[data-f]");
+  if (!b) return;
+  S.fontScale = b.dataset.f; save(); applyLook();
+};
+$("themePick").onclick = e => {
+  const b = e.target.closest("button[data-t]");
+  if (!b) return;
+  S.theme = b.dataset.t; save(); applyLook();
+};
+$("timerPick").onclick = e => {
+  const b = e.target.closest("button[data-s]");
+  if (!b) return;
+  S.showTimer = b.dataset.s === "on"; save(); applyLook();
+};
 $("cellPick").onclick = e => {
   const b = e.target.closest("button[data-c]");
   if (!b) return;
@@ -11553,6 +11620,7 @@ document.querySelectorAll("#scHelp .lead").forEach(el => {
 $("xpNum").textContent = S.xp;
 renderPl();
 applyCellStyle();
+applyLook();
 Sound.mode = S.sound || "se";
 $("btnSound").textContent = {se: "🔉", all: "🔊", off: "🔇"}[Sound.mode];
 renderStart();
