@@ -594,6 +594,44 @@
     background: var(--accent); color: var(--bg); font-weight: 900; font-size: .76rem;
   }
 
+  /* ── 問題を選ぶ画面 ── */
+  .lvtabs { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 8px; margin-top: 12px; }
+  .lvtabs button {
+    flex: none; min-width: 42px; min-height: 40px; padding: 6px 10px; border-radius: 10px;
+    background: transparent; border: 1px solid var(--line); color: var(--muted);
+    font: inherit; font-size: .84rem; font-weight: 800; cursor: pointer;
+  }
+  .lvtabs button.on { border-color: var(--accent); background: var(--accentSoft); color: var(--accent); }
+  .lvtabs button:disabled { opacity: .35; cursor: default; }
+
+  .jrow {
+    display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px;
+    width: 100%; text-align: left; margin-bottom: 6px; padding: 10px 12px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--fg); font: inherit; cursor: pointer;
+  }
+  .jrow:hover { border-color: var(--accent); }
+  .jrow .jn {
+    display: grid; place-items: center; width: 34px; height: 30px; border-radius: 8px;
+    border: 1px solid var(--line); font-size: .8rem; font-weight: 800; font-variant-numeric: tabular-nums;
+  }
+  .jrow .jq {
+    font-size: .82rem; line-height: 1.45; min-width: 0;
+    overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  }
+  .jrow .js { font-size: .66rem; font-weight: 800; white-space: nowrap; color: var(--muted); }
+  .jrow.done .jn { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+  .jrow.done .js { color: var(--ok); }
+  .jrow.miss .jn { background: var(--ng-bg); border-color: var(--ng); color: var(--ng); }
+  .jrow.miss .js { color: var(--ng); }
+  .jrow.now { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accentSoft); }
+  .jtag {
+    display: inline-block; margin-right: 6px; padding: 1px 6px; border-radius: 99px;
+    background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn);
+    font-size: .6rem; font-weight: 800;
+  }
+  .jboss { color: var(--gold); }
+
   /* ── マス目（復習・テスト） ── */
   .jumpgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
   .jumpgrid button {
@@ -805,6 +843,7 @@
       <span class="lv" id="hLevel">適応型学習システム 試作</span>
       <span class="hmeta" id="hMeta"></span>
       <button class="ghost" id="btnFree">復習</button>
+      <button class="ghost" id="btnJump">問題</button>
       <button class="ghost" id="btnStats">記録</button>
       <button class="ghost" id="btnHelp" title="使い方と設定">⚙</button>
     </div>
@@ -960,7 +999,6 @@
       <h3 style="margin-top:0">検証用</h3>
       <p class="lead" style="margin-top:0">本番では出さない項目です。</p>
       <div class="btnrow">
-        <button class="ghost" id="btnJump">好きな問題を開く</button>
         <button class="ghost" id="btnReset">記録を消してやり直す</button>
       </div>
       <p class="lead" style="margin-top:10px">
@@ -1070,18 +1108,14 @@
 
   <!-- テストプレイ用。本番では出さない -->
   <section id="scJump" class="hide">
-    <h1>テスト用: 好きな問題に移動</h1>
-    <div class="testnote">
-      <b>これは試作を確認するための画面です。本番では出しません。</b><br>
-      本番では、次に解く問題はアプリが決めます。生徒がここから選ぶことはできません。
-    </div>
-    <p class="lead" style="margin-top:14px">
-      数字は難易度（＝そのレベルの何問目か）。順番に正解しなくても、直接移動できます。
-      緑は正解済み、赤はつまずいたことがある問題です。
+    <h1>問題を選ぶ</h1>
+    <p class="lead" style="margin-top:6px">
+      どの問題にも直接移動できます。<b>本番では出しません</b>（次に解く問題はアプリが決めるため）。
     </p>
+    <div class="lvtabs" id="jumpTabs"></div>
     <div id="jumpList"></div>
     <div class="btnrow">
-      <button class="ghost" id="btnJumpBack">もどる</button>
+      <button class="primary" id="btnJumpBack">もどる</button>
     </div>
   </section>
 
@@ -1185,6 +1219,14 @@ const DATA = {
    "name": "わる数の取りちがえ",
    "description": "ax = b で、係数 a ではなく右辺の b でわってしまう。等式としては成り立つが、 x の係数が 1 に近づかないので x を求められない。",
    "fix": "ax = b は、右辺の数ではなく x の係数 a でわる。",
+   "back_to": "レベル2（等式の性質）",
+   "back_to_level": 2,
+   "back_to_unit": null
+  },
+  "E-PROP-05": {
+   "name": "操作の効果の誤解",
+   "description": "両辺への操作や代入をしたあと、式がどう変わるのかを取りちがえる。 操作の名前は言えても、それが何のための操作なのかが結びついていない。",
+   "fix": "その操作をしたあと、左辺に何が残るのかを見る。ねらいは x だけにすること。",
    "back_to": "レベル2（等式の性質）",
    "back_to_level": 2,
    "back_to_unit": null
@@ -1389,8 +1431,7 @@ const DATA = {
        "step_no": 1,
        "prompt": "代入したあとの左辺はどれですか。",
        "writes": [
-        "左辺 = 2 × 3 + 1 = 7",
-        "右辺 = 7 なので、x = 3 は解である"
+        "左辺 = 2 × 3 + 1 = 7"
        ],
        "show_op": false,
        "choices": [
@@ -1414,6 +1455,30 @@ const DATA = {
          "error_type": "E-SUB-01"
         }
        ]
+      },
+      {
+       "step_no": 2,
+       "prompt": "左辺が 7、右辺も 7 でした。ここから何が言えますか。",
+       "writes": [
+        "右辺 = 7 なので、x = 3 は解である"
+       ],
+       "show_op": false,
+       "choices": [
+        {
+         "text": "両辺の値が等しいので、x = 3 は解である",
+         "correct": true
+        },
+        {
+         "text": "両辺の値は等しいが、x が残っていないので解ではない",
+         "correct": false,
+         "error_type": "E-MEAN-01"
+        },
+        {
+         "text": "代入しただけでは、解かどうかは決められない",
+         "correct": false,
+         "error_type": "E-MEAN-01"
+        }
+       ]
       }
      ]
     },
@@ -1433,8 +1498,7 @@ const DATA = {
        "step_no": 1,
        "prompt": "この変形は何をしたものですか。",
        "writes": [
-        "左辺 = 3 × 4 = 12",
-        "右辺 = 12 なので、x = 4 は解である"
+        "左辺 = 3 × 4 = 12"
        ],
        "show_op": false,
        "choices": [
@@ -1456,6 +1520,30 @@ const DATA = {
          "text": "3 と x をたして 3 + 4 とした",
          "correct": false,
          "error_type": "E-EXPR-01"
+        }
+       ]
+      },
+      {
+       "step_no": 2,
+       "prompt": "左辺が 12、右辺も 12 でした。ここから何が言えますか。",
+       "writes": [
+        "右辺 = 12 なので、x = 4 は解である"
+       ],
+       "show_op": false,
+       "choices": [
+        {
+         "text": "両辺の値が等しいので、x = 4 は解である",
+         "correct": true
+        },
+        {
+         "text": "代入して計算した 12 が答えである",
+         "correct": false,
+         "error_type": "E-MEAN-01"
+        },
+        {
+         "text": "両辺が等しくても、解かどうかは分からない",
+         "correct": false,
+         "error_type": "E-MEAN-01"
         }
        ]
       }
@@ -2254,8 +2342,7 @@ const DATA = {
        "step_no": 1,
        "prompt": "両辺から 3 をひいた式はどれですか。",
        "writes": [
-        "x + 3 - 3 = 8 - 3",
-        "x = 5"
+        "x + 3 - 3 = 8 - 3"
        ],
        "show_op": false,
        "choices": [
@@ -2279,6 +2366,35 @@ const DATA = {
          "error_type": "E-PROP-03"
         }
        ]
+      },
+      {
+       "step_no": 2,
+       "prompt": "両辺から 3 をひいたことで、左辺はどうなりましたか。",
+       "writes": [
+        "x = 5"
+       ],
+       "show_op": false,
+       "choices": [
+        {
+         "text": "+3 が消えて、左辺が x だけになった",
+         "correct": true
+        },
+        {
+         "text": "左辺の x も消えた",
+         "correct": false,
+         "error_type": "E-PROP-05"
+        },
+        {
+         "text": "左辺が 3x になった",
+         "correct": false,
+         "error_type": "E-PROP-05"
+        },
+        {
+         "text": "左辺は何も変わらなかった",
+         "correct": false,
+         "error_type": "E-PROP-05"
+        }
+       ]
       }
      ]
     },
@@ -2298,8 +2414,7 @@ const DATA = {
        "step_no": 1,
        "prompt": "この変形は何をしたものですか。",
        "writes": [
-        "x - 4 + 4 = 2 + 4",
-        "x = 6"
+        "x - 4 + 4 = 2 + 4"
        ],
        "show_op": false,
        "choices": [
@@ -2321,6 +2436,35 @@ const DATA = {
          "text": "両辺に 4 をかけた",
          "correct": false,
          "error_type": "E-PROP-02"
+        }
+       ]
+      },
+      {
+       "step_no": 2,
+       "prompt": "両辺に 4 をたしたことで、左辺はどうなりましたか。",
+       "writes": [
+        "x = 6"
+       ],
+       "show_op": false,
+       "choices": [
+        {
+         "text": "-4 が消えて、左辺が x だけになった",
+         "correct": true
+        },
+        {
+         "text": "左辺が 4x になった",
+         "correct": false,
+         "error_type": "E-PROP-05"
+        },
+        {
+         "text": "左辺の x が消えた",
+         "correct": false,
+         "error_type": "E-PROP-05"
+        },
+        {
+         "text": "右辺も x になった",
+         "correct": false,
+         "error_type": "E-PROP-05"
         }
        ]
       }
@@ -10510,24 +10654,34 @@ function renderFree() {
 }
 
 /* テストプレイ用。本番では出さない画面。 */
-function renderJump() {
+/* 問題を選ぶ画面。レベルをタブで切りかえ、10問を問題文つきで一覧にする。
+   番号だけだと目当ての問題を探せないため（2026-08-09 オーナー指摘）。 */
+let jumpLevel = 0;
+function renderJump(lv) {
+  jumpLevel = lv || jumpLevel || S.level;
+  const l = levelOf(jumpLevel) || DATA.levels[0];
+
+  $("jumpTabs").innerHTML = DATA.levels.map(x =>
+    `<button data-lv="${x.level}" class="${x.level === jumpLevel ? "on" : ""}"`
+    + `${x.steps_done ? "" : " disabled"} title="${esc(x.title)}">${x.level}</button>`).join("");
+  $("jumpTabs").querySelectorAll("button[data-lv]").forEach(b =>
+    b.onclick = () => renderJump(+b.dataset.lv));
+
   const missed = new Set(S.history.filter(h => h.result !== "correct").map(h => h.problemId));
-  const out = [];
-  for (const l of DATA.levels) {
-    out.push(`<h3>レベル${l.level} ${esc(l.title)}</h3>`);
-    if (!l.steps_done) {
-      out.push(`<p class="lead">工程分解が未着手のため、出題できません。</p>`);
-      continue;
-    }
-    out.push('<div class="jumpgrid">' + l.problems.slice()
-      .sort((a, b) => a.difficulty - b.difficulty)
-      .map(p => {
-        const cls = S.solved.includes(p.id) ? "done" : missed.has(p.id) ? "miss" : "";
-        return `<button class="${cls}" data-id="${p.id}" title="${esc(p.question)}">`
-             + `${p.difficulty}</button>`;
-      }).join("") + "</div>");
-  }
-  $("jumpList").innerHTML = out.join("");
+  const head = `<p style="margin:0 0 10px"><b>レベル${l.level}</b> ${esc(l.title)}`
+    + `<span class="lead"> ・ 教科書 ${esc(l.textbook)}</span></p>`;
+  const rows = l.problems.slice().sort((a, b) => a.difficulty - b.difficulty).map(p => {
+    const done = S.solved.includes(p.id), miss = missed.has(p.id);
+    const cls = ["jrow", done ? "done" : miss ? "miss" : "", cur && cur.id === p.id ? "now" : ""].join(" ");
+    const tag = p.mode === "input" ? '<span class="jtag">準備</span>' : "";
+    const boss = p.difficulty === 10 ? '<span class="jboss">♛ </span>' : "";
+    return `<button class="${cls}" data-id="${p.id}">`
+      + `<span class="jn">${boss}${p.difficulty}</span>`
+      + `<span class="jq">${tag}${esc(p.question)}</span>`
+      + `<span class="js">${done ? "正解ずみ" : miss ? "つまずいた" : "まだ"}</span></button>`;
+  }).join("");
+  $("jumpList").innerHTML = head + (l.steps_done ? rows
+    : `<p class="lead">このレベルはまだ出題できません。</p>`);
   $("jumpList").querySelectorAll("button[data-id]").forEach(b =>
     b.onclick = () => jumpTo(b.dataset.id));
   show("scJump");
@@ -10623,7 +10777,7 @@ $("btnNext").onclick = () => {
   return S.freeReview ? renderFree() : startProblem();
 };
 $("btnStats").onclick = () => { statsBack = ""; renderStats(); };
-$("btnJump").onclick = renderJump;
+$("btnJump").onclick = () => renderJump(S.level);
 $("btnHelp").onclick = () => renderHelp();
 $("btnHelp2").onclick = () => renderHelp("scStart");
 $("btnHelpBack").onclick = () => {
@@ -10645,7 +10799,7 @@ $("btnFreeBack").onclick = () => {
   cur ? renderHeader() : null;
   startProblem();
 };
-$("btnJumpBack").onclick = () => (cur ? show("scResult") : renderHelp("scStart"));
+$("btnJumpBack").onclick = () => (cur ? show("scQuiz") : renderStart());
 $("btnStats2").onclick = () => { statsBack = ""; renderStats(); };
 $("btnBack").onclick = () => {
   if (statsBack) { const to = statsBack; statsBack = ""; return show(to); }
