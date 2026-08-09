@@ -893,6 +893,8 @@
     font-size: .8rem; line-height: 1.6;
   }
   .chart .todo b { color: var(--accent); }
+  #teachList .jrow { grid-template-columns: 40px 1fr auto; }
+  #teachList .jrow .jq { -webkit-line-clamp: 3; }
   .chart .lvline {
     display: grid; grid-template-columns: 58px 1fr auto; gap: 8px; align-items: center;
     font-size: .8rem; padding: 3px 0;
@@ -1099,6 +1101,14 @@
     </div>
 
     <div class="card">
+      <h3 style="margin-top:0">先生用</h3>
+      <p class="lead" style="margin-top:0">
+        合言葉を知っている端末でだけ、みんなの記録をまとめて見られます。
+      </p>
+      <div class="btnrow"><button class="ghost" id="btnTeacher">みんなの記録を見る</button></div>
+    </div>
+
+    <div class="card">
       <h3 style="margin-top:0">検証用</h3>
       <p class="lead" style="margin-top:0">本番では出さない項目です。</p>
       <div class="btnrow">
@@ -1187,6 +1197,27 @@
     </div>
   </section>
 
+  <!-- 先生用。合言葉を入れた端末でだけ、みんなの記録が見られる。
+       合言葉は公開ファイルに入れず、入れた端末の中だけに保存する。 -->
+  <section id="scTeacher" class="hide">
+    <h1>先生用 — みんなの記録</h1>
+    <div class="card" id="teachGate">
+      <p class="lead" style="margin-top:0">合言葉を入れてください。この端末の中だけに保存します。</p>
+      <div class="whoadd">
+        <input id="teachPass" type="password" placeholder="合言葉">
+        <button class="ghost" id="teachGo">見る</button>
+      </div>
+      <p class="lead" id="teachMsg" style="margin:10px 0 0"></p>
+    </div>
+    <div id="teachList"></div>
+    <div class="card hide" id="teachOne"></div>
+    <div class="btnrow">
+      <button class="primary" id="teachBack">もどる</button>
+      <button class="ghost hide" id="teachReload">読み直す</button>
+      <button class="ghost hide" id="teachForget">この端末から合言葉を消す</button>
+    </div>
+  </section>
+
   <!-- 記録 -->
   <section id="scStats" class="hide">
     <h1>記録</h1>
@@ -1253,7 +1284,7 @@
   </section>
 
   <p class="foot">
-    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 18:22
+    一次方程式 適応出題 — 試作版（テスト中） ・ 版 2026-08-09 18:30
   </p>
 </div>
 
@@ -9868,7 +9899,7 @@ function levelCleaned(lv) {
   return [...missed].every(id => S.solved.includes(id));
 }
 const show = id => {
-  ["scStart", "scQuiz", "scResult", "scClear", "scStats", "scJump", "scFree", "scHelp", "scChapter"].forEach(s => $(s).classList.toggle("hide", s !== id));
+  ["scStart", "scQuiz", "scResult", "scClear", "scStats", "scJump", "scFree", "scHelp", "scChapter", "scTeacher"].forEach(s => $(s).classList.toggle("hide", s !== id));
   window.scrollTo(0, 0);
 };
 const esc = s => String(s).replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c]));
@@ -10901,7 +10932,8 @@ function renderClear(lv) {
 /* そのつまずきに対して、次に解くべき問題を出す。
    まだ解けていない問題のうち、その誤りが選択肢に入っているものを選ぶ。
    原因が分野の外（1章・2章）にあるときは、まだ問題がないのでそこは正直に書く。 */
-function toDoFor(errId) {
+function toDoFor(errId, solvedIds) {
+  const done = solvedIds || S.solved;
   const et = DATA.errorTypes[errId] || {};
   if (et.back_to_unit) {
     return `解くべきところ: <b>${esc(UNIT_NAME[et.back_to_unit] || et.back_to_unit)}</b>`
@@ -10913,7 +10945,7 @@ function toDoFor(errId) {
   const hit = pool.filter(p =>
     (p.steps || []).some(st => st.choices.some(c => c.error_type === errId)));
   // まだ解けていないものを先に、なければ解きなおし用に解いたものも出す
-  const undone = hit.filter(p => !S.solved.includes(p.id));
+  const undone = hit.filter(p => !done.includes(p.id));
   const picks = (undone.length ? undone : hit).slice(0, 3);
   if (!picks.length) {
     return `解くべきところ: <b>${esc(errBack(errId))}</b>`;
@@ -10982,55 +11014,116 @@ function renderSyncNote() {
 
 /* 先生に見せる1枚。数字ではなく「何ができて、何でつまずいているか」を先に出す。
    端末の外にデータを出す手段がないので、印刷／PDF と 文章コピーで渡す。 */
-function renderChart() {
-  const solved = S.solved.length;
-  const oneShot = S.solved.filter(id => {
-    const h = S.history.filter(x => x.problemId === id);
-    return h.length && h[0].result === "correct" && !(h[0].slips || []).length;
-  }).length;
-  const paces = Object.keys(S.pace).map(Number).sort((a, b) => a - b);
-
-  const top = Object.entries(S.errors).sort((a, b) => b[1] - a[1]).slice(0, 5);
+/* カルテを組み立てる。自分の記録でも、先生が見る他人の記録でも同じ形で出す。 */
+function chartHTML(name, p) {
+  const top = Object.entries(p.errors || {}).sort((a, b) => b[1] - a[1]).slice(0, 5);
   const stuck = top.length
     ? "<ul>" + top.map(([id, n]) =>
         `<li><b>${esc(errName(id))}</b> ${n}回<br>`
         + `<span class="lead">${esc((DATA.errorTypes[id] || {}).description || "")}</span><br>`
-        + `<span class="todo">${toDoFor(id)}</span></li>`).join("") + "</ul>"
+        + `<span class="todo">${toDoFor(id, p.solvedIds || [])}</span></li>`).join("") + "</ul>"
     : '<p class="none">まだつまずきの記録がありません。</p>';
 
-  const unknown = S.history.filter(h => h.result === "unknown").length;
-  const think = S.history.filter(h => h.thinkMs !== undefined);
-  const tSum = think.reduce((a, h) => a + h.thinkMs, 0);
-  const pSum = think.reduce((a, h) => a + h.pickMs, 0);
-  const ratio = tSum + pSum > 0 ? Math.round(tSum / (tSum + pSum) * 100) : null;
-  // 取り組んだ時間。まちがえた回や「わからない」も含む、実際に画面に向かっていた時間。
-  const spent = Math.round(S.history.reduce((a, h) => a + (h.elapsedMs || 0), 0) / 1000);
+  const spent = p.spentSec || 0;
   const hhmm = spent >= 3600
     ? `${Math.floor(spent / 3600)}時間${Math.floor(spent % 3600 / 60)}分`
     : `${Math.floor(spent / 60)}分${String(spent % 60).padStart(2, "0")}秒`;
 
+  const paces = Object.keys(p.pace || {}).map(Number).sort((a, b) => a - b);
   const lvlines = paces.map(n => {
-    const r = S.pace[n].actual / S.pace[n].est;
+    const r = p.pace[n].actual / p.pace[n].est;
     const w = Math.max(4, Math.min(100, (1.6 - r) / 1.2 * 100));
     return `<div class="lvline"><span>レベル${n}</span><i style="width:${w.toFixed(0)}%"></i>`
       + `<span>${r.toFixed(2)}</span></div>`;
   }).join("") || '<p class="none">まだレベルをクリアしていません。</p>';
 
-  $("chartBody").innerHTML =
-    `<p style="margin:0 0 8px"><b>${esc(WHOM.cur || "（名前なし）")}</b>`
-    + `<span class="lead"> ・ 一次方程式 ・ 到達レベル ${S.reached}</span></p>`
+  return `<p style="margin:0 0 8px"><b>${esc(name || "（名前なし）")}</b>`
+    + `<span class="lead"> ・ 一次方程式 ・ 到達レベル ${p.reached}</span></p>`
     + `<div class="big">`
-    + `<div><b>${solved}<span style="font-size:.7rem">/80</span></b><span>解いた問題</span></div>`
-    + `<div><b>${oneShot}</b><span>一発で正解</span></div>`
+    + `<div><b>${p.solved}<span style="font-size:.7rem">/80</span></b><span>解いた問題</span></div>`
+    + `<div><b>${p.oneShot}</b><span>一発で正解</span></div>`
     + `<div><b style="font-size:1rem">${hhmm}</b><span>取り組んだ時間</span></div>`
     + `</div>`
     + `<h4>つまずいているところ（多い順）</h4>${stuck}`
     + `<h4>ペース（想定に対する比・低いほど速い）</h4>${lvlines}`
     + `<h4>そのほか</h4>`
-    + `<ul><li>考えていた時間の割合: ${ratio === null ? "—" : ratio + "%"}`
+    + `<ul><li>考えていた時間の割合: ${p.thinkRatio === null || p.thinkRatio === undefined ? "—" : p.thinkRatio + "%"}`
     + `<span class="lead">（選択肢を見る前に考えていた割合。低いと、考えずに選んでいる）</span></li>`
-    + `<li>「わからない」を選んだ回数: ${unknown}回</li>`
-    + `<li>プレイヤーレベル ${plOf(S.xp)}（${S.xp} XP）</li></ul>`;
+    + `<li>「わからない」を選んだ回数: ${p.unknownCount || 0}回</li>`
+    + `<li>プレイヤーレベル ${p.pl}（${p.xp} XP）</li></ul>`;
+}
+
+function renderChart() {
+  $("chartBody").innerHTML = chartHTML(WHOM.cur, syncPayload());
+}
+
+/* ── 先生用 ───────────────────────────────────── */
+const PASSKEY = "labs-adaptive-teacher";
+let teachRows = [];
+
+function teachPass() { try { return localStorage.getItem(PASSKEY) || ""; } catch (e) { return ""; } }
+
+function renderTeacher() {
+  const pass = teachPass();
+  $("teachGate").classList.toggle("hide", !!pass);
+  $("teachReload").classList.toggle("hide", !pass);
+  $("teachForget").classList.toggle("hide", !pass);
+  $("teachOne").classList.add("hide");
+  $("teachList").innerHTML = "";
+  show("scTeacher");
+  if (pass) loadTeacher(pass);
+}
+
+function loadTeacher(pass) {
+  $("teachList").innerHTML = '<p class="lead">読みこんでいます…</p>';
+  fetch(`${SYNC.url}/rest/v1/rpc/list_records`, {
+    method: "POST",
+    headers: {
+      "apikey": SYNC.key, "Authorization": `Bearer ${SYNC.key}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({p_pass: pass}),
+  }).then(r => r.ok ? r.json() : r.json().then(e => Promise.reject(e)))
+    .then(rows => {
+      teachRows = rows || [];
+      try { localStorage.setItem(PASSKEY, pass); } catch (e) {}
+      $("teachGate").classList.add("hide");
+      $("teachReload").classList.remove("hide");
+      $("teachForget").classList.remove("hide");
+      drawTeacherList();
+    })
+    .catch(() => {
+      $("teachList").innerHTML = "";
+      $("teachGate").classList.remove("hide");
+      $("teachMsg").textContent = "合言葉がちがうか、つながりませんでした。";
+    });
+}
+
+function drawTeacherList() {
+  if (!teachRows.length) {
+    $("teachList").innerHTML = '<p class="lead">まだ記録がありません。</p>';
+    return;
+  }
+  $("teachList").innerHTML = teachRows.map((r, i) => {
+    const p = r.payload || {};
+    const when = new Date(r.updated_at);
+    const ago = Math.round((Date.now() - when.getTime()) / 60000);
+    const agoText = ago < 60 ? `${ago}分前`
+      : ago < 60 * 24 ? `${Math.round(ago / 60)}時間前`
+      : `${Math.round(ago / 60 / 24)}日前`;
+    return `<button class="jrow" data-i="${i}">`
+      + `<span class="jn">${p.reached || 1}</span>`
+      + `<span class="jq"><b>${esc(r.name)}</b><br>`
+      + `<span class="lead">解いた ${p.solved || 0}/80 ・ 一発 ${p.oneShot || 0} ・ ${agoText}</span></span>`
+      + `<span class="js">見る</span></button>`;
+  }).join("");
+  $("teachList").querySelectorAll("button[data-i]").forEach(b =>
+    b.onclick = () => {
+      const r = teachRows[+b.dataset.i];
+      $("teachOne").innerHTML = chartHTML(r.name, r.payload || {});
+      $("teachOne").classList.remove("hide");
+      $("teachOne").scrollIntoView({behavior: "smooth", block: "start"});
+    });
 }
 
 function renderStats() {
@@ -11300,6 +11393,22 @@ $("btnBack").onclick = () => {
 $("btnSend").onclick = sendSummary;
 $("btnCopy").onclick = copySummary;
 $("btnPrint").onclick = () => window.print();
+$("btnTeacher").onclick = () => { $("teachMsg").textContent = ""; renderTeacher(); };
+$("teachGo").onclick = () => {
+  const v = ($("teachPass").value || "").trim();
+  if (!v) return;
+  $("teachMsg").textContent = "";
+  loadTeacher(v);
+};
+$("teachPass").onkeydown = e => { if (e.key === "Enter") $("teachGo").click(); };
+$("teachReload").onclick = () => loadTeacher(teachPass());
+$("teachForget").onclick = () => {
+  try { localStorage.removeItem(PASSKEY); } catch (e) {}
+  teachRows = [];
+  $("teachPass").value = "";
+  renderTeacher();
+};
+$("teachBack").onclick = () => renderHelp("scStart");
 $("btnExport").onclick = exportJSON;
 /* 記録を消すのは取り返しがつかないので、2回押させる。
    ブラウザの確認ダイアログは使わない（画面をふさぐし、環境によっては操作を止めてしまう）。 */
