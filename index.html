@@ -2284,10 +2284,10 @@ const DATA = {
     {
      "id": "L2-01",
      "difficulty": 1,
-     "question": "方程式 x + 3 = 8 を解きなさい。",
+     "question": "x + 3 = 8 で「両辺から 3 をひく」と、式はどうなりますか。",
      "answer": "x = 5",
      "estimated_seconds": 25,
-     "mode": null,
+     "mode": "input",
      "timeout_seconds": 65,
      "textbook": "p.82-85",
      "has_work": true,
@@ -2295,30 +2295,31 @@ const DATA = {
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "両辺から 3 をひいた式はどれですか。",
        "writes": [
+        "x + 3 - 3 = 8 - 3",
         "x = 5"
        ],
-       "show_op": true,
+       "show_op": false,
        "choices": [
         {
-         "text": "両辺から 3 をひく",
+         "text": "x + 3 - 3 = 8 - 3",
          "correct": true
         },
         {
-         "text": "両辺に 3 をたす",
-         "correct": false,
-         "error_type": "E-PROP-01"
-        },
-        {
-         "text": "左辺から 3 をひく",
+         "text": "x + 3 - 3 = 8",
          "correct": false,
          "error_type": "E-PROP-03"
         },
         {
-         "text": "両辺を 3 でわる",
+         "text": "x + 3 + 3 = 8 + 3",
          "correct": false,
-         "error_type": "E-PROP-02"
+         "error_type": "E-PROP-01"
+        },
+        {
+         "text": "x + 3 = 8 - 3",
+         "correct": false,
+         "error_type": "E-PROP-03"
         }
        ]
       }
@@ -2327,41 +2328,42 @@ const DATA = {
     {
      "id": "L2-02",
      "difficulty": 2,
-     "question": "方程式 x - 4 = 2 を解きなさい。",
+     "question": "x - 4 = 2 を x - 4 + 4 = 2 + 4 に変えました。何をしましたか。",
      "answer": "x = 6",
-     "estimated_seconds": 25,
-     "mode": null,
-     "timeout_seconds": 65,
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
      "textbook": "p.82-85",
      "has_work": true,
      "solution_start": "x - 4 = 2",
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "この変形は何をしたものですか。",
        "writes": [
+        "x - 4 + 4 = 2 + 4",
         "x = 6"
        ],
-       "show_op": true,
+       "show_op": false,
        "choices": [
         {
-         "text": "両辺に 4 をたす",
+         "text": "両辺に 4 をたした",
          "correct": true
         },
         {
-         "text": "両辺から 4 をひく",
+         "text": "両辺から 4 をひいた",
          "correct": false,
          "error_type": "E-PROP-01"
         },
         {
-         "text": "両辺に 4 をかける",
-         "correct": false,
-         "error_type": "E-PROP-02"
-        },
-        {
-         "text": "左辺に 4 をたす",
+         "text": "左辺に 4 をたした",
          "correct": false,
          "error_type": "E-PROP-03"
+        },
+        {
+         "text": "両辺に 4 をかけた",
+         "correct": false,
+         "error_type": "E-PROP-02"
         }
        ]
       }
@@ -3480,89 +3482,42 @@ const DATA = {
     {
      "id": "L4-01",
      "difficulty": 1,
-     "question": "方程式 2(x + 3) = 10 を解きなさい。",
+     "question": "2(x + 3) = 10 で「かっこを外す」と、左辺はどうなりますか。",
      "answer": "x = 2",
-     "estimated_seconds": 50,
-     "mode": null,
-     "timeout_seconds": 125,
-     "textbook": "p.86-90",
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
+     "textbook": "p.91-94",
      "has_work": true,
      "solution_start": "2(x + 3) = 10",
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "かっこを外した式はどれですか。",
        "writes": [
-        "2x + 6 = 10"
+        "2x + 6 = 10",
+        "x = 2"
        ],
-       "show_op": true,
+       "show_op": false,
        "choices": [
         {
-         "text": "かっこを外す（2 を x と 3 の両方にかける）",
+         "text": "2x + 6 = 10",
          "correct": true
         },
         {
-         "text": "2 を x にだけかける",
+         "text": "2x + 3 = 10",
          "correct": false,
          "error_type": "E-DIST-01"
         },
         {
-         "text": "両辺から 2 をひく",
+         "text": "2x - 6 = 10",
          "correct": false,
-         "error_type": "E-PROP-02"
+         "error_type": "E-DIST-02"
         },
         {
-         "text": "2 と x + 3 をたして 2 + x + 3 とする",
+         "text": "2 + x + 3 = 10",
          "correct": false,
          "error_type": "E-EXPR-01"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "次に何をしますか。",
-       "writes": [
-        "2x = 4"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "+6 を右辺に移項する",
-         "correct": true
-        },
-        {
-         "text": "+6 を、符号を変えずにそのまま右辺に書く",
-         "correct": false,
-         "error_type": "E-TRANS-01"
-        },
-        {
-         "text": "両辺を 2 でわる",
-         "correct": false,
-         "error_type": "E-ORDER-01"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "次に何をしますか。",
-       "writes": [
-        "x = 2"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "両辺を 2 でわる",
-         "correct": true
-        },
-        {
-         "text": "2 を右辺に移項する",
-         "correct": false,
-         "error_type": "E-PROP-02"
-        },
-        {
-         "text": "両辺に 2 をかける",
-         "correct": false,
-         "error_type": "E-PROP-01"
         }
        ]
       }
@@ -3571,87 +3526,40 @@ const DATA = {
     {
      "id": "L4-02",
      "difficulty": 2,
-     "question": "方程式 4(x - 1) = 8 を解きなさい。",
+     "question": "0.2x + 1 = 1.6 を 2x + 10 = 16 に変えました。何をしましたか。",
      "answer": "x = 3",
-     "estimated_seconds": 50,
-     "mode": null,
-     "timeout_seconds": 125,
-     "textbook": "p.86-90",
+     "estimated_seconds": 35,
+     "mode": "input",
+     "timeout_seconds": 85,
+     "textbook": "p.91-94",
      "has_work": true,
-     "solution_start": "4(x - 1) = 8",
+     "solution_start": "0.2x + 1 = 1.6",
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "この変形は何をしたものですか。",
        "writes": [
-        "4x - 4 = 8"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "かっこを外す（4 を x と -1 の両方にかける）",
-         "correct": true
-        },
-        {
-         "text": "4 を x にだけかける",
-         "correct": false,
-         "error_type": "E-DIST-01"
-        },
-        {
-         "text": "かっこの中の符号はそのままにして、4x + 4 とする",
-         "correct": false,
-         "error_type": "E-DIST-02"
-        },
-        {
-         "text": "4 と -1 をたして 3x とする",
-         "correct": false,
-         "error_type": "E-EXPR-02"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "次に何をしますか。",
-       "writes": [
-        "4x = 12"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "-4 を右辺に移項する",
-         "correct": true
-        },
-        {
-         "text": "-4 を、符号を変えずにそのまま右辺に書く",
-         "correct": false,
-         "error_type": "E-TRANS-01"
-        },
-        {
-         "text": "両辺を 4 でわる",
-         "correct": false,
-         "error_type": "E-ORDER-01"
-        }
-       ]
-      },
-      {
-       "step_no": 3,
-       "prompt": "次に何をしますか。",
-       "writes": [
+        "2x + 10 = 16",
         "x = 3"
        ],
-       "show_op": true,
+       "show_op": false,
        "choices": [
         {
-         "text": "両辺を 4 でわる",
+         "text": "両辺を 10倍した",
          "correct": true
         },
         {
-         "text": "4 を右辺に移項する",
+         "text": "両辺を 100倍した",
          "correct": false,
-         "error_type": "E-PROP-02"
+         "error_type": "E-DEC-01"
         },
         {
-         "text": "両辺に 4 をかける",
+         "text": "左辺だけ 10倍した",
+         "correct": false,
+         "error_type": "E-DEC-02"
+        },
+        {
+         "text": "両辺を 10 でわった",
          "correct": false,
          "error_type": "E-PROP-01"
         }
@@ -4374,70 +4282,42 @@ const DATA = {
     {
      "id": "L5-01",
      "difficulty": 1,
-     "question": "比例式 x:6 = 1:2 の x を求めなさい。",
+     "question": "x:6 = 1:2 で「外側どうし、内側どうしをかける」と、式はどうなりますか。",
      "answer": "x = 3",
-     "estimated_seconds": 40,
-     "mode": null,
-     "timeout_seconds": 100,
-     "textbook": "p.91-92",
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
+     "textbook": "p.95-97",
      "has_work": true,
      "solution_start": "x:6 = 1:2",
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "かけ算をした式はどれですか。",
        "writes": [
-        "2x = 6"
-       ],
-       "show_op": true,
-       "choices": [
-        {
-         "text": "外側どうし、内側どうしをかけて、x × 2 = 6 × 1 とする",
-         "correct": true
-        },
-        {
-         "text": "左どうし、右どうしをかけて、x × 1 = 6 × 2 とする",
-         "correct": false,
-         "error_type": "E-RATIO-01"
-        },
-        {
-         "text": "左の2つ、右の2つをかけて、x × 6 = 1 × 2 とする",
-         "correct": false,
-         "error_type": "E-RATIO-01"
-        },
-        {
-         "text": "先頭どうしが同じと考えて、x = 1 とする",
-         "correct": false,
-         "error_type": "E-RATIO-02"
-        }
-       ]
-      },
-      {
-       "step_no": 2,
-       "prompt": "次に何をしますか。",
-       "writes": [
+        "x × 2 = 6 × 1",
         "x = 3"
        ],
-       "show_op": true,
+       "show_op": false,
        "choices": [
         {
-         "text": "両辺を 2 でわる",
+         "text": "x × 2 = 6 × 1",
          "correct": true
         },
         {
-         "text": "両辺を 6 でわる",
+         "text": "x × 1 = 6 × 2",
          "correct": false,
-         "error_type": "E-PROP-04"
+         "error_type": "E-RATIO-01"
         },
         {
-         "text": "2 を右辺に移項する",
+         "text": "x × 6 = 1 × 2",
          "correct": false,
-         "error_type": "E-PROP-02"
+         "error_type": "E-RATIO-01"
         },
         {
-         "text": "両辺に 2 をかける",
+         "text": "x = 1",
          "correct": false,
-         "error_type": "E-PROP-01"
+         "error_type": "E-RATIO-02"
         }
        ]
       }
@@ -4446,39 +4326,35 @@ const DATA = {
     {
      "id": "L5-02",
      "difficulty": 2,
-     "question": "比例式 3:x = 1:4 の x を求めなさい。",
+     "question": "3:x = 1:4 を 3 × 4 = x × 1 に変えました。何をしましたか。",
      "answer": "x = 12",
-     "estimated_seconds": 40,
-     "mode": null,
-     "timeout_seconds": 100,
-     "textbook": "p.91-92",
+     "estimated_seconds": 30,
+     "mode": "input",
+     "timeout_seconds": 75,
+     "textbook": "p.95-97",
      "has_work": true,
      "solution_start": "3:x = 1:4",
      "steps": [
       {
        "step_no": 1,
-       "prompt": "まず何をしますか。",
+       "prompt": "この変形は何をしたものですか。",
        "writes": [
+        "3 × 4 = x × 1",
         "x = 12"
        ],
-       "show_op": true,
+       "show_op": false,
        "choices": [
         {
-         "text": "外側どうし、内側どうしをかけて、3 × 4 = x × 1 とする",
+         "text": "外側どうし、内側どうしをかけた",
          "correct": true
         },
         {
-         "text": "左どうし、右どうしをかけて、3 × 1 = x × 4 とする",
+         "text": "左どうし、右どうしをかけた",
          "correct": false,
          "error_type": "E-RATIO-01"
         },
         {
-         "text": "左の2つ、右の2つをかけて、3 × x = 1 × 4 とする",
-         "correct": false,
-         "error_type": "E-RATIO-01"
-        },
-        {
-         "text": "3 と 1 が対応するので、x は 4 と同じと考える",
+         "text": "同じ位置にあるものどうしが等しいと考えた",
          "correct": false,
          "error_type": "E-RATIO-02"
         }
