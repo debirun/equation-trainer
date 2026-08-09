@@ -347,6 +347,18 @@
     display: block; margin-top: 3px; font-size: .72rem; font-weight: 600;
     color: var(--muted); letter-spacing: .01em;
   }
+  /* 1回目の誤答。押しまちがいを救うための猶予 */
+  .retry {
+    margin: 0 0 10px; padding: 9px 12px; border-radius: 10px;
+    background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn);
+    font-size: .82rem; font-weight: 800;
+  }
+  button.choice.picked {
+    opacity: .55; border-color: var(--ng); border-style: dashed;
+    text-decoration: line-through; text-decoration-color: var(--ng);
+  }
+  button.choice.picked .also { text-decoration: none; }
+
   /* 「わからない」。選択肢とは別のものだと分かるように離して置く */
   button.dunno {
     display: block; width: 100%; margin-top: 6px; padding: 12px;
@@ -936,6 +948,10 @@
         想定時間の2〜3倍で打ち切ります。粘っても時間の記録が取れなくなるためです。
       </p>
       <p class="lead">
+        <b>1回だけえらび直せます。</b>まちがえても、その場でもう一度えらべます。
+        2回目でまちがえると、そこで止まります。えらび直した問題は「一発で正解」には入りません。
+      </p>
+      <p class="lead">
         方針が思いつかないときは <b>「わからない」</b> を押してください。当てずっぽうより役に立ちます。
         正しい方針を見せたあと、<b>同じ問題をもう一度</b>出します。
       </p>
@@ -1031,6 +1047,7 @@
         <button class="think" id="btnThink">決めた（選択肢を見る）</button>
         <p class="thinknote">解答をよく見て、<b>次に何をするか</b>を頭の中で決めてから押してください。</p>
       </div>
+      <p class="retry hide" id="retryNote"></p>
       <div id="choices" class="hide"></div>
       <button class="dunno hide" id="btnDunno">わからない</button>
       <p class="sideHint hide" id="sideHint"></p>
@@ -9643,6 +9660,7 @@ let clearPending = 0;       // この結果画面のあとにリザルトを出�
 let choiceTimer = null;     // 選択肢を出すまでの待ち
 let hintHTML = "";          // その工程で添える用語の意味
 let stepShownAt = 0, pickShownAt = 0, thinkMs = 0, pickMs = 0;   // 考えた時間と選んだ時間
+let stepSlips = 0, problemSlips = [];   // その工程・その問題での「1回目の誤答」
 let repeatSame = null;      // 「わからない」のあと、もう一度出す問題
 let statsBack = "";         // 記録から「もどる」で帰る先
 let gainBuf = 0, gainTimer = null;
@@ -9817,7 +9835,7 @@ function startProblem() {
   cur = p;
   stepIdx = 0;
   startedAt = Date.now();
-  thinkMs = 0; pickMs = 0;
+  thinkMs = 0; pickMs = 0; problemSlips = [];
   resetWork();
   renderHeader();
   renderStep();
@@ -9918,6 +9936,8 @@ function showChoices(on) {
 function renderStep() {
   const s = cur.steps[stepIdx];
   const qcard = document.querySelector("#scQuiz .card");
+  stepSlips = 0;
+  $("retryNote").classList.add("hide");
 
   $("cutin").classList.add("hide");   // カットインは次の問題に持ち越さない
 
@@ -9979,7 +9999,7 @@ function renderStep() {
     b.className = "choice";
     const also = alsoFor(c.text);
     b.innerHTML = esc(c.text) + (also ? `<span class="also">＝ ${esc(also)}</span>` : "");
-    b.onclick = () => answer(c);
+    b.onclick = () => answer(c, b);
     box.appendChild(b);
   }
 
@@ -10035,15 +10055,34 @@ function dunno() {
   finish("unknown", null);
 }
 
-function answer(choice) {
+function answer(choice, btn) {
   if (pickShownAt) pickMs += Date.now() - pickShownAt;
   if (choice.correct) {
     Sound.play(S.review ? "stepChance" : "step");
-    addXp(XP.step);
+    // 押しまちがいで拾い直したぶんは経験値に入れない（一発正解ボーナスも付かない）
+    if (!stepSlips) addXp(XP.step);
     if (cur.has_work) writeStep(cur.steps[stepIdx], choice.text);
     if (stepIdx + 1 < cur.steps.length) { stepIdx++; return renderStep(); }
     return finish("correct", null);
   }
+
+  // 1回目の誤答は打ち切らない。押しまちがいと、本当の思いちがいを分けるため
+  // （2026-08-09 オーナー指摘：答えは分かっていたのに押しまちがえた、が何度もあった）。
+  // つまずきの集計には1回目から入れる。診断のデータは減らさない。
+  if (!stepSlips) {
+    stepSlips++;
+    problemSlips.push(choice.error_type || null);
+    if (choice.error_type) S.errors[choice.error_type] = (S.errors[choice.error_type] || 0) + 1;
+    save();
+    if (btn) { btn.classList.add("picked"); btn.blur(); }
+    const n = $("retryNote");
+    n.textContent = "ちがいます。もう一度えらべます（次にまちがえると、ここで止まります）。";
+    n.classList.remove("hide");
+    Sound.play("wrong");
+    pickShownAt = Date.now();
+    return;
+  }
+
   Sound.play("wrong");
   // 選んだ誤答を解答欄に残す。どこで、何を選んで止まったかが後から見える。
   if (cur.has_work) {
@@ -10065,6 +10104,8 @@ function finish(result, errorType) {
     elapsedMs: elapsed, estimatedSec: cur.estimated_seconds,
     // 考えていた時間と、選択肢を見比べていた時間。合計は elapsedMs とほぼ一致する。
     thinkMs: Math.round(thinkMs), pickMs: Math.round(pickMs),
+    // 1回目の誤答（押しまちがい・思いちがい）。最終結果とは別に残す。
+    slips: problemSlips.slice(),
     timeoutSec: cur.timeout_seconds,
     review: inReview ? S.review.level : null,
   };
@@ -10078,6 +10119,7 @@ function finish(result, errorType) {
   if (!inReview && !S.freeReview) S.last = rec;
   if (result === "correct" && !S.solved.includes(cur.id)) S.solved.push(cur.id);
   if (errorType) S.errors[errorType] = (S.errors[errorType] || 0) + 1;
+  rec.slips = problemSlips.slice();
 
   rec.gain = [];
   if (result === "correct") {
@@ -10165,8 +10207,10 @@ function renderResult(rec) {
     const lastOne = cur.difficulty === 10;
     const bossKill = lastOne && !rec.review && !S.review && !S.freeReview;
     banner.className = "banner ok";
+    const slipped = (rec.slips || []).filter(Boolean).length;
     banner.innerHTML = `<h2>${bossKill ? "ボスをたおした" : "x に近づいた"}</h2>`
-      + `<p class="sub">${sec}秒（想定 ${rec.estimatedSec}秒）</p>`
+      + `<p class="sub">${sec}秒（想定 ${rec.estimatedSec}秒）`
+      + `${slipped ? " ・ 途中で1回えらび直したので、一発正解にはなりません" : ""}</p>`
       + (bossKill ? `<div class="bossdown">${BOSS_SVG}</div>` : "");
     if (bossKill) { Sound.play("bossDown"); Sound.mood("calm"); }
     detail.innerHTML = `<p style="margin:0">答え: <b>${esc(cur.answer)}</b></p>`
@@ -10311,7 +10355,8 @@ function clearStats(lv) {
     if (!ok) continue;
     solved++;
     actual += ok.elapsedMs / 1000;
-    if (hs[0].result === "correct") oneShot++;
+    // 拾い直し（1回目の誤答あり）は一発正解にしない
+    if (hs[0].result === "correct" && !(hs[0].slips || []).length) oneShot++;
   }
   return {pool, oneShot, solved, actual: Math.round(actual), est};
 }
