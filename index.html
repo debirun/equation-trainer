@@ -1453,7 +1453,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 19:56</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 20:03</span>
   </p>
 </div>
 
@@ -4450,7 +4450,7 @@ const DATA = {
        "id": "L5-A1",
        "difficulty": 0,
        "question": "3x × 5 を計算しなさい。",
-       "answer": "文字のついた式に数をかけるときは、数のところだけにかける",
+       "answer": "15x",
        "estimated_seconds": 30,
        "mode": "atom",
        "timeout_seconds": 65,
@@ -4512,7 +4512,7 @@ const DATA = {
        "id": "L5-A2",
        "difficulty": 0,
        "question": "8x ÷ 4 を計算しなさい。",
-       "answer": "文字のついた式を数でわるときは、数のところだけをわる",
+       "answer": "2x",
        "estimated_seconds": 30,
        "mode": "atom",
        "timeout_seconds": 65,
@@ -4574,7 +4574,7 @@ const DATA = {
        "id": "L5-A3",
        "difficulty": 0,
        "question": "3(x + 2) のかっこを外しなさい。",
-       "answer": "かっこの前の数は、中のすべての項にかかる",
+       "answer": "3x + 6",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -4636,7 +4636,7 @@ const DATA = {
        "id": "L5-A4",
        "difficulty": 0,
        "question": "-4(x - 1) のかっこを外しなさい。",
-       "answer": "かっこの前が負のとき、中のすべての項の符号が変わる",
+       "answer": "-4x + 4",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 74,
@@ -4698,7 +4698,7 @@ const DATA = {
        "id": "L5-A5",
        "difficulty": 0,
        "question": "(4x + 6) ÷ 2 を計算しなさい。",
-       "answer": "かっこの式を数でわるときは、中のすべての項をわる",
+       "answer": "2x + 3",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 74,
@@ -4760,7 +4760,7 @@ const DATA = {
        "id": "L5-A6",
        "difficulty": 0,
        "question": "(x + 1)/2 × 4 を計算しなさい。",
-       "answer": "分数の形の式に数をかけるときは、分母とやくぶんする",
+       "answer": "2(x + 1)",
        "estimated_seconds": 36,
        "mode": "atom",
        "timeout_seconds": 78,
@@ -6229,8 +6229,8 @@ const DATA = {
       {
        "id": "L1-A1",
        "difficulty": 0,
-       "question": "x = 3 を 2x = 6 に入れると、左辺は 6、右辺も 6 になりました。x = 3 は解ですか。",
-       "answer": "左辺と右辺の値を見くらべて、等しければ解、ちがえば解ではない",
+       "question": "x = 3 を 2x = 6 に入れると、左辺は 6、右辺も 6 になりました。",
+       "answer": "両辺の値が等しいので、x = 3 は解",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -6240,7 +6240,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "左辺と右辺の値を見て、どう決めますか。",
+         "prompt": "x = 3 は、この方程式の解ですか。",
          "writes": [
           "両辺の値が等しいので、x = 3 は解"
          ],
@@ -6292,7 +6292,7 @@ const DATA = {
        "id": "L1-A2",
        "difficulty": 0,
        "question": "x = 4 のとき、2x の値を求めなさい。",
-       "answer": "文字に数をあてはめてから、計算する",
+       "answer": "2 × 4 = 8",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -6354,7 +6354,7 @@ const DATA = {
        "id": "L1-A3",
        "difficulty": 0,
        "question": "1, 2 のうち、方程式 2x = 4 の解はどちらですか。",
-       "answer": "候補を1つずつあてはめて、両辺がそろうものを探す",
+       "answer": "x = 2 のとき 2 × 2 = 4 で、右辺と等しい",
        "estimated_seconds": 36,
        "mode": "atom",
        "timeout_seconds": 78,
@@ -7327,7 +7327,7 @@ const DATA = {
        "id": "L2-A1",
        "difficulty": 0,
        "question": "方程式 x - 3 = 5 を解きます。",
-       "answer": "ひかれている数は、両辺にたして消す",
+       "answer": "x - 3 + 3 = 5 + 3",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -7389,7 +7389,7 @@ const DATA = {
        "id": "L2-A2",
        "difficulty": 0,
        "question": "方程式 x + 2 = 7 を解きます。",
-       "answer": "消したい操作の、逆の操作を両辺にする",
+       "answer": "x + 2 - 2 = 7 - 2",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
@@ -7399,23 +7399,23 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "なぜ「両辺から 2 をひく」のですか。",
+         "prompt": "左辺の +2 を消したいです。何をしますか。",
          "writes": [
           "x + 2 - 2 = 7 - 2"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "+2 を消したいので、逆のひき算をする",
+           "text": "逆の操作をして、両辺から 2 をひく",
            "correct": true
           },
           {
-           "text": "2 が小さいので、ひくとやりやすいから",
+           "text": "同じ操作をして、両辺に 2 をたす",
            "correct": false,
-           "error_type": "E-PROP-05"
+           "error_type": "E-PROP-01"
           },
           {
-           "text": "左辺に 2 があるので、右辺にも 2 をたすから",
+           "text": "左辺だけから 2 をひく",
            "correct": false,
            "error_type": "E-PROP-03"
           }
@@ -7451,7 +7451,7 @@ const DATA = {
        "id": "L2-A3",
        "difficulty": 0,
        "question": "方程式 5x = 20 を解きます。",
-       "answer": "かけられている数は、両辺をわって消す",
+       "answer": "5x ÷ 5 = 20 ÷ 5",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -7513,7 +7513,7 @@ const DATA = {
        "id": "L2-A4",
        "difficulty": 0,
        "question": "方程式 x ÷ 3 = 2 を解きます。",
-       "answer": "わられている数は、両辺にかけて消す",
+       "answer": "x ÷ 3 × 3 = 2 × 3",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -7575,7 +7575,7 @@ const DATA = {
        "id": "L2-A5",
        "difficulty": 0,
        "question": "方程式 x + 6 = 10 を解きます。",
-       "answer": "たされている数は、両辺からひいて消す",
+       "answer": "x + 6 - 6 = 10 - 6",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -7637,7 +7637,7 @@ const DATA = {
        "id": "L2-A6",
        "difficulty": 0,
        "question": "方程式 3x + 1 = 7 を解きます。",
-       "answer": "たされている数を先に消し、かけられている数はあとで消す",
+       "answer": "3x + 1 - 1 = 7 - 1",
        "estimated_seconds": 40,
        "mode": "atom",
        "timeout_seconds": 88,
@@ -7647,7 +7647,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "2つの数を消します。どちらを先に消しますか。",
+         "prompt": "左辺には 3 と +1 があります。どちらを先に消しますか。",
          "writes": [
           "3x + 1 - 1 = 7 - 1"
          ],
@@ -8296,7 +8296,7 @@ const DATA = {
        "id": "L3-A1",
        "difficulty": 0,
        "question": "方程式 x + 4 = 9 の +4 を、右辺にうつしなさい。",
-       "answer": "反対の辺へうつすと、符号が変わる",
+       "answer": "x = 9 - 4",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
@@ -8358,7 +8358,7 @@ const DATA = {
        "id": "L3-A2",
        "difficulty": 0,
        "question": "方程式 4x - 1 = 2x + 5 を、解ける形に整えなさい。",
-       "answer": "文字の項を左辺に、数の項を右辺に集める",
+       "answer": "4x - 2x = 5 + 1",
        "estimated_seconds": 40,
        "mode": "atom",
        "timeout_seconds": 88,
@@ -9101,7 +9101,7 @@ const DATA = {
        "id": "L4-A1",
        "difficulty": 0,
        "question": "方程式 0.4x = 1.2 から、小数をなくしなさい。",
-       "answer": "小数は、両辺すべての項を10倍して消す",
+       "answer": "4x = 12",
        "estimated_seconds": 36,
        "mode": "atom",
        "timeout_seconds": 79,
@@ -9163,7 +9163,7 @@ const DATA = {
        "id": "L4-A2",
        "difficulty": 0,
        "question": "方程式 x/2 = 3 から、分母をなくしなさい。",
-       "answer": "分数は、両辺すべての項に分母をかけて消す",
+       "answer": "x = 6",
        "estimated_seconds": 36,
        "mode": "atom",
        "timeout_seconds": 79,
@@ -10025,7 +10025,7 @@ const DATA = {
        "id": "L5-A1",
        "difficulty": 0,
        "question": "比例式 x:4 = 3:2 を、方程式に直しなさい。",
-       "answer": "外側どうし、内側どうしをかけて = で結ぶ",
+       "answer": "x × 2 = 4 × 3",
        "estimated_seconds": 38,
        "mode": "atom",
        "timeout_seconds": 84,
@@ -10862,7 +10862,7 @@ const DATA = {
        "id": "L6-A1",
        "difficulty": 0,
        "question": "ある数を x とします。「x より 3 大きい数」を式にしなさい。",
-       "answer": "「大きい・多い」はたし算、「少ない」はひき算にする",
+       "answer": "x + 3",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -10924,8 +10924,8 @@ const DATA = {
       {
        "id": "L6-A2",
        "difficulty": 0,
-       "question": "「ある数を 5倍すると 20 になります。ある数を求めなさい」という問題があります。",
-       "answer": "聞かれているもの（求めたいもの）を x とおく",
+       "question": "ある数を 5倍すると 20 になります。ある数を求めます。",
+       "answer": "ある数を x とおく",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
@@ -10988,7 +10988,7 @@ const DATA = {
        "id": "L6-A3",
        "difficulty": 0,
        "question": "「ある数を 5倍すると 20 になります」を、等式にしなさい。",
-       "answer": "「〜になる」「〜と等しい」を = に置きかえる",
+       "answer": "5x = 20",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
@@ -11050,11 +11050,11 @@ const DATA = {
       {
        "id": "L6-A4",
        "difficulty": 0,
-       "question": "あめを x 人に配ります。3個ずつだと 15個、5個ずつだと 25個いります。あめの数を2通りで表しなさい。",
-       "answer": "同じ量を2通りに表して、= で結ぶ",
-       "estimated_seconds": 42,
+       "question": "ある数を x とします。「x を 3倍した数」と「x に 8 をたした数」が、等しくなりました。",
+       "answer": "3x = x + 8",
+       "estimated_seconds": 40,
        "mode": "atom",
-       "timeout_seconds": 92,
+       "timeout_seconds": 88,
        "textbook": "p.94-100",
        "has_work": true,
        "no_op_label": true,
@@ -11062,23 +11062,23 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "この2つは何を表していますか。等式にするとどうなりますか。",
+         "prompt": "この2つを等式にすると、どうなりますか。",
          "writes": [
-          "3x = 15"
+          "3x = x + 8"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "どちらも配ったあめの数なので、3x = 15",
+           "text": "どちらも同じ数を表しているので、3x = x + 8",
            "correct": true
           },
           {
-           "text": "2つをたして 3x + 5x = 40",
+           "text": "3x = 8",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "2つの差なので 5x - 3x = 10",
+           "text": "3x + 8 = x",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -11114,7 +11114,7 @@ const DATA = {
        "id": "L6-A5",
        "difficulty": 0,
        "question": "子どもが x 人います。1人に 4個ずつ配ると 3個あまりました。あめの数を式にしなさい。",
-       "answer": "余りはたし算、不足はひき算で、全体を表す",
+       "answer": "4x + 3",
        "estimated_seconds": 38,
        "mode": "atom",
        "timeout_seconds": 84,
@@ -11177,7 +11177,7 @@ const DATA = {
        "id": "L6-A6",
        "difficulty": 0,
        "question": "女子を x 人とします。男子は女子より 2人多いです。男子の人数を式にしなさい。",
-       "answer": "もう一つの数量も、x を使って表す",
+       "answer": "x + 2",
        "estimated_seconds": 36,
        "mode": "atom",
        "timeout_seconds": 79,
@@ -12378,7 +12378,7 @@ const DATA = {
        "id": "L7-A1",
        "difficulty": 0,
        "question": "長いすが x 脚あります。最後の 1 脚だけ使いません。使った長いすの数を式にしなさい。",
-       "answer": "「1つだけちがう」ときは、その1つを分けて表す",
+       "answer": "使った長いすは x - 1 脚",
        "estimated_seconds": 38,
        "mode": "atom",
        "timeout_seconds": 84,
@@ -13873,7 +13873,7 @@ const DATA = {
        "id": "L8-A1",
        "difficulty": 0,
        "question": "分速 60m で x 分歩きました。進んだ道のりを式にしなさい。",
-       "answer": "道のりは、速さと時間をかけて求める",
+       "answer": "道のり = 60x",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
@@ -13936,7 +13936,7 @@ const DATA = {
        "id": "L8-A2",
        "difficulty": 0,
        "question": "全部で 12km の道のりを、x km 進みました。残りの道のりを式にしなさい。",
-       "answer": "残りは「全体 − 進んだぶん」で表す",
+       "answer": "残りは 12 - x km",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
@@ -13999,7 +13999,7 @@ const DATA = {
        "id": "L8-A3",
        "difficulty": 0,
        "question": "x m の道のりを、分速 80m で歩きました。かかった時間を式にしなさい。",
-       "answer": "時間は、道のりを速さでわって求める",
+       "answer": "時間 = x/80 分",
        "estimated_seconds": 36,
        "mode": "atom",
        "timeout_seconds": 79,
@@ -14061,8 +14061,8 @@ const DATA = {
       {
        "id": "L8-A4",
        "difficulty": 0,
-       "question": "棒の「高さ : 影」は 2:5 です。木の「高さ : 影」は x:20 です。同じ時刻なので、この比は等しくなります。",
-       "answer": "比が等しいときは、2つの比を = で結んで比例式にする",
+       "question": "棒の「高さ : 影」は 2:5 です。木の「高さ : 影」は x:20 です。同じ時刻に測りました。",
+       "answer": "2:5 = x:20",
        "estimated_seconds": 40,
        "mode": "atom",
        "timeout_seconds": 88,
@@ -17193,12 +17193,22 @@ function renderResult(rec) {
     // 解いたあとに、使った手を式とならべて振り返る。
     // 「こういうときは、この手を使う」を1問ごとに整理するためのパネル
     //（2026-08-09 オーナー案。解答の右に方針を添えるのはやめて、ここにまとめた）。
-    const used = chosen.map((c, i) =>
-      `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
-      + `<span class="ueq">${c.before ? lineHTML(c.before) : "はじめに"}</span></div>`
-      + `<div class="op">${nb(c.text)}</div></div>`).join("");
-    banner.innerHTML = `<h2>${bossKill ? "ボスをたおした" : "x に近づいた"}</h2>`
-      + (used ? `<p class="sub" style="margin-bottom:8px">この問題でつかった方針</p>`
+    // 0段目は「やってから、ことばにする」の2工程。式のつながりを見せるより、
+    // 何をして、それを何と呼ぶのかを並べたほうが分かる（2026-08-10 オーナー指摘）。
+    const isAtom = cur.mode === "atom";
+    const used = isAtom
+      ? chosen.map((c, i) =>
+          `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
+          + `<span class="ueq">${i === 0 ? "やったこと" : "ことばにすると"}</span></div>`
+          + `<div class="op">${nb(c.text)}</div></div>`).join("")
+      : chosen.map((c, i) =>
+          `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
+          + `<span class="ueq">${c.before ? lineHTML(c.before) : "はじめに"}</span></div>`
+          + `<div class="op">${nb(c.text)}</div></div>`).join("");
+    banner.innerHTML =
+      `<h2>${isAtom ? "方針をおぼえた" : bossKill ? "ボスをたおした" : "x に近づいた"}</h2>`
+      + (used ? `<p class="sub" style="margin-bottom:8px">${
+            isAtom ? "この問題で身につけた方針" : "この問題でつかった方針"}</p>`
                 + `<div class="usedbox">${used}</div>` : "")
       + `<p class="sub">${sec}秒（想定 ${rec.estimatedSec}秒）`
       + `${slipped ? " ・ 途中で1回えらび直したので、一発正解にはなりません" : ""}</p>`
