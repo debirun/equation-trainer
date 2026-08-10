@@ -1459,7 +1459,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 00:37</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 01:07</span>
   </p>
 </div>
 
@@ -17486,14 +17486,21 @@ function selectNext() {
   }
 
   // 0段目。このレベルの方針をまだ受け取っていないなら、そこから。
+  //
+  // 正解するまで先へ進めない作りだったので、「わからない」を押し続けると
+  // 同じ問題から永久に動けなかった（2026-08-11 に画面テストで見つけた）。
+  // STUCK_RUN 回やって届かなければ、その問題は置いて次の方針へ進む。
+  // 解けていない記録は残るので、先生用の一覧には未達として出る。
   if (!P.freeReview) {
     const all = atomsOf(P.level);
+    const tried = id => hist().filter(h => h.problemId === id).length;
     const left = all.filter(p => !P.solved.includes(p.id));
-    if (left.length) {
+    const open = left.filter(p => tried(p.id) < STUCK_RUN);
+    if (open.length) {
       why = `レベル${P.level}で使う方針を、先に確かめます`
           + `（${all.length - left.length + 1}／${all.length}）。`
           + `1問やってから、それをことばにします。`;
-      return left[0];
+      return open[0];
     }
   }
 
@@ -18332,7 +18339,7 @@ function workHTML(pendingOp) {
         + `<div class="line${w.fresh ? " fresh" : ""}">${lineHTML(w.text)}</div></div></div>`;
     } else if (w.kind === "bad") {
       html += `<div class="wrow solo"><div class="wleft">`
-        + `<div class="opbad${w.fresh ? " fresh" : ""}">${esc(w.text)}</div></div></div>`;
+        + `<div class="opbad${w.fresh ? " fresh" : ""}">${nb(w.text)}</div></div></div>`;
     }
   }
   if (pendingOp) {
@@ -18460,6 +18467,10 @@ function renderStep() {
       ? `<span class="cexpr">${nb(expr)}</span><span class="cop">${diffHTML(op, endsOp)}</span>`
       : diffHTML(c.text, endsAll);
     if (also) b.innerHTML += `<span class="also">＝ ${esc(also)}</span>`;
+    // 画面テスト（tools/screen_check.js）が正解のボタンを確実に選ぶための目印。
+    // JS のプロパティなので HTML には出ない。cur が既にグローバルなので、
+    // 生徒から見える情報が増えるわけではない。
+    b._choice = c;
     b.onclick = () => answer(c, b);
     box.appendChild(b);
   }
@@ -18804,7 +18815,7 @@ function renderResult(rec) {
       + `${slipped ? " ・ 途中で1回えらび直したので、一発正解にはなりません" : ""}</p>`
       + (bossKill ? `<div class="bossdown">${BOSS_SVG}</div>` : "");
     if (bossKill) { Sound.play("bossDown"); Sound.mood("calm"); }
-    detail.innerHTML = `<p style="margin:0">答え: <b>${esc(cur.answer)}</b></p>`
+    detail.innerHTML = `<p style="margin:0">答え: <b>${nb(cur.answer)}</b></p>`
       + (lastOne ? `<p class="lead" style="margin:8px 0 0">このレベルの最終問題です。次でレベルが上がります。</p>` : "");
   } else if (rec.result === "unknown") {
     const step = cur.steps[(rec.failedStep || 1) - 1] || {};
@@ -18814,7 +18825,7 @@ function renderResult(rec) {
       + `<p class="sub">工程${rec.failedStep}で「わからない」を選びました。</p>`;
     picks.innerHTML = right
       ? `<div class="pick right"><span class="tag"><span class="mark">✓</span>正しかった方針</span>`
-        + `<span class="txt">${esc(right.text)}</span></div>` : "";
+        + `<span class="txt">${nb(right.text)}</span></div>` : "";
     detail.innerHTML =
       `<p style="margin:0 0 4px"><b>当てずっぽうを押さなかったのは正しい判断です。</b></p>`
       + `<p class="lead" style="margin:0">分からないことが分かっている、というのは記録として役に立ちます。</p>`
@@ -18842,14 +18853,14 @@ function renderResult(rec) {
     const right = (step.choices || []).find(c => c.correct);
     picks.innerHTML =
       `<div class="pick mine"><span class="tag"><span class="mark">✕</span>あなたが選んだ方針</span>`
-      + `<span class="txt">${esc(wrongChoiceText)}</span></div>`
+      + `<span class="txt">${nb(wrongChoiceText)}</span></div>`
       + (right ? `<div class="pick right"><span class="tag"><span class="mark">✓</span>正しかった方針</span>`
-        + `<span class="txt">${esc(right.text)}</span></div>` : "");
+        + `<span class="txt">${nb(right.text)}</span></div>` : "");
     detail.innerHTML =
-      `<p style="margin:0 0 4px">ここでつまずきました: <b>${esc(errName(rec.errorType))}</b></p>`
-      + `<p class="lead" style="margin:0">${esc(et.description || "")}</p>`
+      `<p style="margin:0 0 4px">ここでつまずきました: <b>${nb(errName(rec.errorType))}</b></p>`
+      + `<p class="lead" style="margin:0">${nb(et.description || "")}</p>`
       + (et.fix ? `<div class="fixbox"><span class="tag">次はこうする</span>`
-        + `<p>${esc(et.fix)}</p></div>` : "")
+        + `<p>${nb(et.fix)}</p></div>` : "")
       + `<p style="margin:12px 0 0">手がかりはここ: <b>${esc(errBack(rec.errorType))}</b>`
       + `<span class="lead"> ・ 教科書 ${esc(cur.textbook)}</span></p>`;
   }
@@ -19471,7 +19482,7 @@ function chartHTML(name, p) {
   const top = Object.entries(p.errors || {}).sort((a, b) => b[1] - a[1]).slice(0, 5);
   const stuck = top.length
     ? "<ul>" + top.map(([id, n]) =>
-        `<li><b>${esc(errName(id))}</b> ${n}回<br>`
+        `<li><b>${nb(errName(id))}</b> ${n}回<br>`
         + `<span class="lead">${esc((DATA.errorTypes[id] || {}).description || "")}</span><br>`
         + `<span class="todo">${toDoFor(id, p.solvedIds || [])}</span></li>`).join("") + "</ul>"
     : '<p class="none">まだつまずきの記録がありません。</p>';
@@ -19593,7 +19604,7 @@ function renderStats() {
   const es = Object.entries(S.errors).sort((a, b) => b[1] - a[1]);
   $("tblErrors").innerHTML = es.length
     ? ['<tr><th>つまずき</th><th>回数</th><th>戻るところ</th></tr>'].concat(
-        es.map(([id, n]) => `<tr><td>${esc(errName(id))}<br><code>${id}</code></td>`
+        es.map(([id, n]) => `<tr><td>${nb(errName(id))}<br><code>${id}</code></td>`
           + `<td class="num">${n}</td><td>${esc(errBack(id))}</td></tr>`)).join("")
     : '<tr><td>まだありません</td></tr>';
 
@@ -19619,7 +19630,7 @@ function renderStats() {
     ? ['<tr><th>問題</th><th>結果</th><th>工程</th><th>秒</th></tr>'].concat(
         S.history.slice().reverse().map(h =>
           `<tr><td><code>${disp(h.problemId)}</code></td><td>${label[h.result]}`
-          + `${h.errorType ? "<br><span class='lead'>" + esc(errName(h.errorType)) + "</span>" : ""}</td>`
+          + `${h.errorType ? "<br><span class='lead'>" + nb(errName(h.errorType)) + "</span>" : ""}</td>`
           + `<td class="num">${h.failedStep || "-"}</td>`
           + `<td class="num">${(h.elapsedMs / 1000).toFixed(1)}</td></tr>`)).join("")
     : '<tr><td>まだありません</td></tr>';
