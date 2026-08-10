@@ -1459,7 +1459,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 23:36</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 23:59</span>
   </p>
 </div>
 
@@ -2402,7 +2402,7 @@ const DATA = {
            "error_type": "E-EXPR-03"
           },
           {
-           "text": "a × 3 のまま",
+           "text": "a × 3",
            "correct": false,
            "error_type": "E-EXPR-03"
           }
@@ -3016,12 +3016,12 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "「大きい・多い」はたし算、「少ない」はひき算にする"
+          "「大きい・多い」はたし算にする"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "「大きい・多い」はたし算、「少ない」はひき算にする",
+           "text": "「大きい・多い」はたし算にする",
            "correct": true
           },
           {
@@ -4231,11 +4231,6 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "左から順。3 - 5 を先に計算して 2 × (-2) = -4",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
            "text": "ひき算が先。2 × (3 - 5) = -4",
            "correct": false,
            "error_type": "E-ORDER-02"
@@ -4265,7 +4260,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "×が省いてあるので 4 × x",
+           "text": "4 × x",
            "correct": true
           },
           {
@@ -4327,7 +4322,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "×が省いてあるので 3 × x",
+           "text": "3 × x",
            "correct": true
           },
           {
@@ -4417,11 +4412,6 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "左から順。3 - 5 を先に計算する",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
            "text": "ひき算が先。2 × (3 - 5) = -4",
            "correct": false,
            "error_type": "E-ORDER-02"
@@ -4451,7 +4441,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "÷を分数にしてあるので x ÷ 2",
+           "text": "x ÷ 2",
            "correct": true
           },
           {
@@ -4503,12 +4493,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "左から順。2 + 3 を先に計算する",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "たし算が先。(-4) ÷ 5 とする",
+           "text": "たし算が先。(-4) ÷ 5",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -4589,12 +4574,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "左から順。(-3) + 1 を先に計算する",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "たし算が先。(-3) × (-3 + 1) とする",
+           "text": "たし算が先。(-3) × (-3 + 1)",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -4673,11 +4653,6 @@ const DATA = {
           {
            "text": "かけ算が先。12 - 2 = 10",
            "correct": true
-          },
-          {
-           "text": "左から順。3 - 2 を先に計算する",
-           "correct": false,
-           "error_type": "E-ORDER-02"
           },
           {
            "text": "ひき算が先。3 × 2 × (2 - 2) = 0",
@@ -4761,12 +4736,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "左から順。(-3) + 5 を先に計算する",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "たし算が先。2 × (-3) × (-3 + 5) とする",
+           "text": "たし算が先。2 × (-3) × (-3 + 5)",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -4874,7 +4844,7 @@ const DATA = {
            "error_type": "E-EXPR-02"
           },
           {
-           "text": "文字もたして 7x^2",
+           "text": "文字どうしもかけて 7x^2",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -4998,7 +4968,7 @@ const DATA = {
            "error_type": "E-EXPR-02"
           },
           {
-           "text": "5x とまとめて -x",
+           "text": "5x とまとめて x",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -5542,7 +5512,7 @@ const DATA = {
            "error_type": "E-CALC-01"
           },
           {
-           "text": "4x とまとめて -1x",
+           "text": "4x とまとめて x",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -5776,7 +5746,7 @@ const DATA = {
            "error_type": "E-EXPR-02"
           },
           {
-           "text": "係数だけたして 2 + 7 = 9",
+           "text": "文字を消して、係数を全部たして 3 - 1 + 2 + 5 = 9",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -6328,7 +6298,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "すべて変わる（負をかけるので）",
+           "text": "すべて変わる",
            "correct": true
           },
           {
@@ -6485,7 +6455,7 @@ const DATA = {
            "error_type": "E-EXPR-02"
           },
           {
-           "text": "3 と -4x をまとめて -1x",
+           "text": "3 と -4x をまとめて -x",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -6566,7 +6536,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "2x と -3 をまとめて -1x",
+           "text": "2x と -3 をまとめて -x",
            "correct": false,
            "error_type": "E-EXPR-02"
           },
@@ -6877,7 +6847,7 @@ const DATA = {
            "error_type": "E-EXPR-02"
           },
           {
-           "text": "文字が消えるのはおかしいので、まとめない",
+           "text": "2x と -2x を、まとめずにそのまま残す",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -6914,16 +6884,16 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "= の右がわなので 7",
+           "text": "7",
            "correct": true
           },
           {
-           "text": "= の左がわの 2x - 1",
+           "text": "2x - 1",
            "correct": false,
            "error_type": "E-REL-01"
           },
           {
-           "text": "式ぜんぶの 2x - 1 = 7",
+           "text": "2x - 1 = 7",
            "correct": false,
            "error_type": "E-REL-01"
           }
@@ -7004,12 +6974,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "「〜になる」は、つなげて1つの式にする",
+           "text": "「〜になる」「〜と等しい」を ひき算にする",
            "correct": false,
            "error_type": "E-REL-01"
           },
           {
-           "text": "「〜になる」は、ひき算にする",
+           "text": "「〜になる」「〜と等しい」を かけ算にする",
            "correct": false,
            "error_type": "E-REL-01"
           }
@@ -7847,8 +7817,8 @@ const DATA = {
       {
        "id": "L1-A1",
        "difficulty": 0,
-       "question": "x = 3 を 2x = 6 に入れると、左辺は 6、右辺も 6 になりました。",
-       "answer": "両辺の値が等しいので、x = 3 は解",
+       "question": "x = 5 を 3x - 2 = 13 に入れると、左辺は 13、右辺も 13 になりました。",
+       "answer": "両辺の値が等しいので、x = 5 は解",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
@@ -7858,23 +7828,23 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "x = 3 は、この方程式の解ですか。",
+         "prompt": "x = 5 は、この方程式の解ですか。",
          "writes": [
-          "両辺の値が等しいので、x = 3 は解"
+          "両辺の値が等しいので、x = 5 は解"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "両辺の値が等しいので、x = 3 は解である",
+           "text": "両辺の値が等しいので、x = 5 は解である",
            "correct": true
           },
           {
-           "text": "左辺が 6 になったので、答えは 6 である",
+           "text": "両辺の値がちがうので、x = 5 は解ではない",
            "correct": false,
            "error_type": "E-MEAN-01"
           },
           {
-           "text": "計算ができたので、x = 3 は解である",
+           "text": "左辺が 13 になったので、答えは 13 である",
            "correct": false,
            "error_type": "E-MEAN-01"
           }
@@ -7893,12 +7863,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "計算ができれば、それが解である",
+           "text": "左辺と右辺の値を見くらべて、ちがえば解、等しければ解ではない",
            "correct": false,
            "error_type": "E-MEAN-01"
           },
           {
-           "text": "左辺の値が、そのまま解である",
+           "text": "左辺の値を、そのまま解にする",
            "correct": false,
            "error_type": "E-MEAN-01"
           }
@@ -7955,12 +7925,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "先に計算してから、文字に数をあてはめる",
+           "text": "文字に数をあてはめずに、そのままにしておく",
            "correct": false,
            "error_type": "E-SUB-01"
           },
           {
-           "text": "文字はそのままにして、数だけを計算する",
+           "text": "文字と数を、たし算する",
            "correct": false,
            "error_type": "E-SUB-01"
           }
@@ -7993,12 +7963,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "大きいほうの 2 を選ぶ",
+           "text": "1 と 2 のうち、大きいほうを選ぶ",
            "correct": false,
            "error_type": "E-MEAN-04"
           },
           {
-           "text": "左辺にある 2 と同じ 2 を選ぶ",
+           "text": "1 と 2 のうち、左辺の 2x にある 2 と同じほうを選ぶ",
            "correct": false,
            "error_type": "E-MEAN-04"
           }
@@ -8017,12 +7987,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "見た目が近いものを選ぶ",
+           "text": "候補のうち、いちばん大きいものを選ぶ",
            "correct": false,
            "error_type": "E-MEAN-04"
           },
           {
-           "text": "いちばん大きい候補を選ぶ",
+           "text": "候補のうち、式に出てくる数と同じものを選ぶ",
            "correct": false,
            "error_type": "E-MEAN-04"
           }
@@ -8726,7 +8696,7 @@ const DATA = {
            "error_type": "E-SUB-01"
           },
           {
-           "text": "式に出てくる数に近い候補を選ぶ",
+           "text": "候補を1つずつ左辺に代入して、右辺の 5 とちがう値になるものを探す",
            "correct": false,
            "error_type": "E-MEAN-04"
           }
@@ -8846,7 +8816,7 @@ const DATA = {
            "error_type": "E-MEAN-04"
           },
           {
-           "text": "左辺だけを見て、いちばん近いものを選ぶ",
+           "text": "それぞれの方程式に x = -4 を代入して、左辺だけを見て決める",
            "correct": false,
            "error_type": "E-MEAN-04"
           }
@@ -8981,21 +8951,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "ひかれている数は、両辺にたして消す"
+          "ひいてある数は、両辺にたすと消える"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "ひかれている数は、両辺にたして消す",
+           "text": "ひいてある数は、両辺にたすと消える",
            "correct": true
           },
           {
-           "text": "ひかれている数は、両辺からひいて消す",
+           "text": "ひいてある数は、両辺からひくと消える",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "ひかれている数は、両辺でわって消す",
+           "text": "ひいてある数は、両辺でわると消える",
            "correct": false,
            "error_type": "E-PROP-02"
           }
@@ -9024,11 +8994,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "逆の操作をして、両辺から 2 をひく",
+           "text": "両辺から 2 をひく",
            "correct": true
           },
           {
-           "text": "同じ操作をして、両辺に 2 をたす",
+           "text": "両辺に 2 をたす",
            "correct": false,
            "error_type": "E-PROP-01"
           },
@@ -9043,21 +9013,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "消したい操作の、逆の操作を両辺にする"
+          "たしてある数はひき、かけてある数はわる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "消したい操作の、逆の操作を両辺にする",
+           "text": "たしてある数はひき、かけてある数はわる",
            "correct": true
           },
           {
-           "text": "消したい数と、同じ操作を両辺にする",
+           "text": "たしてある数はたし、かけてある数はかける",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "左辺だけに、逆の操作をする",
+           "text": "たしてある数もかけてある数も、ひけば消える",
            "correct": false,
            "error_type": "E-PROP-03"
           }
@@ -9105,21 +9075,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "かけられている数は、両辺をわって消す"
+          "かけてある数は、両辺をわると消える"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "かけられている数は、両辺をわって消す",
+           "text": "かけてある数は、両辺をわると消える",
            "correct": true
           },
           {
-           "text": "かけられている数は、両辺からひいて消す",
+           "text": "かけてある数は、両辺からひくと消える",
            "correct": false,
            "error_type": "E-PROP-02"
           },
           {
-           "text": "かけられている数は、両辺にかけて消す",
+           "text": "かけてある数は、両辺にかけると消える",
            "correct": false,
            "error_type": "E-PROP-01"
           }
@@ -9167,21 +9137,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "わられている数は、両辺にかけて消す"
+          "わってある数は、両辺にかけると消える"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "わられている数は、両辺にかけて消す",
+           "text": "わってある数は、両辺にかけると消える",
            "correct": true
           },
           {
-           "text": "わられている数は、両辺をわって消す",
+           "text": "わってある数は、両辺をわると消える",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "わられている数は、両辺にたして消す",
+           "text": "わってある数は、両辺にたすと消える",
            "correct": false,
            "error_type": "E-PROP-02"
           }
@@ -9229,21 +9199,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "たされている数は、両辺からひいて消す"
+          "たしてある数は、両辺からひくと消える"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "たされている数は、両辺からひいて消す",
+           "text": "たしてある数は、両辺からひくと消える",
            "correct": true
           },
           {
-           "text": "たされている数は、両辺にたして消す",
+           "text": "たしてある数は、両辺にたすと消える",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "たされている数は、両辺でわって消す",
+           "text": "たしてある数は、両辺でわると消える",
            "correct": false,
            "error_type": "E-PROP-02"
           }
@@ -9272,16 +9242,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "たされている +1 を先に消す",
+           "text": "たしてある +1 を先に消す",
            "correct": true
           },
           {
-           "text": "かけられている 3 を先に消す",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          },
-          {
-           "text": "先に目についた 3 から消す",
+           "text": "かけてある 3 を先に消す",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -9291,21 +9256,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "たされている数を先に消し、かけられている数はあとで消す"
+          "たしてある数を先に消し、かけてある数はあとで消す"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "たされている数を先に消し、かけられている数はあとで消す",
+           "text": "たしてある数を先に消し、かけてある数はあとで消す",
            "correct": true
           },
           {
-           "text": "かけられている数を先に消し、たされている数はあとで消す",
+           "text": "かけてある数を先に消し、たしてある数はあとで消す",
            "correct": false,
            "error_type": "E-ORDER-01"
           },
           {
-           "text": "どちらを先に消しても、出てくる式は同じになる",
+           "text": "たしてある数だけを消せば、それで終わりになる",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -11618,7 +11583,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -5 とする",
+           "text": "何もせずに、-x = 5 のまま答えにする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -11953,7 +11918,7 @@ const DATA = {
            "error_type": "E-RATIO-01"
           },
           {
-           "text": "9 と 3 が対応するので、x は 5 と同じと考える",
+           "text": "x と 5 が対応するので、x は 5 と同じと考える",
            "correct": false,
            "error_type": "E-RATIO-02"
           }
@@ -12517,12 +12482,12 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "「大きい・多い」はたし算、「少ない」はひき算にする"
+          "「大きい・多い」はたし算にする"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "「大きい・多い」はたし算、「少ない」はひき算にする",
+           "text": "「大きい・多い」はたし算にする",
            "correct": true
           },
           {
@@ -12652,12 +12617,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "「〜になる」は、つないで1つの式にするだけでよい",
+           "text": "「〜になる」「〜と等しい」を ひき算に置きかえる",
            "correct": false,
            "error_type": "E-REL-01"
           },
           {
-           "text": "「〜になる」は、たし算に置きかえる",
+           "text": "「〜になる」「〜と等しい」を かけ算に置きかえる",
            "correct": false,
            "error_type": "E-REL-01"
           }
@@ -12691,12 +12656,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "3x = 8",
+           "text": "どちらも同じ数を表しているので、3x = 8",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "3x + 8 = x",
+           "text": "どちらも同じ数を表しているので、3x + 8 = x",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -13109,7 +13074,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "「もとの数」と「ある数」は別のものなので、2つの文字でおく",
+           "text": "もとの数とある数を、それぞれ別の文字でおく",
            "correct": false,
            "error_type": "E-WORD-01"
           },
@@ -14286,7 +14251,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -18 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -18 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -14398,12 +14363,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "5x + 14 = 6x + 10",
+           "text": "どちらもあめの全部の数なので、5x + 14 = 6x + 10",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "5x + 14 + 6x - 10 = 0",
+           "text": "どちらもあめの全部の数なので、5x + 14 + 6x - 10 = 0",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -14447,7 +14412,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -24 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -24 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -14559,12 +14524,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "3x + 5 = 4x + 3",
+           "text": "どちらもえんぴつの全部の本数なので、3x + 5 = 4x + 3",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "3x - 5 = 4x + 3",
+           "text": "どちらもえんぴつの全部の本数なので、3x - 5 = 4x + 3",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -14608,7 +14573,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -8 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -8 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -14720,12 +14685,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "2x + 9 = 3x + 4",
+           "text": "どちらもノートの全部の冊数なので、2x + 9 = 3x + 4",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "2x - 9 = 3x + 4",
+           "text": "どちらもノートの全部の冊数なので、2x - 9 = 3x + 4",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -14769,7 +14734,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -13 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -13 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -14881,12 +14846,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "300x + 700 = 400x + 2200",
+           "text": "どちらも記念品の代金なので、300x + 700 = 400x + 2200",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "300x - 700 = 400x + 2200",
+           "text": "どちらも記念品の代金なので、300x - 700 = 400x + 2200",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -15042,12 +15007,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "600x + 1500 = 800x + 3100",
+           "text": "どちらもクラス会の費用なので、600x + 1500 = 800x + 3100",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "600x - 1500 = 800x + 3100",
+           "text": "どちらもクラス会の費用なので、600x - 1500 = 800x + 3100",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -15208,12 +15173,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "4x + 9 = 5(x - 1) - 2",
+           "text": "どちらも生徒の人数なので、4x + 9 = 5(x - 1) - 2",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "4x - 9 = 5(x - 1) + 2",
+           "text": "どちらも生徒の人数なので、4x - 9 = 5(x - 1) + 2",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -15281,7 +15246,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -12 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -12 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -15373,7 +15338,7 @@ const DATA = {
            "error_type": "E-WORD-02"
           },
           {
-           "text": "1 脚あまるだけなので、x 脚のまま",
+           "text": "x 脚",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -15393,12 +15358,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "6x + 7 = 7x",
+           "text": "どちらも生徒の人数なので、6x + 7 = 7x",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "6x + 7 = 7(x + 1)",
+           "text": "どちらも生徒の人数なので、6x + 7 = 7(x + 1)",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -15466,7 +15431,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -14 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -14 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -15731,7 +15696,7 @@ const DATA = {
            "error_type": "E-RATIO-02"
           },
           {
-           "text": "比が等しいときは、大きいほうの比だけを使う",
+           "text": "比が等しいときは、2つの比のうち片方だけを使う",
            "correct": false,
            "error_type": "E-RATIO-02"
           }
@@ -15868,7 +15833,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "15x（道のり = 速さ × 時間）",
+           "text": "15x",
            "correct": true
           },
           {
@@ -16272,7 +16237,7 @@ const DATA = {
            "error_type": "E-WORD-05"
           },
           {
-           "text": "50x - 40(17 - x) = 800",
+           "text": "2つの道のりの差が 800m なので、50x - 40(17 - x) = 800",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -16457,7 +16422,7 @@ const DATA = {
            "error_type": "E-WORD-05"
           },
           {
-           "text": "x/80 - x/50 = 52",
+           "text": "行きと帰りの時間の差が 52 分なので、x/80 - x/50 = 52",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -16637,7 +16602,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "x/70 + 9 = x/100",
+           "text": "かかった時間の差が 9 分なので、x/70 + 9 = x/100",
            "correct": false,
            "error_type": "E-WORD-02"
           },
@@ -16851,7 +16816,7 @@ const DATA = {
            "error_type": "E-WORD-05"
           },
           {
-           "text": "5x + 4(22 - x) = 5",
+           "text": "2つの道のりの合計が 5 なので、5x + 4(22 - x) = 5",
            "correct": false,
            "error_type": "E-WORD-05"
           }
@@ -16943,7 +16908,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺に -1 をかけずに、そのまま x = -10 とする",
+           "text": "両辺を -1 でわらずに、そのまま x = -10 とする",
            "correct": false,
            "error_type": "E-CALC-03"
           },
@@ -17041,7 +17006,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "同じ時刻なので高さと影の比は等しいので、2:5 = x:20",
+           "text": "同じ時刻なら高さと影の比は等しいので、2:5 = x:20",
            "correct": true
           },
           {
@@ -17187,7 +17152,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "同じ味にするので比が等しいので、150:80 = x:120",
+           "text": "同じ味にするには比が等しいので、150:80 = x:120",
            "correct": true
           },
           {
