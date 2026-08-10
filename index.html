@@ -286,6 +286,11 @@
   /* かけるの記号。文字の x と見分けやすくするため、細く小さく置く。 */
   .mul { color: var(--muted); font-weight: 400; font-size: .82em; padding: 0 .08em; }
   sup { font-size: .66em; vertical-align: super; line-height: 0; }
+  /* 0段目（方針をおぼえる）の札。準備問題とは色を変える */
+  .modeTag.atom {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border-color: var(--accent); color: var(--accent);
+  }
   /* 準備問題（ことばと式を合わせる）であることを示す小さな札 */
   .modeTag {
     display: inline-block; margin: 0 0 8px; padding: 3px 10px; border-radius: 99px;
@@ -1299,7 +1304,7 @@
       <!-- 考える段。選択肢を見る前に、自分で方針を決めてもらう -->
       <div id="thinkBox">
         <button class="think" id="btnThink">決めた（選択肢を見る）</button>
-        <p class="thinknote">解答をよく見て、<b>次に何をするか</b>を頭の中で決めてから押してください。</p>
+        <p class="thinknote" id="thinkNote">解答をよく見て、<b>次に何をするか</b>を頭の中で決めてから押してください。</p>
       </div>
       <p class="retry hide" id="retryNote"></p>
       <div id="choices" class="hide"></div>
@@ -1448,7 +1453,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 13:41</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 17:02</span>
   </p>
 </div>
 
@@ -4441,6 +4446,234 @@ const DATA = {
      "textbook": "p.77-79",
      "steps_done": true,
      "problems": [
+      {
+       "id": "L5-A1",
+       "difficulty": 0,
+       "question": "文字のついた式に、数をかけます。どこにかけますか。",
+       "answer": "数のところ（係数）だけにかける",
+       "estimated_seconds": 20,
+       "mode": "atom",
+       "timeout_seconds": 45,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しいのはどれですか。",
+         "writes": [
+          "数のところ（係数）だけにかける"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数のところ（係数）だけにかける",
+           "correct": true
+          },
+          {
+           "text": "数にも文字にも、両方にかける",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "文字のところだけにかける",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-A2",
+       "difficulty": 0,
+       "question": "文字のついた式を、数でわります。どこをわりますか。",
+       "answer": "数のところ（係数）だけをわる",
+       "estimated_seconds": 20,
+       "mode": "atom",
+       "timeout_seconds": 45,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しいのはどれですか。",
+         "writes": [
+          "数のところ（係数）だけをわる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数のところ（係数）だけをわる",
+           "correct": true
+          },
+          {
+           "text": "数も文字も、両方をわる",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "文字のところだけをわる",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-A3",
+       "difficulty": 0,
+       "question": "かっこの前に数があります。その数は、かっこの中のどこにかかりますか。",
+       "answer": "中のすべての項にかかる",
+       "estimated_seconds": 22,
+       "mode": "atom",
+       "timeout_seconds": 48,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しいのはどれですか。",
+         "writes": [
+          "中のすべての項にかかる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "中のすべての項にかかる",
+           "correct": true
+          },
+          {
+           "text": "中の、いちばん前の項だけにかかる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "中の、いちばんうしろの項だけにかかる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-A4",
+       "difficulty": 0,
+       "question": "かっこの前についている数が負のとき、かっこの中の符号はどうなりますか。",
+       "answer": "中のすべての項の符号が変わる",
+       "estimated_seconds": 22,
+       "mode": "atom",
+       "timeout_seconds": 48,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しいのはどれですか。",
+         "writes": [
+          "中のすべての項の符号が変わる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "中のすべての項の符号が変わる",
+           "correct": true
+          },
+          {
+           "text": "符号は何も変わらない",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "いちばん前の項の符号だけが変わる",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-A5",
+       "difficulty": 0,
+       "question": "かっこのついた式を、数でわります。どこをわりますか。",
+       "answer": "中のすべての項をわる",
+       "estimated_seconds": 22,
+       "mode": "atom",
+       "timeout_seconds": 48,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しいのはどれですか。",
+         "writes": [
+          "中のすべての項をわる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "中のすべての項をわる",
+           "correct": true
+          },
+          {
+           "text": "中の、いちばん前の項だけをわる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "かっこの外に数を書いてから、あとで考える",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-A6",
+       "difficulty": 0,
+       "question": "分数の形をした式に、数をかけます。まず何を見ますか。",
+       "answer": "分母とかける数が、やくぶんできるかを見る",
+       "estimated_seconds": 24,
+       "mode": "atom",
+       "timeout_seconds": 52,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しいのはどれですか。",
+         "writes": [
+          "分母とかける数が、やくぶんできるかを見る"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分母とかける数が、やくぶんできるかを見る",
+           "correct": true
+          },
+          {
+           "text": "分子と分母の両方に、その数をかける",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          },
+          {
+           "text": "先に分母を消してから、あとで考える",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        }
+       ]
+      },
       {
        "id": "L5-01",
        "difficulty": 1,
@@ -9648,6 +9881,30 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
+         "prompt": "文章題では、はじめに「何を x とおくか」を決めます。ふつう、何を x とおきますか。",
+         "writes": [
+          "聞かれているものを x とおく"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "聞かれているもの（求めたいもの）を x とおく",
+           "correct": true
+          },
+          {
+           "text": "文章に出てくる、いちばん最初の数を x とおく",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          },
+          {
+           "text": "文章に出てくる、いちばん大きい数を x とおく",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
          "prompt": "3x + 2 が表しているのはどれですか。",
          "writes": [
           "3x + 2 は、x を 3倍して 2 をたした数"
@@ -10454,12 +10711,12 @@ const DATA = {
          "step_no": 4,
          "prompt": "この方程式を解きます。まず何をしますか。",
          "writes": [
-          "x + x + 2 = 36"
+          "2x + 2 = 36"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "かっこを外す",
+           "text": "かっこを外して、左辺の x の項をまとめる",
            "correct": true
           },
           {
@@ -10476,30 +10733,6 @@ const DATA = {
         },
         {
          "step_no": 5,
-         "prompt": "次に何をしますか。",
-         "writes": [
-          "2x + 2 = 36"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "左辺の x の項をまとめる",
-           "correct": true
-          },
-          {
-           "text": "左辺の x と数をまとめて 1つの項にする",
-           "correct": false,
-           "error_type": "E-EXPR-02"
-          },
-          {
-           "text": "両辺を 2 でわる",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          }
-         ]
-        },
-        {
-         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "2x = 34"
@@ -10523,7 +10756,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 7,
+         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 17",
@@ -10648,12 +10881,12 @@ const DATA = {
          "step_no": 4,
          "prompt": "この方程式を解きます。まず何をしますか。",
          "writes": [
-          "x + x + 6 = 28"
+          "2x + 6 = 28"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "かっこを外す",
+           "text": "かっこを外して、左辺の x の項をまとめる",
            "correct": true
           },
           {
@@ -10670,30 +10903,6 @@ const DATA = {
         },
         {
          "step_no": 5,
-         "prompt": "次に何をしますか。",
-         "writes": [
-          "2x + 6 = 28"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "左辺の x の項をまとめる",
-           "correct": true
-          },
-          {
-           "text": "左辺の x と数をまとめて 1つの項にする",
-           "correct": false,
-           "error_type": "E-EXPR-02"
-          },
-          {
-           "text": "両辺を 2 でわる",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          }
-         ]
-        },
-        {
-         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "2x = 22"
@@ -10717,7 +10926,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 7,
+         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 11",
@@ -11863,31 +12072,7 @@ const DATA = {
         },
         {
          "step_no": 3,
-         "prompt": "5 人ずつ座ると、最後の 1 脚だけ 2 人です。5 人が座った長いすは何脚ですか。",
-         "writes": [
-          "5 人座ったのは x - 1 脚"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "x - 1 脚",
-           "correct": true
-          },
-          {
-           "text": "x 脚",
-           "correct": false,
-           "error_type": "E-WORD-02"
-          },
-          {
-           "text": "x + 1 脚",
-           "correct": false,
-           "error_type": "E-WORD-02"
-          }
-         ]
-        },
-        {
-         "step_no": 4,
-         "prompt": "5 人ずつ座ったときは、どうなりますか。最後の 1 脚だけ 2 人です。",
+         "prompt": "5 人ずつ座ると、最後の 1 脚だけ 2 人です。5 人が座った長いすは x - 1 脚です。生徒の人数を x で表すとどうなりますか。",
          "writes": [
           "5 人ずつのとき 5(x - 1) + 2"
          ],
@@ -11915,7 +12100,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 5,
+         "step_no": 4,
          "prompt": "等式にすると、どうなりますか。",
          "writes": [
           "どちらも生徒の人数なので",
@@ -11940,15 +12125,15 @@ const DATA = {
          ]
         },
         {
-         "step_no": 6,
+         "step_no": 5,
          "prompt": "この方程式を解きます。まず何をしますか。",
          "writes": [
-          "4x + 9 = 5x - 5 + 2"
+          "4x + 9 = 5x - 3"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "右辺のかっこを外す",
+           "text": "右辺のかっこを外して、数の項をまとめる",
            "correct": true
           },
           {
@@ -11964,31 +12149,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 7,
-         "prompt": "次に何をしますか。",
-         "writes": [
-          "4x + 9 = 5x - 3"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "右辺の数の項をまとめる",
-           "correct": true
-          },
-          {
-           "text": "右辺の 5x と -5 をまとめて 0 とする",
-           "correct": false,
-           "error_type": "E-EXPR-02"
-          },
-          {
-           "text": "5x を左辺に移項する",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          }
-         ]
-        },
-        {
-         "step_no": 8,
+         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "-x = -12"
@@ -12012,7 +12173,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 9,
+         "step_no": 7,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 12",
@@ -12798,12 +12959,12 @@ const DATA = {
          "step_no": 7,
          "prompt": "次に何をしますか。",
          "writes": [
-          "10x + 680 = 800"
+          "10x = 120"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "左辺の x の項をまとめる",
+           "text": "左辺の x の項をまとめて、680 を右辺に移項する",
            "correct": true
           },
           {
@@ -12820,30 +12981,6 @@ const DATA = {
         },
         {
          "step_no": 8,
-         "prompt": "次に何をしますか。",
-         "writes": [
-          "10x = 120"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "680 を右辺に移項する",
-           "correct": true
-          },
-          {
-           "text": "680 を、符号を変えずにそのまま右辺に書く",
-           "correct": false,
-           "error_type": "E-TRANS-01"
-          },
-          {
-           "text": "両辺を 10 でわる",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          }
-         ]
-        },
-        {
-         "step_no": 9,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 12",
@@ -13425,12 +13562,12 @@ const DATA = {
          "step_no": 8,
          "prompt": "次に何をしますか。",
          "writes": [
-          "-x + 110 = 100"
+          "-x = -10"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "左辺の x の項をまとめる",
+           "text": "左辺の x の項をまとめて、110 を右辺に移項する",
            "correct": true
           },
           {
@@ -13447,30 +13584,6 @@ const DATA = {
         },
         {
          "step_no": 9,
-         "prompt": "次に何をしますか。",
-         "writes": [
-          "-x = -10"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "110 を右辺に移項する",
-           "correct": true
-          },
-          {
-           "text": "110 を、符号を変えずにそのまま右辺に書く",
-           "correct": false,
-           "error_type": "E-TRANS-01"
-          },
-          {
-           "text": "両辺を -1 でわる",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          }
-         ]
-        },
-        {
-         "step_no": 10,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 10",
@@ -13973,7 +14086,12 @@ const hist = () => S.history.filter(h => (h.chapter || "ch3") === S.chapter);
 
 const playable = () => LV.filter(l => l.steps_done);
 const levelOf = n => LV.find(l => l.level === n);
-const poolOf = n => (levelOf(n) || {problems: []}).problems;
+/* 難易度つきの10問。適応出題はここだけを見る。 */
+const poolOf = n => ((levelOf(n) || {problems: []}).problems).filter(p => p.mode !== "atom");
+/* 0段目。式も数字も使わず、方針そのものを覚える問題。
+   レベルに入ったとき、難易度つきの問題より先に、書いてある順で出す。
+   ねらいは、生徒がまずアトムをアトムとして受け取ること（オーナー構想・2026-08-10）。 */
+const atomsOf = n => ((levelOf(n) || {problems: []}).problems).filter(p => p.mode === "atom");
 const byId = id => LV.flatMap(l => l.problems).find(p => p.id === id);
 const errName = id => (DATA.errorTypes[id] || {}).name || id;
 // 生徒に見せる問題番号は「1-2」の形にする（L1-02 という書き方は伝わりにくい）
@@ -14006,7 +14124,9 @@ function mulSpan(html) {
     .replace(/\^(\d+)/g, (_, n) => `<sup>${n}</sup>`);
 }
 
-const disp = id => String(id).replace(/^L(\d+)-0?(\d+)$/, "$1-$2");
+const disp = id => String(id)
+  .replace(/^L(\d+)-A(\d+)$/, "$1-方針$2")     // 0段目
+  .replace(/^L(\d+)-0?(\d+)$/, "$1-$2");
 /* 戻り先。同じ誤りでも、いまの章によって戻る場所が変わることがある。
    「ことばと式の対応の誤り」は、2章で踏めば2章レベル1、3章なら3章レベル6。 */
 const errAlso = id => ((DATA.errorTypes[id] || {}).also || {})[S.chapter];
@@ -14050,6 +14170,17 @@ function selectNext() {
         + `レベル${returnTo}に戻ります。`
       : `レベル${lv}の復習中です（正解 ${correct}/${REVIEW_RULE.count}）。`;
     return pick;
+  }
+
+  // 0段目。このレベルの方針をまだ受け取っていないなら、そこから。
+  if (!P.freeReview) {
+    const all = atomsOf(P.level);
+    const left = all.filter(p => !P.solved.includes(p.id));
+    if (left.length) {
+      why = `レベル${P.level}で使う方針を、先に確かめます`
+          + `（${all.length - left.length + 1}／${all.length}）。式は出てきません。`;
+      return left[0];
+    }
   }
 
   const pool = poolOf(P.level);
@@ -14650,8 +14781,10 @@ function renderTrack(done, pool, shown) {
 
   // キャラクターを、いまの難易度のマスの上に移動させる
   const ch = $("charPos");
+  // 0段目（difficulty 0）は難易度のマスに乗らない。手前に置いて、
+  // これから1段目に入るところだと分かるようにする。
   const at = cur ? cur.difficulty : 1;
-  const left = ((at - 0.5) / pool.length * 100).toFixed(2) + "%";
+  const left = at === 0 ? "0%" : ((at - 0.5) / pool.length * 100).toFixed(2) + "%";
   if (ch.style.left !== left) {
     ch.style.left = left;
     ch.classList.remove("hop"); void ch.offsetWidth; ch.classList.add("hop");
@@ -14970,7 +15103,15 @@ function renderStep() {
   } else {
     gb.classList.add("hide");
   }
-  $("modeTag").classList.toggle("hide", cur.mode !== "input");
+  $("thinkNote").innerHTML = cur.mode === "atom"
+    ? "どうするのが正しいかを、<b>頭の中で決めてから</b>押してください。"
+    : "解答をよく見て、<b>次に何をするか</b>を頭の中で決めてから押してください。";
+  const mt = $("modeTag");
+  mt.classList.toggle("hide", cur.mode !== "input" && cur.mode !== "atom");
+  mt.classList.toggle("atom", cur.mode === "atom");
+  mt.textContent = cur.mode === "atom"
+    ? "方針をおぼえる — 式は出てきません"
+    : "準備 — ことばと式を合わせる";
   $("qText").innerHTML = nb(cur.question);
   // 工程の問いにも式が入る（「2x^2 の 2乗は」など）ので、問題文と同じ整形を通す
   $("sPrompt").innerHTML = `工程${s.step_no}: ` + nb(s.prompt);
