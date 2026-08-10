@@ -1453,7 +1453,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 19:05</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 19:19</span>
   </p>
 </div>
 
@@ -6227,6 +6227,192 @@ const DATA = {
      "steps_done": true,
      "problems": [
       {
+       "id": "L1-A1",
+       "difficulty": 0,
+       "question": "x = 3 を 2x = 6 に入れると、左辺は 6、右辺も 6 になりました。x = 3 は解ですか。",
+       "answer": "左辺と右辺の値を見くらべて、等しければ解、ちがえば解ではない",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺と右辺の値を見て、どう決めますか。",
+         "writes": [
+          "両辺の値が等しいので、x = 3 は解"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺の値が等しいので、x = 3 は解である",
+           "correct": true
+          },
+          {
+           "text": "左辺が 6 になったので、答えは 6 である",
+           "correct": false,
+           "error_type": "E-MEAN-01"
+          },
+          {
+           "text": "計算ができたので、x = 3 は解である",
+           "correct": false,
+           "error_type": "E-MEAN-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "左辺と右辺の値を見くらべて、等しければ解、ちがえば解ではない"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "左辺と右辺の値を見くらべて、等しければ解、ちがえば解ではない",
+           "correct": true
+          },
+          {
+           "text": "計算ができれば、それが解である",
+           "correct": false,
+           "error_type": "E-MEAN-01"
+          },
+          {
+           "text": "左辺の値が、そのまま解である",
+           "correct": false,
+           "error_type": "E-MEAN-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-A2",
+       "difficulty": 0,
+       "question": "x = 4 のとき、2x の値を求めなさい。",
+       "answer": "文字に数をあてはめてから、計算する",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず何をしますか。",
+         "writes": [
+          "2 × 4 = 8"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x に 4 をあてはめて 2 × 4 とする",
+           "correct": true
+          },
+          {
+           "text": "2 と 4 をたして 6 とする",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          },
+          {
+           "text": "2x のまま答えにする",
+           "correct": false,
+           "error_type": "E-MEAN-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "文字に数をあてはめてから、計算する"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字に数をあてはめてから、計算する",
+           "correct": true
+          },
+          {
+           "text": "先に計算してから、文字に数をあてはめる",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          },
+          {
+           "text": "文字はそのままにして、数だけを計算する",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-A3",
+       "difficulty": 0,
+       "question": "1, 2 のうち、方程式 2x = 4 の解はどちらですか。",
+       "answer": "候補をひとつずつあてはめて、両辺がそろうものを探す",
+       "estimated_seconds": 36,
+       "mode": "atom",
+       "timeout_seconds": 78,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "どうやって調べますか。",
+         "writes": [
+          "x = 2 のとき 2 × 2 = 4 で、右辺と等しい"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1 と 2 を順に左辺に入れて、右辺の 4 と等しくなるほうを探す",
+           "correct": true
+          },
+          {
+           "text": "大きいほうの 2 を選ぶ",
+           "correct": false,
+           "error_type": "E-MEAN-04"
+          },
+          {
+           "text": "左辺にある 2 と同じ 2 を選ぶ",
+           "correct": false,
+           "error_type": "E-MEAN-04"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "候補をひとつずつあてはめて、両辺がそろうものを探す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "候補をひとつずつあてはめて、両辺がそろうものを探す",
+           "correct": true
+          },
+          {
+           "text": "見た目が近いものを選ぶ",
+           "correct": false,
+           "error_type": "E-MEAN-04"
+          },
+          {
+           "text": "いちばん大きい候補を選ぶ",
+           "correct": false,
+           "error_type": "E-MEAN-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L1-01",
        "difficulty": 1,
        "question": "2x + 1 = 7 の x に 3 を代入すると、左辺はどうなりますか。",
@@ -7138,6 +7324,378 @@ const DATA = {
      "steps_done": true,
      "problems": [
       {
+       "id": "L2-A1",
+       "difficulty": 0,
+       "question": "方程式 x - 3 = 5 を解きます。",
+       "answer": "ひかれている数は、両辺にたして消す",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにするには、まず何をしますか。",
+         "writes": [
+          "x - 3 + 3 = 5 + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺に 3 をたす",
+           "correct": true
+          },
+          {
+           "text": "両辺から 3 をひく",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺を 3 でわる",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "ひかれている数は、両辺にたして消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ひかれている数は、両辺にたして消す",
+           "correct": true
+          },
+          {
+           "text": "ひかれている数は、両辺からひいて消す",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "ひかれている数は、両辺でわって消す",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A2",
+       "difficulty": 0,
+       "question": "方程式 x + 2 = 7 を解きます。",
+       "answer": "消したい操作の、逆の操作を両辺にする",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "なぜ「両辺から 2 をひく」のですか。",
+         "writes": [
+          "x + 2 - 2 = 7 - 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "+2 を消したいので、逆のひき算をする",
+           "correct": true
+          },
+          {
+           "text": "2 が小さいので、ひくとやりやすいから",
+           "correct": false,
+           "error_type": "E-PROP-05"
+          },
+          {
+           "text": "左辺に 2 があるので、右辺にも 2 をたすから",
+           "correct": false,
+           "error_type": "E-PROP-03"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "消したい操作の、逆の操作を両辺にする"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "消したい操作の、逆の操作を両辺にする",
+           "correct": true
+          },
+          {
+           "text": "消したい数と、同じ操作を両辺にする",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "左辺だけに、逆の操作をする",
+           "correct": false,
+           "error_type": "E-PROP-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A3",
+       "difficulty": 0,
+       "question": "方程式 5x = 20 を解きます。",
+       "answer": "かけられている数は、両辺をわって消す",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにするには、何をしますか。",
+         "writes": [
+          "5x ÷ 5 = 20 ÷ 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺を 5 でわる",
+           "correct": true
+          },
+          {
+           "text": "両辺から 5 をひく",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "両辺を 20 でわる",
+           "correct": false,
+           "error_type": "E-PROP-04"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "かけられている数は、両辺をわって消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かけられている数は、両辺をわって消す",
+           "correct": true
+          },
+          {
+           "text": "かけられている数は、両辺からひいて消す",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "かけられている数は、両辺にかけて消す",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A4",
+       "difficulty": 0,
+       "question": "方程式 x ÷ 3 = 2 を解きます。",
+       "answer": "わられている数は、両辺にかけて消す",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにするには、何をしますか。",
+         "writes": [
+          "x ÷ 3 × 3 = 2 × 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺に 3 をかける",
+           "correct": true
+          },
+          {
+           "text": "両辺を 3 でわる",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺に 3 をたす",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "わられている数は、両辺にかけて消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "わられている数は、両辺にかけて消す",
+           "correct": true
+          },
+          {
+           "text": "わられている数は、両辺をわって消す",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "わられている数は、両辺にたして消す",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A5",
+       "difficulty": 0,
+       "question": "方程式 x + 6 = 10 を解きます。",
+       "answer": "たされている数は、両辺からひいて消す",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにするには、何をしますか。",
+         "writes": [
+          "x + 6 - 6 = 10 - 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺から 6 をひく",
+           "correct": true
+          },
+          {
+           "text": "両辺に 6 をたす",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺を 6 でわる",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "たされている数は、両辺からひいて消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "たされている数は、両辺からひいて消す",
+           "correct": true
+          },
+          {
+           "text": "たされている数は、両辺にたして消す",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "たされている数は、両辺でわって消す",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A6",
+       "difficulty": 0,
+       "question": "方程式 3x + 1 = 7 を解きます。",
+       "answer": "たされている数を先に消し、かけられている数はあとで消す",
+       "estimated_seconds": 40,
+       "mode": "atom",
+       "timeout_seconds": 88,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2つの数を消します。どちらを先に消しますか。",
+         "writes": [
+          "3x + 1 - 1 = 7 - 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "たされている +1 を先に消す",
+           "correct": true
+          },
+          {
+           "text": "かけられている 3 を先に消す",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          },
+          {
+           "text": "どちらから消しても同じなので、3 から消す",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "たされている数を先に消し、かけられている数はあとで消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "たされている数を先に消し、かけられている数はあとで消す",
+           "correct": true
+          },
+          {
+           "text": "かけられている数を先に消し、たされている数はあとで消す",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          },
+          {
+           "text": "どちらを先に消しても、手間は変わらない",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L2-01",
        "difficulty": 1,
        "question": "x + 3 = 8 で「両辺から 3 をひく」と、式はどうなりますか。",
@@ -7734,6 +8292,130 @@ const DATA = {
      "textbook": "p.86-90",
      "steps_done": true,
      "problems": [
+      {
+       "id": "L3-A1",
+       "difficulty": 0,
+       "question": "方程式 x + 4 = 9 の +4 を、右辺にうつしなさい。",
+       "answer": "反対の辺へうつすと、符号が変わる",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.86-90",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "うつしたあとの式はどれですか。",
+         "writes": [
+          "x = 9 - 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x = 9 - 4",
+           "correct": true
+          },
+          {
+           "text": "x = 9 + 4",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "x = 4 - 9",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "反対の辺へうつすと、符号が変わる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "反対の辺へうつすと、符号が変わる",
+           "correct": true
+          },
+          {
+           "text": "反対の辺へうつしても、符号は変わらない",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "反対の辺へうつすと、左右が入れかわる",
+           "correct": false,
+           "error_type": "E-TRANS-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-A2",
+       "difficulty": 0,
+       "question": "方程式 4x - 1 = 2x + 5 を、解ける形に整えなさい。",
+       "answer": "文字の項を左辺に、数の項を右辺に集める",
+       "estimated_seconds": 40,
+       "mode": "atom",
+       "timeout_seconds": 88,
+       "textbook": "p.86-90",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "どの項を、どちらへうつしますか。",
+         "writes": [
+          "4x - 2x = 5 + 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x を左辺に、-1 を右辺にうつす",
+           "correct": true
+          },
+          {
+           "text": "2x を左辺に、+5 を左辺にうつす",
+           "correct": false,
+           "error_type": "E-TRANS-03"
+          },
+          {
+           "text": "4x を右辺に、+5 を右辺にうつす",
+           "correct": false,
+           "error_type": "E-TRANS-03"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "文字の項を左辺に、数の項を右辺に集める"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字の項を左辺に、数の項を右辺に集める",
+           "correct": true
+          },
+          {
+           "text": "文字の項も数の項も、まとめて左辺に集める",
+           "correct": false,
+           "error_type": "E-TRANS-03"
+          },
+          {
+           "text": "数の項を左辺に、文字の項を右辺に集める",
+           "correct": false,
+           "error_type": "E-TRANS-03"
+          }
+         ]
+        }
+       ]
+      },
       {
        "id": "L3-01",
        "difficulty": 1,
@@ -8391,6 +9073,130 @@ const DATA = {
      "textbook": "p.86-90",
      "steps_done": true,
      "problems": [
+      {
+       "id": "L4-A1",
+       "difficulty": 0,
+       "question": "方程式 0.4x = 1.2 から、小数をなくしなさい。",
+       "answer": "小数は、両辺すべての項に同じ数をかけて消す",
+       "estimated_seconds": 36,
+       "mode": "atom",
+       "timeout_seconds": 79,
+       "textbook": "p.86-90",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "小数をなくすには、何をしますか。",
+         "writes": [
+          "4x = 12"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺に 10 をかけて 4x = 12",
+           "correct": true
+          },
+          {
+           "text": "左辺だけに 10 をかけて 4x = 1.2",
+           "correct": false,
+           "error_type": "E-DEC-02"
+          },
+          {
+           "text": "両辺に 100 をかけて 40x = 12",
+           "correct": false,
+           "error_type": "E-DEC-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "小数は、両辺すべての項に同じ数をかけて消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "小数は、両辺すべての項に同じ数をかけて消す",
+           "correct": true
+          },
+          {
+           "text": "小数は、小数のついた項だけに数をかけて消す",
+           "correct": false,
+           "error_type": "E-DEC-02"
+          },
+          {
+           "text": "小数は、そのままにして解く",
+           "correct": false,
+           "error_type": "E-DEC-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-A2",
+       "difficulty": 0,
+       "question": "方程式 x/2 = 3 から、分母をなくしなさい。",
+       "answer": "分数は、両辺すべての項に分母をかけて消す",
+       "estimated_seconds": 36,
+       "mode": "atom",
+       "timeout_seconds": 79,
+       "textbook": "p.86-90",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "分母をなくすには、何をしますか。",
+         "writes": [
+          "x = 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺に 2 をかけて x = 6",
+           "correct": true
+          },
+          {
+           "text": "分子だけを取り出して x = 3",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          },
+          {
+           "text": "両辺を 2 でわって x = 1.5",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "分数は、両辺すべての項に分母をかけて消す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分数は、両辺すべての項に分母をかけて消す",
+           "correct": true
+          },
+          {
+           "text": "分数は、分数の項だけに分母をかけて消す",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          },
+          {
+           "text": "分数は、分子だけを取り出して消す",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        }
+       ]
+      },
       {
        "id": "L4-01",
        "difficulty": 1,
@@ -9192,6 +9998,68 @@ const DATA = {
      "steps_done": true,
      "problems": [
       {
+       "id": "L5-A1",
+       "difficulty": 0,
+       "question": "比例式 x:4 = 3:2 を、方程式に直しなさい。",
+       "answer": "外側どうし、内側どうしをかけて = で結ぶ",
+       "estimated_seconds": 38,
+       "mode": "atom",
+       "timeout_seconds": 84,
+       "textbook": "p.91-92",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "どこどうしをかけますか。",
+         "writes": [
+          "x × 2 = 4 × 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "外側どうし、内側どうしをかけて x × 2 = 4 × 3",
+           "correct": true
+          },
+          {
+           "text": "となりどうしをかけて x × 4 = 3 × 2",
+           "correct": false,
+           "error_type": "E-RATIO-01"
+          },
+          {
+           "text": "左どうし、右どうしをかけて x × 3 = 4 × 2",
+           "correct": false,
+           "error_type": "E-RATIO-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "外側どうし、内側どうしをかけて = で結ぶ"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "外側どうし、内側どうしをかけて = で結ぶ",
+           "correct": true
+          },
+          {
+           "text": "となりどうしをかけて = で結ぶ",
+           "correct": false,
+           "error_type": "E-RATIO-01"
+          },
+          {
+           "text": "左どうし、右どうしをかけて = で結ぶ",
+           "correct": false,
+           "error_type": "E-RATIO-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L5-01",
        "difficulty": 1,
        "question": "x:6 = 1:2 で「外側どうし、内側どうしをかける」と、式はどうなりますか。",
@@ -9966,6 +10834,384 @@ const DATA = {
      "textbook": "p.94-100",
      "steps_done": true,
      "problems": [
+      {
+       "id": "L6-A1",
+       "difficulty": 0,
+       "question": "ある数を x とします。「x より 3 大きい数」を式にしなさい。",
+       "answer": "「大きい・多い」はたし算、「少ない」はひき算にする",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "式にすると、どうなりますか。",
+         "writes": [
+          "x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x + 3",
+           "correct": true
+          },
+          {
+           "text": "3x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x - 3",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "「大きい・多い」はたし算、「少ない」はひき算にする"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "「大きい・多い」はたし算、「少ない」はひき算にする",
+           "correct": true
+          },
+          {
+           "text": "「大きい・多い」はかけ算にする",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "「大きい・多い」はひき算にする",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-A2",
+       "difficulty": 0,
+       "question": "「ある数を 5倍すると 20 になります。ある数を求めなさい」という問題があります。",
+       "answer": "聞かれているもの（求めたいもの）を x とおく",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "何を x とおきますか。",
+         "writes": [
+          "ある数を x とおく"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "求める「ある数」を x とおく",
+           "correct": true
+          },
+          {
+           "text": "問題に出てくる 5 を x とおく",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          },
+          {
+           "text": "答えの 20 を x とおく",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "聞かれているもの（求めたいもの）を x とおく"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "聞かれているもの（求めたいもの）を x とおく",
+           "correct": true
+          },
+          {
+           "text": "問題に出てくる、はじめの数を x とおく",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          },
+          {
+           "text": "いちばん大きい数を x とおく",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-A3",
+       "difficulty": 0,
+       "question": "「ある数を 5倍すると 20 になります」を、等式にしなさい。",
+       "answer": "「〜になる」「〜と等しい」を = に置きかえる",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "等式にすると、どうなりますか。",
+         "writes": [
+          "5x = 20"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "5x = 20",
+           "correct": true
+          },
+          {
+           "text": "5x + 20",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "x = 5 + 20",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "「〜になる」「〜と等しい」を = に置きかえる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "「〜になる」「〜と等しい」を = に置きかえる",
+           "correct": true
+          },
+          {
+           "text": "「〜になる」は、つないでひとつの式にするだけでよい",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "「〜になる」は、たし算に置きかえる",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-A4",
+       "difficulty": 0,
+       "question": "あめを x 人に配ります。3個ずつだと 15個、5個ずつだと 25個いります。あめの数を2通りで表しなさい。",
+       "answer": "同じ量を、ちがう見方で表したものどうしを = で結ぶ",
+       "estimated_seconds": 42,
+       "mode": "atom",
+       "timeout_seconds": 92,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この2つは何を表していますか。等式にするとどうなりますか。",
+         "writes": [
+          "3x = 15"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "どちらも配ったあめの数なので、3x = 15",
+           "correct": true
+          },
+          {
+           "text": "2つをたして 3x + 5x = 40",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "2つの差なので 5x - 3x = 10",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "同じ量を、ちがう見方で表したものどうしを = で結ぶ"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "同じ量を、ちがう見方で表したものどうしを = で結ぶ",
+           "correct": true
+          },
+          {
+           "text": "ちがう見方で表した式は、たしてひとつにする",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "ちがう見方で表した式は、ひいて差を求める",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-A5",
+       "difficulty": 0,
+       "question": "子どもが x 人います。1人に 4個ずつ配ると 3個あまりました。あめの数を式にしなさい。",
+       "answer": "余りはたし算、不足はひき算で、全体を表す",
+       "estimated_seconds": 38,
+       "mode": "atom",
+       "timeout_seconds": 84,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "あめの数を表す式はどれですか。",
+         "writes": [
+          "4x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "4x + 3",
+           "correct": true
+          },
+          {
+           "text": "4x - 3",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "4x × 3",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "余りはたし算、不足はひき算で、全体を表す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "余りはたし算、不足はひき算で、全体を表す",
+           "correct": true
+          },
+          {
+           "text": "余りも不足も、ひき算で全体を表す",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "余りも不足も、たし算で全体を表す",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-A6",
+       "difficulty": 0,
+       "question": "女子を x 人とします。男子は女子より 2人多いです。男子の人数を式にしなさい。",
+       "answer": "もう一つの数量も、x を使って表す",
+       "estimated_seconds": 36,
+       "mode": "atom",
+       "timeout_seconds": 79,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "男子の人数を x で表すと、どうなりますか。",
+         "writes": [
+          "x + 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x + 2",
+           "correct": true
+          },
+          {
+           "text": "x - 2",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "2x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "もう一つの数量も、x を使って表す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "もう一つの数量も、x を使って表す",
+           "correct": true
+          },
+          {
+           "text": "もう一つの数量には、別の文字を使う",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          },
+          {
+           "text": "もう一つの数量は、あとで数字を入れて考える",
+           "correct": false,
+           "error_type": "E-WORD-01"
+          }
+         ]
+        }
+       ]
+      },
       {
        "id": "L6-01",
        "difficulty": 1,
@@ -11104,6 +12350,69 @@ const DATA = {
      "textbook": "p.94-100",
      "steps_done": true,
      "problems": [
+      {
+       "id": "L7-A1",
+       "difficulty": 0,
+       "question": "長いすが x 脚あります。最後の 1 脚だけ使いません。使った長いすの数を式にしなさい。",
+       "answer": "「ひとつだけちがう」ときは、そのぶんを分けて表す",
+       "estimated_seconds": 38,
+       "mode": "atom",
+       "timeout_seconds": 84,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "使った長いすの数を x で表すと、どうなりますか。",
+         "writes": [
+          "使った長いすは x - 1 脚"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x - 1 脚",
+           "correct": true
+          },
+          {
+           "text": "x 脚",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x + 1 脚",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "「ひとつだけちがう」ときは、そのぶんを分けて表す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "「ひとつだけちがう」ときは、そのぶんを分けて表す",
+           "correct": true
+          },
+          {
+           "text": "「ひとつだけちがう」ときも、全部同じものとして表す",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "「ひとつだけちがう」ときは、そのぶんを無視してよい",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
       {
        "id": "L7-01",
        "difficulty": 1,
@@ -12536,6 +13845,258 @@ const DATA = {
      "textbook": "p.94-100",
      "steps_done": true,
      "problems": [
+      {
+       "id": "L8-A1",
+       "difficulty": 0,
+       "question": "分速 60m で x 分歩きました。進んだ道のりを式にしなさい。",
+       "answer": "道のりは、速さと時間をかけて求める",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "道のりを x で表すと、どうなりますか。",
+         "writes": [
+          "道のり = 60x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "60x",
+           "correct": true
+          },
+          {
+           "text": "60 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "x ÷ 60",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "道のりは、速さと時間をかけて求める"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "道のりは、速さと時間をかけて求める",
+           "correct": true
+          },
+          {
+           "text": "道のりは、速さを時間でわって求める",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "道のりは、時間を速さでわって求める",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L8-A2",
+       "difficulty": 0,
+       "question": "全部で 12km の道のりを、x km 進みました。残りの道のりを式にしなさい。",
+       "answer": "残りは「全体 − 進んだぶん」で表す",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "残りの道のりを x で表すと、どうなりますか。",
+         "writes": [
+          "残りは 12 - x km"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "12 - x km",
+           "correct": true
+          },
+          {
+           "text": "x - 12 km",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "12 + x km",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "残りは「全体 − 進んだぶん」で表す"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "残りは「全体 − 進んだぶん」で表す",
+           "correct": true
+          },
+          {
+           "text": "残りは「進んだぶん − 全体」で表す",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "残りは「全体 + 進んだぶん」で表す",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L8-A3",
+       "difficulty": 0,
+       "question": "x m の道のりを、分速 80m で歩きました。かかった時間を式にしなさい。",
+       "answer": "時間は、道のりを速さでわって求める",
+       "estimated_seconds": 36,
+       "mode": "atom",
+       "timeout_seconds": 79,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かかった時間を x で表すと、どうなりますか。",
+         "writes": [
+          "時間 = x/80 分"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x/80 分",
+           "correct": true
+          },
+          {
+           "text": "80x 分",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "80/x 分",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "時間は、道のりを速さでわって求める"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "時間は、道のりを速さでわって求める",
+           "correct": true
+          },
+          {
+           "text": "時間は、道のりと速さをかけて求める",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "時間は、速さを道のりでわって求める",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L8-A4",
+       "difficulty": 0,
+       "question": "棒の「高さ : 影」は 2:5 です。木の「高さ : 影」は x:20 です。同じ時刻なので、この比は等しくなります。",
+       "answer": "比が等しいときは、ふたつの比を = で結んで比例式にする",
+       "estimated_seconds": 40,
+       "mode": "atom",
+       "timeout_seconds": 88,
+       "textbook": "p.94-100",
+       "has_work": true,
+       "no_op_label": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "比例式にすると、どうなりますか。",
+         "writes": [
+          "2:5 = x:20"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2:5 = x:20",
+           "correct": true
+          },
+          {
+           "text": "2:5 = 20:x",
+           "correct": false,
+           "error_type": "E-RATIO-02"
+          },
+          {
+           "text": "2:x = 5:20",
+           "correct": false,
+           "error_type": "E-RATIO-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "比が等しいときは、ふたつの比を = で結んで比例式にする"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "比が等しいときは、ふたつの比を = で結んで比例式にする",
+           "correct": true
+          },
+          {
+           "text": "比が等しいときは、ふたつの比をたしてひとつにする",
+           "correct": false,
+           "error_type": "E-RATIO-02"
+          },
+          {
+           "text": "比が等しいときは、順番を入れかえてよい",
+           "correct": false,
+           "error_type": "E-RATIO-02"
+          }
+         ]
+        }
+       ]
+      },
       {
        "id": "L8-01",
        "difficulty": 1,
