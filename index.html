@@ -1453,7 +1453,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 20:27</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 21:46</span>
   </p>
 </div>
 
@@ -2229,7 +2229,7 @@ const DATA = {
            "error_type": "E-EXPR-07"
           },
           {
-           "text": "文字のならび順は、決まっていない",
+           "text": "文字は、あとから出てきたものを前に書く",
            "correct": false,
            "error_type": "E-EXPR-07"
           }
@@ -3993,34 +3993,34 @@ const DATA = {
       {
        "id": "L3-A3",
        "difficulty": 0,
-       "question": "x = 5 のとき、3x - 2 の値を求めなさい。",
-       "answer": "13",
+       "question": "x = 4 のとき、2 + 3x の値を求めなさい。",
+       "answer": "14",
        "estimated_seconds": 34,
        "mode": "atom",
        "timeout_seconds": 75,
        "textbook": "p.71-73",
        "has_work": true,
-       "solution_start": "3x - 2",
+       "solution_start": "2 + 3x",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "x に 5 をあてはめると 3 × 5 - 2 になります。どの順で計算しますか。",
+         "prompt": "x に 4 をあてはめると 2 + 3 × 4 になります。どの順で計算しますか。",
          "writes": [
-          "3 × 5 - 2 = 13"
+          "2 + 3 × 4 = 14"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "かけ算を先に計算して 15 - 2 = 13",
+           "text": "かけ算を先に計算して 2 + 12 = 14",
            "correct": true
           },
           {
-           "text": "ひき算を先に計算して 3 × 3 = 9",
+           "text": "書いてある順に計算して 2 + 3 = 5、5 × 4 = 20",
            "correct": false,
            "error_type": "E-ORDER-02"
           },
           {
-           "text": "3 から 2 をひいてから x をかけて 1 × 5 = 5",
+           "text": "2 と 3 をかけてから 4 をたして 6 + 4 = 10",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -4039,12 +4039,12 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "たし算・ひき算を、かけ算・わり算より先に計算する",
+           "text": "書いてある順に、左から計算する",
            "correct": false,
            "error_type": "E-ORDER-02"
           },
           {
-           "text": "左から順に計算する",
+           "text": "たし算・ひき算を、かけ算・わり算より先に計算する",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -6112,7 +6112,7 @@ const DATA = {
            "error_type": "E-DIST-01"
           },
           {
-           "text": "かっこの式を数でわるときは、かっこの外に書いてからあとで考える",
+           "text": "かっこの式を数でわるときは、かっこの中の数だけをわる",
            "correct": false,
            "error_type": "E-DIST-01"
           }
@@ -7065,7 +7065,7 @@ const DATA = {
            "error_type": "E-REL-02"
           },
           {
-           "text": "「以上・以下」は、大小が反対になる",
+           "text": "「以上・以下」は、= をつけずに表す",
            "correct": false,
            "error_type": "E-REL-02"
           }
@@ -7127,7 +7127,7 @@ const DATA = {
            "error_type": "E-REL-02"
           },
           {
-           "text": "「より大きい・より小さい」は、大小が反対になる",
+           "text": "「より大きい・より小さい」は、= をつけて表す",
            "correct": false,
            "error_type": "E-REL-02"
           }
@@ -9275,7 +9275,7 @@ const DATA = {
            "error_type": "E-ORDER-01"
           },
           {
-           "text": "どちらから消しても同じなので、3 から消す",
+           "text": "先に目についた 3 から消す",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -9299,7 +9299,7 @@ const DATA = {
            "error_type": "E-ORDER-01"
           },
           {
-           "text": "どちらを先に消しても、手間は変わらない",
+           "text": "どちらを先に消しても、出てくる式は同じになる",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -9958,7 +9958,7 @@ const DATA = {
            "error_type": "E-TRANS-01"
           },
           {
-           "text": "反対の辺へうつすと、左右が入れかわる",
+           "text": "反対の辺へうつせるのは数だけで、文字はうつせない",
            "correct": false,
            "error_type": "E-TRANS-02"
           }
@@ -12840,7 +12840,7 @@ const DATA = {
            "error_type": "E-WORD-01"
           },
           {
-           "text": "もう一つの数量は、あとで数字を入れて考える",
+           "text": "もう一つの数量は、式にしなくてよい",
            "correct": false,
            "error_type": "E-WORD-01"
           }
@@ -15725,7 +15725,7 @@ const DATA = {
            "error_type": "E-RATIO-02"
           },
           {
-           "text": "比が等しいときは、順番を入れかえてよい",
+           "text": "比が等しいときは、大きいほうの比だけを使う",
            "correct": false,
            "error_type": "E-RATIO-02"
           }
