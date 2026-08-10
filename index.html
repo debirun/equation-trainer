@@ -1213,7 +1213,9 @@
         <button data-m="off">🔇 音なし</button>
       </div>
       <p class="lead" style="margin-top:10px">
-        BGMは場面で変わります（ふだん／復習中のチャンス／ボス戦）。
+        BGMは場面で変わります（ふだん／復習中のチャンス／ボス戦）。<br>
+        音楽を選ぶと、曲を取りにいきます（3曲で 3.8MB）。1回きりで、
+        つぎからは端末に残ったものを使います。
       </p>
     </div>
 
@@ -1421,7 +1423,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 04:16</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 11:19</span>
   </p>
 </div>
 
@@ -2219,7 +2221,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこは、どうしますか。",
+         "prompt": "文字式の書き方に直します。かっこは、どうしますか。",
          "writes": [
           "4(x + 3)"
          ],
@@ -4076,7 +4078,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこの前が + のとき、中の符号はどうなりますか。",
+         "prompt": "かっこを外します。前が + のとき、中の符号はどうなりますか。",
          "writes": [
           "3x + 2 + x - 5"
          ],
@@ -4162,7 +4164,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこの前が − のとき、中の符号はどうなりますか。",
+         "prompt": "かっこを外します。前が − のとき、中の符号はどうなりますか。",
          "writes": [
           "5x + 1 - 2x - 4"
          ],
@@ -4248,7 +4250,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこを外すと、中の符号はどうなりますか。",
+         "prompt": "かっこを外します。中の符号はどうなりますか。",
          "writes": [
           "4x - 3 - x + 7 + 2x"
          ],
@@ -4334,7 +4336,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこを外すと、中の符号はどうなりますか。",
+         "prompt": "かっこを外します。中の符号はどうなりますか。",
          "writes": [
           "3a + 2b - a + 5b"
          ],
@@ -4428,7 +4430,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "4x に 3 をかけるとき、何にかけますか。",
+         "prompt": "4x に 3 をかけます。何にかけますか。",
          "writes": [
           "12x"
          ],
@@ -4547,7 +4549,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこの前が負のとき、中の符号はどうなりますか。",
+         "prompt": "かっこを外します。前が負のとき、中の符号はどうなりますか。",
          "writes": [
           "(-2) × x + (-2) × (-4)"
          ],
@@ -4571,7 +4573,7 @@ const DATA = {
         },
         {
          "step_no": 2,
-         "prompt": "両方にかけると、どうなりますか。",
+         "prompt": "かっこの中の両方にかけると、どうなりますか。",
          "writes": [
           "-2x + 8"
          ],
@@ -4609,7 +4611,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "わり算は、かっこの中のどこにかかりますか。",
+         "prompt": "かっこを外します。わり算は、中のどこにかかりますか。",
          "writes": [
           "6x ÷ 3 + 9 ÷ 3"
          ],
@@ -4733,7 +4735,7 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "わり算は、どこにかかりますか。",
+         "prompt": "かっこを外します。わり算は、中のどこにかかりますか。",
          "writes": [
           "8x ÷ 4 - 12 ÷ 4 + 3"
          ],
@@ -13955,6 +13957,13 @@ const hasError = (p, eid) =>
 /* BGMの譜面。8分音符8個で1小節、4小節で1周する。
    roots は小節ごとの低音、scale はメロディに使う音、mel は8分ごとの音（null は休み）。
    音量はどれも効果音より小さくしてある（じゃまをしないため）。 */
+/* 音源ファイルのBGM（BGMer https://bgmer.net/ ・商用可・クレジット不要・再配布可）。
+   置いてなければ取りにいって失敗し、下の合成版に自動で戻る。
+   Artifact版はここが必ず失敗するので、合成版で鳴る。 */
+const BGM_FILES = {calm: "bgm/calm.mp3", chance: "bgm/chance.mp3", boss: "bgm/boss.mp3"};
+/* 市販の曲は合成版よりずっと大きい。効果音を食わないところまで下げてある（実測でそろえた）。 */
+const BGM_FILE_VOL = 0.15;
+
 const BGM_SETS = {
   // ふだん。Am - F - C - G。ゆっくりで、メロディはまばら。
   calm: {
@@ -14128,22 +14137,106 @@ const Sound = {
     if (S2.hat[k]) this.hatAt(t, S2.hatVol);
   },
 
-  /* BGMの通り道。ローパスを1つ通して、効果音より後ろに聞こえるようにする。 */
+  /* BGMの通り道。ローパスを1つ通して、効果音より後ろに聞こえるようにする。
+     合成版は倍音がきついので 2.6kHz、音源ファイルは曲としてのバランスがあるので 7kHz。 */
   ensureBgmBus() {
     if (this.bgmGain) return;
     this.bgmGain = this.ctx.createGain();
     this.bgmGain.gain.value = 0;
-    const lp = this.ctx.createBiquadFilter();
-    lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.7;
-    this.bgmGain.connect(lp); lp.connect(this.master);
+    this.bgmLp = this.ctx.createBiquadFilter();
+    this.bgmLp.type = "lowpass"; this.bgmLp.frequency.value = 2600; this.bgmLp.Q.value = 0.7;
+    this.bgmGain.connect(this.bgmLp); this.bgmLp.connect(this.master);
+  },
+
+  /* ── 音源ファイルのBGM ─────────────────────────────────
+     GitHub Pages に移してファイルが置けるようになったので足した（2026-08-10）。
+     取りにいくのは「音楽も鳴らす」を選んだときだけ。既定は効果音だけなので、
+     ほとんどの生徒はダウンロードしない。
+     取れなかったとき（Artifact・通信断・置き忘れ）は、そのまま合成版に戻る。 */
+  bgmBuf: {},          // 場面 -> AudioBuffer
+  bgmSrc: null,        // いま鳴っている音源
+  bgmSrcGain: null,
+  bgmFileFail: false,  // 一度でも取れなかったら、以後は合成版だけ
+  bgmPlaying: null,    // ファイルで鳴らしている場面
+
+  async ensureBgmFile(mood) {
+    if (this.bgmBuf[mood]) return this.bgmBuf[mood];
+    if (this.bgmFileFail || !BGM_FILES[mood]) return null;
+    try {
+      const res = await fetch(BGM_FILES[mood]);
+      if (!res.ok) throw new Error(res.status);
+      const buf = await this.ctx.decodeAudioData(await res.arrayBuffer());
+      this.bgmBuf[mood] = buf;
+      return buf;
+    } catch (e) {
+      this.bgmFileFail = true;    // 合成版にまかせる
+      return null;
+    }
+  },
+
+  /* 場面を切りかえる。前の曲をしぼりながら次を上げる（1.2秒）。
+     合成版とちがって小節に合わせる必要はない。別の曲なので、そろえても意味がないため。 */
+  playBgmFile(mood, buf) {
+    const t = this.ctx.currentTime;
+    if (this.bgmSrc) {
+      const old = this.bgmSrc, og = this.bgmSrcGain;
+      og.gain.cancelScheduledValues(t);
+      og.gain.setValueAtTime(og.gain.value, t);
+      og.gain.linearRampToValueAtTime(0.0001, t + 1.2);
+      try { old.stop(t + 1.3); } catch (e) {}
+    }
+    const src = this.ctx.createBufferSource();
+    src.buffer = buf; src.loop = true;
+    const g = this.ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    // 市販の曲の大きさのままだと効果音を食うので、大きく下げる（実測でそろえた値）
+    g.gain.linearRampToValueAtTime(BGM_FILE_VOL, t + 1.2);
+    src.connect(g); g.connect(this.bgmGain);
+    src.start(t);
+    this.bgmSrc = src; this.bgmSrcGain = g; this.bgmPlaying = mood;
+  },
+
+  stopBgmFile() {
+    if (!this.bgmSrc) return;
+    const t = this.ctx.currentTime, src = this.bgmSrc, g = this.bgmSrcGain;
+    g.gain.cancelScheduledValues(t);
+    g.gain.setValueAtTime(g.gain.value, t);
+    g.gain.linearRampToValueAtTime(0.0001, t + 0.4);
+    try { src.stop(t + 0.5); } catch (e) {}
+    this.bgmSrc = null; this.bgmSrcGain = null; this.bgmPlaying = null;
+  },
+
+  /* ファイルで鳴らせるなら鳴らし、だめなら合成版を動かす。
+     取りにいっているあいだは無音（合成版を先に鳴らすと、あとで二重になる）。 */
+  async syncBgmFile() {
+    if (this.mode !== "all" || !this.ready()) return false;
+    const want = this.bgmPending || this.bgmMood || "calm";
+    const buf = await this.ensureBgmFile(want);
+    if (!buf) return false;
+    if (this.mode !== "all") return true;            // 取っているあいだに切られた
+    if (this.bgmPlaying !== want) this.playBgmFile(want, buf);
+    this.bgmMood = want;
+    return true;
   },
 
   startBgm() {
-    if (this.bgmTimer || !this.ready()) return;
+    if (!this.ready()) return;
     this.ensureBgmBus();
     this.bgmGain.gain.cancelScheduledValues(this.ctx.currentTime);
     this.bgmGain.gain.setValueAtTime(this.bgmGain.gain.value, this.ctx.currentTime);
     this.bgmGain.gain.linearRampToValueAtTime(1, this.ctx.currentTime + 1.2);   // 静かに入る
+
+    if (!this.bgmFileFail) {
+      this.bgmLp.frequency.value = 7000;
+      this.syncBgmFile().then(ok => { if (!ok) this.startSynthBgm(); });
+      return;
+    }
+    this.startSynthBgm();
+  },
+
+  startSynthBgm() {
+    if (this.bgmTimer || !this.ready()) return;
+    this.bgmLp.frequency.value = 2600;
     this.bgmNext = this.ctx.currentTime + 0.1;
     this.bgmTimer = setInterval(() => {
       if (!this.ready() || this.mode !== "all") return;
@@ -14163,6 +14256,7 @@ const Sound = {
 
   stopBgm() {
     clearInterval(this.bgmTimer); this.bgmTimer = null;
+    this.stopBgmFile();
     if (this.bgmGain && this.ctx) {
       this.bgmGain.gain.cancelScheduledValues(this.ctx.currentTime);
       this.bgmGain.gain.setValueAtTime(this.bgmGain.gain.value, this.ctx.currentTime);
@@ -14170,10 +14264,11 @@ const Sound = {
     }
   },
 
-  /* 場面を伝える。実際に曲が変わるのは次の小節のあたま。 */
+  /* 場面を伝える。合成版なら次の小節のあたまで、ファイルならその場でクロスフェードする。 */
   mood(name) {
     if (!BGM_SETS[name]) name = "calm";
     this.bgmPending = name;
+    if (this.mode === "all" && !this.bgmFileFail && this.bgmSrc) this.syncBgmFile();
   },
 
   setMode(m) {
@@ -15138,12 +15233,30 @@ const SAY_ALSO = [
 ];
 const alsoFor = t => (SAY_ALSO.find(([re]) => re.test(t)) || [])[1] || "";
 
+/* ペースは履歴から毎回calculateし直す。P.pace（クリア時の控え）は見ない。
+   控えを信じると、そこに入った値がまちがっていたときに永久に直らないため。
+   実際、全レベルが 0.00 のまま表示されていた（2026-08-10）。
+   clearStats はその問題の「最初の正解」を見るので、あとから復習しても値は動かない。 */
+function paceOf(lv) {
+  const st = clearStats(lv);
+  return {actual: st.actual, est: st.est, oneShot: st.oneShot, solved: st.solved};
+}
+
+/* 比べられるだけの記録があるレベルだけを返す。
+   時間の記録がないレベル（記録を消した、テスト用の移動で通過した等）に
+   0.00 の棒を立てると、「ものすごく速かった」と読めてしまう。 */
+function pacedLevels() {
+  const lvs = (P.cleared || []).slice().map(Number).sort((a, b) => a - b);
+  return lvs.map(n => [n, paceOf(n)]).filter(([, p]) => p.est > 0 && p.actual > 0);
+}
+
 /* ペースの推移。想定に対する比を、レベル順に並べる。低いほど速い＝棒が高い。
    レベルが変わっても比べられる唯一の指標なので、上達はここに出る。 */
 function paceRowHTML() {
-  const lvs = Object.keys(P.pace).map(Number).sort((a, b) => a - b);
-  if (lvs.length < 2) return "";
-  const rs = lvs.map(n => P.pace[n].actual / P.pace[n].est);
+  const rows = pacedLevels();
+  if (rows.length < 2) return "";
+  const lvs = rows.map(r => r[0]);
+  const rs = rows.map(([, p]) => p.actual / p.est);
   // 高さは実データの幅にそろえる。比の差が小さくても、伸びが見えるように。
   const best = Math.min(...rs), worst = Math.max(...rs);
   const span = Math.max(0.12, worst - best);
@@ -15289,6 +15402,8 @@ function renderClear(lv) {
 
   // ペースを記録する。想定に対する比だけが、レベルをまたいで比べられる指標。
   P.pace[lv] = {actual: st.actual, est: st.est, oneShot: st.oneShot};
+  // 過去に取りそこねた控えも、いまの履歴で上書きしておく
+  (P.cleared || []).forEach(n => { const x = paceOf(n); if (x.actual > 0) P.pace[n] = x; });
   const ratio = st.est ? st.actual / st.est : 1;
   const goal = P.goal && P.goal.level === lv ? P.goal : null;
 
@@ -15325,9 +15440,12 @@ function renderClear(lv) {
   const hasNext = nx && nx.steps_done;
 
   // 次のレベルの目標タイム。直近2レベルのペースを平均して当てる（1回のブレに引きずられないため）。
-  const recent = Object.keys(P.pace).map(Number).sort((a2, b2) => b2 - a2).slice(0, 2)
-    .map(n => P.pace[n]).filter(x => x.est);
-  const myRatio = recent.reduce((a2, x) => a2 + x.actual / x.est, 0) / (recent.length || 1);
+  // 時間の記録があるレベルだけを使う。1つもなければ「想定どおり」を目標にする（比 1.0）。
+  // ここで 0 を混ぜると目標タイムが 0分00秒 になる（2026-08-10 に実際に起きた）。
+  const recent = pacedLevels().map(r => r[1]).reverse().slice(0, 2);
+  const myRatio = recent.length
+    ? recent.reduce((a2, x) => a2 + x.actual / x.est, 0) / recent.length
+    : 1;
   if (hasNext) {
     const nextEst = poolOf(lv + 1).reduce((a2, q) => a2 + q.estimated_seconds, 0);
     P.goal = {level: lv + 1, sec: Math.round(nextEst * myRatio), ratio: myRatio};
@@ -15438,7 +15556,7 @@ function syncPayload() {
     oneShot: perChapter.reduce((a, c) => a + c.oneShot, 0),
     xp: S.xp, pl: plOf(S.xp),
     errors: S.errors,
-    pace: P.pace,
+    pace: Object.fromEntries(pacedLevels()),
     spentSec: Math.round(S.history.reduce((a, h) => a + (h.elapsedMs || 0), 0) / 1000),
     thinkRatio: tSum + pSum > 0 ? Math.round(tSum / (tSum + pSum) * 100) : null,
     unknownCount: S.history.filter(h => h.result === "unknown").length,
@@ -15737,9 +15855,9 @@ function summaryText() {
     const hs = hist().filter(h => h.problemId === id);
     return hs.length && hs[0].result === "correct";
   }).length;
-  const paces = Object.keys(P.pace).map(Number).sort((a, b) => a - b);
-  const pace = paces.length
-    ? paces.map(n => `L${n} ${(P.pace[n].actual / P.pace[n].est).toFixed(2)}`).join(" / ")
+  const paced = pacedLevels();
+  const pace = paced.length
+    ? paced.map(([n, x]) => `L${n} ${(x.actual / x.est).toFixed(2)}`).join(" / ")
     : "まだなし";
   const top = Object.entries(S.errors).sort((a, b) => b[1] - a[1]).slice(0, 3)
     .map(([id, n]) => `  ${errName(id)} ${n}回`).join("\n") || "  なし";
