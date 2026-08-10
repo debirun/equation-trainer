@@ -1448,7 +1448,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 11:56</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 13:41</span>
   </p>
 </div>
 
@@ -10454,12 +10454,12 @@ const DATA = {
          "step_no": 4,
          "prompt": "この方程式を解きます。まず何をしますか。",
          "writes": [
-          "2x + 2 = 36"
+          "x + x + 2 = 36"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "かっこを外して、左辺の x の項をまとめる",
+           "text": "かっこを外す",
            "correct": true
           },
           {
@@ -10476,6 +10476,30 @@ const DATA = {
         },
         {
          "step_no": 5,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "2x + 2 = 36"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "左辺の x の項をまとめる",
+           "correct": true
+          },
+          {
+           "text": "左辺の x と数をまとめて 1つの項にする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "両辺を 2 でわる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "2x = 34"
@@ -10499,7 +10523,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 6,
+         "step_no": 7,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 17",
@@ -10624,12 +10648,12 @@ const DATA = {
          "step_no": 4,
          "prompt": "この方程式を解きます。まず何をしますか。",
          "writes": [
-          "2x + 6 = 28"
+          "x + x + 6 = 28"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "かっこを外して、左辺の x の項をまとめる",
+           "text": "かっこを外す",
            "correct": true
           },
           {
@@ -10646,6 +10670,30 @@ const DATA = {
         },
         {
          "step_no": 5,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "2x + 6 = 28"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "左辺の x の項をまとめる",
+           "correct": true
+          },
+          {
+           "text": "左辺の x と数をまとめて 1つの項にする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "両辺を 2 でわる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 6,
          "prompt": "次に何をしますか。",
          "writes": [
           "2x = 22"
@@ -10669,7 +10717,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 6,
+         "step_no": 7,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 11",
@@ -11815,6 +11863,30 @@ const DATA = {
         },
         {
          "step_no": 3,
+         "prompt": "5 人ずつ座ると、最後の 1 脚だけ 2 人です。5 人が座った長いすは何脚ですか。",
+         "writes": [
+          "5 人座ったのは x - 1 脚"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x - 1 脚",
+           "correct": true
+          },
+          {
+           "text": "x 脚",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x + 1 脚",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 4,
          "prompt": "5 人ずつ座ったときは、どうなりますか。最後の 1 脚だけ 2 人です。",
          "writes": [
           "5 人ずつのとき 5(x - 1) + 2"
@@ -11843,7 +11915,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 4,
+         "step_no": 5,
          "prompt": "等式にすると、どうなりますか。",
          "writes": [
           "どちらも生徒の人数なので",
@@ -11868,15 +11940,15 @@ const DATA = {
          ]
         },
         {
-         "step_no": 5,
+         "step_no": 6,
          "prompt": "この方程式を解きます。まず何をしますか。",
          "writes": [
-          "4x + 9 = 5x - 3"
+          "4x + 9 = 5x - 5 + 2"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "右辺のかっこを外して整理する",
+           "text": "右辺のかっこを外す",
            "correct": true
           },
           {
@@ -11892,7 +11964,31 @@ const DATA = {
          ]
         },
         {
-         "step_no": 6,
+         "step_no": 7,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "4x + 9 = 5x - 3"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "右辺の数の項をまとめる",
+           "correct": true
+          },
+          {
+           "text": "右辺の 5x と -5 をまとめて 0 とする",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "5x を左辺に移項する",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 8,
          "prompt": "次に何をしますか。",
          "writes": [
           "-x = -12"
@@ -11916,7 +12012,7 @@ const DATA = {
          ]
         },
         {
-         "step_no": 7,
+         "step_no": 9,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 12",
@@ -12702,12 +12798,12 @@ const DATA = {
          "step_no": 7,
          "prompt": "次に何をしますか。",
          "writes": [
-          "10x = 120"
+          "10x + 680 = 800"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "左辺の x の項をまとめて、680 を右辺に移項する",
+           "text": "左辺の x の項をまとめる",
            "correct": true
           },
           {
@@ -12724,6 +12820,30 @@ const DATA = {
         },
         {
          "step_no": 8,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "10x = 120"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "680 を右辺に移項する",
+           "correct": true
+          },
+          {
+           "text": "680 を、符号を変えずにそのまま右辺に書く",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "両辺を 10 でわる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 9,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 12",
@@ -13305,12 +13425,12 @@ const DATA = {
          "step_no": 8,
          "prompt": "次に何をしますか。",
          "writes": [
-          "-x = -10"
+          "-x + 110 = 100"
          ],
          "show_op": true,
          "choices": [
           {
-           "text": "左辺の x の項をまとめて、110 を右辺に移項する",
+           "text": "左辺の x の項をまとめる",
            "correct": true
           },
           {
@@ -13327,6 +13447,30 @@ const DATA = {
         },
         {
          "step_no": 9,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "-x = -10"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "110 を右辺に移項する",
+           "correct": true
+          },
+          {
+           "text": "110 を、符号を変えずにそのまま右辺に書く",
+           "correct": false,
+           "error_type": "E-TRANS-01"
+          },
+          {
+           "text": "両辺を -1 でわる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 10,
          "prompt": "次に何をしますか。",
          "writes": [
           "x = 10",
