@@ -362,11 +362,35 @@
   .work .lhs { color: var(--fg); }
   .work .rhs { color: color-mix(in srgb, var(--accent) 78%, var(--fg)); }
 
+  /* 式を上に大きく、方針をその下に小さく。中1がまず式を見て、
+     そのあと「なぜそうなるか」を読めるようにするため（2026-08-10）。 */
+  .choice .cexpr {
+    display: block; font-size: 1.06em; font-weight: 800; line-height: 1.5;
+    letter-spacing: .01em;
+  }
+  .choice .cop {
+    display: block; margin-top: 2px; font-size: .84em; font-weight: 600;
+    color: var(--muted); line-height: 1.55;
+  }
+  button.choice.picked .cop { text-decoration: none; }
+
   /* 選択肢の下に添える言い換え */
   .choice .also {
     display: block; margin-top: 3px; font-size: .72rem; font-weight: 600;
     color: var(--muted); letter-spacing: .01em;
   }
+  /* 「わからない」が続いたときの知らせ。先生に見せるための枠 */
+  .stuckbox {
+    margin: 12px 0 0; padding: 11px 13px; border-radius: 10px;
+    border: 1px solid var(--warn); background: var(--warn-bg);
+  }
+  .stuckbox .tag {
+    display: block; font-size: .68rem; font-weight: 800; letter-spacing: .08em;
+    color: var(--warn); margin-bottom: 5px;
+  }
+  .stuckbox p { margin: 0 0 5px; font-size: .86rem; }
+  .stuckbox p:last-child { margin-bottom: 0; }
+
   /* 1回目の誤答。押しまちがいを救うための猶予 */
   .retry {
     margin: 0 0 10px; padding: 9px 12px; border-radius: 10px;
@@ -1424,7 +1448,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 11:40</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 11:56</span>
   </p>
 </div>
 
@@ -13674,6 +13698,9 @@ let WHOM = loadWho();
 // 連続である必要はない（連続を条件にすると復習が長引いてつらい・2026-08-08 オーナー判断）。
 // cap は、いつまでも復習から出られなくなるのを防ぐ上限（達したら理由を表示して戻す）。
 const REVIEW_RULE = {count: 2, cap: 10};
+/* 「わからない」が何問続いたら、先生につなぐか。
+   戻り先のないレベル（いちばん下）では、戻して解き直させることができないため。 */
+const STUCK_RUN = 3;
 
 /* 経験値。2周目をさせることに効く行動を厚くしている。
    工程より問題、問題より「つまずきの回収」、そして復習中は倍。 */
@@ -13884,11 +13911,26 @@ function selectNext() {
   const pool = poolOf(P.level);
   const solved = new Set(P.solved);
   const last = P.last;
+  // 直前の1問だけを避けても、2問を行ったり来たりしてしまう。
+  // 「わからない」を押しつづけたときに実際に起きた（2026-08-10）。
+  const recent = new Set(hist().slice(-3).map(h => h.problemId));
+  /* 候補から「ここ数問に出したもの」を外す。全部消えるなら外さない。 */
+  const notRecent = cands => {
+    const left = cands.filter(p => !recent.has(p.id));
+    return left.length ? left : cands;
+  };
 
   if (!last || last.level !== P.level) {
     why = `レベル${P.level}の最初の問題です。いちばん易しい難易度1から始めます。`;
     return pool.find(p => p.difficulty === 1) || pool[0];
   }
+
+  /* 難易度が実際にどう動いたかを、そのまま言う。
+     未正解の問題が下に残っていないと、下げるつもりでも上がることがある。 */
+  const sameOrDown = (from, to) =>
+    to < from ? `難易度を${from}から${to}に下げて、`
+      : to === from ? `難易度は${from}のまま、`
+        : `難易度${from}より下に未正解の問題がないので、難易度${to}で、`;
 
   const nearest = (cands, target) => cands.slice().sort((a, b) =>
     Math.abs(a.difficulty - target) - Math.abs(b.difficulty - target)
@@ -13896,15 +13938,15 @@ function selectNext() {
 
   if (last.result === "wrong") {
     const target = Math.max(1, last.difficulty - 1);
-    const same = pool.filter(p =>
-      p.id !== last.problemId && !solved.has(p.id) && hasError(p, last.errorType));
+    const same = notRecent(pool.filter(p =>
+      p.id !== last.problemId && !solved.has(p.id) && hasError(p, last.errorType)));
     if (same.length) {
       const pick = nearest(same, target);
       why = `直前に「${errName(last.errorType)}」で間違えたので、同じつまずきが起きうる`
           + `難易度${pick.difficulty}の問題を選びました。`;
       return pick;
     }
-    const rest = pool.filter(p => p.id !== last.problemId && !solved.has(p.id));
+    const rest = notRecent(pool.filter(p => p.id !== last.problemId && !solved.has(p.id)));
     if (rest.length) {
       const pick = nearest(rest, target);
       why = `直前に「${errName(last.errorType)}」で間違えましたが、同じつまずきを含む未正解の`
@@ -13915,8 +13957,34 @@ function selectNext() {
     return byId(last.problemId);
   }
 
+  // 「わからない」。ここが無いと「正解」と同じ扱いになり、
+  // 分からないと言った直後に難しい問題が出ていた（2026-08-10 に気づいた）。
+  if (last.result === "unknown") {
+    const target = Math.max(1, last.difficulty - 1);
+    // 分からないと言った直後は、まず「いまより易しい」ことを最優先する。
+    // 同じ考え方を優先すると、その考え方を含む問題が上にしか残っていないときに
+    // 難易度が上がっていってしまう（2026-08-10 に実際そうなっていた）。
+    const open = p => p.id !== last.problemId && !solved.has(p.id);
+    const easier = pool.filter(p => open(p) && p.difficulty <= target);
+    const tries = [
+      [notRecent(easier.filter(p => hasError(p, last.stuckType))), "同じ考え方を使う、やさしい問題"],
+      [notRecent(easier),                                          "やさしい問題"],
+      [notRecent(pool.filter(p => open(p) && hasError(p, last.stuckType))), "同じ考え方を使う問題"],
+      [notRecent(pool.filter(open)),                               "別の問題"],
+    ];
+    for (const [cands, label] of tries) {
+      if (!cands.length) continue;
+      const pick = nearest(cands, target);
+      why = `「わからない」を選んだので、${sameOrDown(last.difficulty, pick.difficulty)}`
+          + `${label}を出します。`;
+      return pick;
+    }
+    why = `ほかに未正解の問題がないため、同じ問題をもう一度出します。`;
+    return byId(last.problemId);
+  }
+
   if (last.result === "timeout") {
-    const rest = pool.filter(p => p.id !== last.problemId && !solved.has(p.id));
+    const rest = notRecent(pool.filter(p => p.id !== last.problemId && !solved.has(p.id)));
     if (rest.length) {
       const pick = nearest(rest, last.difficulty);
       why = `時間切れでした。理解不足とは限らないので、難易度は${last.difficulty}のまま`
@@ -13945,6 +14013,21 @@ function selectNext() {
 
 const hasError = (p, eid) =>
   !!eid && (p.steps || []).some(s => s.choices.some(c => c.error_type === eid));
+
+/* 「わからない」は、まちがえたのではなく方針そのものを持っていない状態。
+   正解の選択肢には誤りの種類が付いていないので、
+   その工程の誤答が指している種類を「この工程で持っていない方針」とみなす。
+   これがないと、わからないを選んでも戻り先が決められなかった（2026-08-10）。 */
+function stuckTypeOf(p, idx) {
+  const s = ((p || {}).steps || [])[idx];
+  if (!s) return null;
+  const ids = s.choices.filter(c => !c.correct && c.error_type).map(c => c.error_type);
+  if (!ids.length) return null;
+  const n = {};
+  ids.forEach(i => { n[i] = (n[i] || 0) + 1; });
+  // いちばん多いもの。同数なら、先に書いてあるほう
+  return ids.slice().sort((x, y) => n[y] - n[x])[0];
+}
 
 /* ------------------------------------------------------------------
    画面
@@ -14278,6 +14361,22 @@ const Sound = {
     }
   },
 
+  /* 読んでいるあいだは音楽を下げる。
+     背景音楽は「読解」と「記憶」の課題をはっきり邪魔する、という結果が
+     系統的レビュー（Cheah ほか 2022・95本／154実験／6,246人）で出ている。
+     とくに「難しい課題では音楽を避けるべき」とある。
+     いっぽう算数そのものへの悪影響は認められていない。
+     このアプリで読む量がいちばん多いのは「考える段」（問題文と解答を読んで
+     方針を決めるところ）なので、そこだけ下げて、選択肢が出たら戻す。
+     止めてしまうと不自然なので、消さずに half まで下げる。 */
+  duck(on) {
+    if (!this.bgmGain || !this.ctx) return;
+    const t = this.ctx.currentTime, to = on ? 0.5 : 1;
+    this.bgmGain.gain.cancelScheduledValues(t);
+    this.bgmGain.gain.setValueAtTime(this.bgmGain.gain.value, t);
+    this.bgmGain.gain.linearRampToValueAtTime(to, t + 0.6);
+  },
+
   /* 場面を伝える。合成版なら次の小節のあたまで、ファイルならその場でクロスフェードする。 */
   mood(name) {
     if (!BGM_SETS[name]) name = "calm";
@@ -14306,6 +14405,7 @@ let stepShownAt = 0, pickShownAt = 0, thinkMs = 0, pickMs = 0;   // 考えた時
 let stepSlips = 0, problemSlips = [];   // その工程・その問題での「1回目の誤答」
 let chosen = [];   // その問題で選んだ手。{そのときの式, 選んだ方針}
 let repeatSame = null;      // 「わからない」のあと、もう一度出す問題
+let stuckType = null;       // 「わからない」を押した工程が、どの方針を欠いているか
 let statsBack = "";         // 記録から「もどる」で帰る先
 let gainBuf = 0, gainTimer = null;
 function addXp(base, why) {
@@ -14670,6 +14770,7 @@ function showChoices(on) {
   const hint = $("sideHint");
   hint.innerHTML = hintHTML;
   hint.classList.toggle("hide", !on || !hintHTML);
+  Sound.duck(!on);        // 読んで考えているあいだは音楽を下げる
   if (on) {
     pickShownAt = Date.now();
     thinkMs += pickShownAt - stepShownAt;
@@ -14748,7 +14849,12 @@ function renderStep() {
     const b = document.createElement("button");
     b.className = "choice";
     const also = alsoFor(c.text);
-    b.innerHTML = nb(c.text) + (also ? `<span class="also">＝ ${esc(also)}</span>` : "");
+    const {expr, op} = splitChoice(c.text);
+    // 式があれば上に大きく、方針はその下に。式が無ければ方針だけを1行で。
+    b.innerHTML = (expr && op)
+      ? `<span class="cexpr">${nb(expr)}</span><span class="cop">${nb(op)}</span>`
+      : nb(c.text);
+    if (also) b.innerHTML += `<span class="also">＝ ${esc(also)}</span>`;
     b.onclick = () => answer(c, b);
     box.appendChild(b);
   }
@@ -14799,6 +14905,7 @@ function dunno() {
     work.push({kind: "bad", text: "わからない", fresh: true});
   }
   wrongChoiceText = "わからない";
+  stuckType = stuckTypeOf(cur, stepIdx);
   Sound.play("wrong");
   // もう一度出すのは1回だけ。2回続けて「わからない」なら、そこで足踏みさせない。
   const twice = hist().some(h => h.problemId === cur.id && h.result === "unknown");
@@ -14860,6 +14967,9 @@ function finish(result, errorType) {
     thinkMs: Math.round(thinkMs), pickMs: Math.round(pickMs),
     // 1回目の誤答（押しまちがい・思いちがい）。最終結果とは別に残す。
     slips: problemSlips.slice(),
+    // 「わからない」のときだけ入る。誤りの集計（S.errors）には入れない。
+    // 本人はまちがえていないので、つまずきの回数として数えると診断がゆがむ。
+    stuckType: result === "unknown" ? stuckType : null,
     timeoutSec: cur.timeout_seconds,
     review: inReview ? P.review.level : null,
   };
@@ -15000,8 +15110,8 @@ function updateReview(rec) {
     if (rec.result === "correct") P.review.correct++;
 
     // 復習中にもっと前が原因の誤りが出たら、そこまで下りる
-    const bl = errBackLevel(rec.errorType);
-    if (rec.result === "wrong" && bl && bl < P.review.level) {
+    const bl = errBackLevel(rec.errorType || rec.stuckType);
+    if ((rec.result === "wrong" || rec.result === "unknown") && bl && bl < P.review.level) {
       const from = P.review.level;
       P.review = {level: bl, errorType: rec.errorType, correct: 0, seen: 0,
                   returnTo: P.review.returnTo, lastId: null};
@@ -15021,18 +15131,30 @@ function updateReview(rec) {
     return {type: "continue", correct: P.review.correct, level: P.review.level};
   }
 
-  if (rec.result !== "wrong") return null;
+  if (rec.result !== "wrong" && rec.result !== "unknown") return null;
+
+  // 「わからない」は方針そのものを持っていない状態。まちがえたよりも重い。
+  // ただし1回目は、正しい方針を見せて同じ問題をもう一度出すところまで。
+  // 2回続けて分からないなら、見せても届いていないので原因のレベルへ戻す。
+  let cause = rec.errorType;
+  if (rec.result === "unknown") {
+    const times = hist().filter(h =>
+      h.problemId === rec.problemId && h.result === "unknown").length;
+    if (times < 2) return null;
+    cause = rec.stuckType;
+  }
 
   // 原因が下のレベルにある → そこへ戻る（分野の中なので混ざらない）
-  const bl2 = errBackLevel(rec.errorType);
+  const bl2 = errBackLevel(cause);
   if (bl2 && bl2 < P.level) {
-    P.review = {level: bl2, errorType: rec.errorType, correct: 0, seen: 0,
+    P.review = {level: bl2, errorType: cause, correct: 0, seen: 0,
                 returnTo: P.level, lastId: null};
     P.level = bl2;
     return {type: "start", to: bl2, from: P.review.returnTo};
   }
   // 原因がこの分野の外にある → 本来はそこへ戻すべきだが、まだ問題がない
-  if (et.back_to_unit) return {type: "unit", unit: et.back_to_unit};
+  const et2 = DATA.errorTypes[cause] || et;
+  if (et2.back_to_unit) return {type: "unit", unit: et2.back_to_unit};
   return null;
 }
 
@@ -15129,6 +15251,24 @@ function renderResult(rec) {
   if (rec.gain && rec.gain.length) {
     detail.innerHTML += '<p style="margin:8px 0 0">' + rec.gain.map(([why, got]) =>
       `<span class="gain shown">+${got}</span> <span class="lead">${esc(why)}</span>`).join("<br>") + "</p>";
+  }
+
+  /* 「わからない」が続いたとき。
+     このアプリは「教えない。どこに戻るべきかを示す」方針なので、
+     戻り先がない（いちばん下のレベル）ときは、示すものが何もなくなる。
+     問題を出しつづけても意味がないので、そこは正直に伝えて先生につなぐ。
+     3回続けて分からない = このレベルの考え方をまだ持っていない、とみなす。 */
+  const runs = hist().slice(-STUCK_RUN).filter(h => h.result === "unknown").length;
+  if (rec.result === "unknown" && runs >= STUCK_RUN) {
+    const at = DATA.errorTypes[rec.stuckType];
+    detail.innerHTML +=
+      `<div class="stuckbox"><span class="tag">ここまでの様子</span>`
+      + `<p><b>${STUCK_RUN}問続けて「わからない」でした。</b>`
+      + `このレベルの考え方は、まだ手に入っていないかもしれません。</p>`
+      + (at ? `<p class="lead">足りていないのは「${esc(at.name)}」のあたりです。`
+              + `${esc(at.fix)}</p>` : "")
+      + `<p class="lead">問題を出し続けても身につかないので、`
+      + `<b>ここは先生に相談してください。</b>この記録は先生の一覧に残ります。</p></div>`;
   }
 
   // 次に何をするかはアプリが決める。生徒には選ばせず、決めたことを伝えるだけ。
@@ -15260,6 +15400,46 @@ const SAY_ALSO = [
   [/項/, "+ や − で区切られたひとかたまり"],
 ];
 const alsoFor = t => (SAY_ALSO.find(([re]) => re.test(t)) || [])[1] || "";
+
+/* 選択肢を「式」と「方針」に分ける。式を上、方針を下に出すため。
+   中1は文章から入るのがまだ重い、というオーナー判断（2026-08-10）。
+   アプリの本質は方針なので方針は消さない。順番だけ入れかえる。
+   誤答の式も並ぶので、式だけ見ても選べない（どの変形が正しいかは方針で決まる）。
+
+   規則。全1216問の選択肢で、変な切れ方をしないことを確認してある。
+     ・半角 ( ) は式の一部。ここでは絶対に切らない
+     ・全角 （ ） は注記。中と外の、式のほうを上にする
+     ・「。」があれば、そこで切る（うしろが式のときだけ）
+     ・末尾の数式のかたまりを式として取り出す */
+const MATH_CH = "0-9A-Za-z\\+\\-−×÷=<>≦≧()/^.,\\s倍円個人冊本歳分秒";
+const isMathish = t => {
+  t = (t || "").trim();
+  return !!t && new RegExp("^[" + MATH_CH + "]+$").test(t) && /[0-9A-Za-z]/.test(t);
+};
+const hasJp = t => /[ぁ-んー一-龥]/.test(t || "");
+
+function splitChoice(text) {
+  const t = String(text).trim();
+  const m1 = t.match(/^(.*?)（([^（）]*)）$/);
+  if (m1) {
+    const head = m1[1].trim(), inside = m1[2].trim();
+    if (isMathish(head) && hasJp(inside)) return {expr: head, op: inside};
+    if (isMathish(inside) && hasJp(head)) return {expr: inside, op: head};
+  }
+  const i = t.indexOf("。");
+  if (i >= 0) {
+    const head = t.slice(0, i).trim(), tail = t.slice(i + 1).trim();
+    if (isMathish(tail) && hasJp(head)) return {expr: tail, op: head};
+  }
+  const m2 = t.match(new RegExp("([0-9A-Za-z(\\-−][" + MATH_CH + "]*)$"));
+  if (m2 && isMathish(m2[1]) && m2[1].trim().length >= 2) {
+    const head = t.slice(0, m2.index).trim();
+    if (head && hasJp(head)) return {expr: m2[1].trim(), op: head};
+    if (!head) return {expr: m2[1].trim(), op: ""};
+  }
+  if (isMathish(t)) return {expr: t, op: ""};
+  return {expr: "", op: t};
+}
 
 /* ペースは履歴から毎回calculateし直す。P.pace（クリア時の控え）は見ない。
    控えを信じると、そこに入った値がまちがっていたときに永久に直らないため。
