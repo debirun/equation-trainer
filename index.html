@@ -379,6 +379,12 @@
   }
   button.choice.picked .cop { text-decoration: none; }
 
+  /* 選択肢どうしで共通している部分はうすく、ちがう部分ははっきり出す。
+     ちがうところが、その工程で問われている一点だから。 */
+  .choice .same { color: var(--muted); font-weight: 400; }
+  .choice .diff { color: var(--fg); font-weight: 800; }
+  .choice .cop .diff { color: color-mix(in srgb, var(--fg) 88%, var(--muted)); font-weight: 800; }
+
   /* 選択肢の下に添える言い換え */
   .choice .also {
     display: block; margin-top: 3px; font-size: .72rem; font-weight: 600;
@@ -1453,7 +1459,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 21:46</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 23:36</span>
   </p>
 </div>
 
@@ -18472,6 +18478,12 @@ function renderStep() {
 
   const box = $("choices");
   box.innerHTML = "";
+  // 先に全部の選択肢を見て、共通している部分を割り出す。
+  // 2段のときは下の行（方針）どうし、1段のときは全文どうしで比べる。
+  const parts = s.choices.map(c => splitChoice(c.text));
+  const bothSplit = parts.every(x => x.expr && x.op);
+  const endsOp = bothSplit ? commonEnds(parts.map(x => x.op)) : null;
+  const endsAll = bothSplit ? null : commonEnds(s.choices.map(c => c.text));
   for (const c of shuffle(s.choices)) {
     const b = document.createElement("button");
     b.className = "choice";
@@ -18479,8 +18491,8 @@ function renderStep() {
     const {expr, op} = splitChoice(c.text);
     // 式があれば上に大きく、方針はその下に。式が無ければ方針だけを1行で。
     b.innerHTML = (expr && op)
-      ? `<span class="cexpr">${nb(expr)}</span><span class="cop">${nb(op)}</span>`
-      : nb(c.text);
+      ? `<span class="cexpr">${nb(expr)}</span><span class="cop">${diffHTML(op, endsOp)}</span>`
+      : diffHTML(c.text, endsAll);
     if (also) b.innerHTML += `<span class="also">＝ ${esc(also)}</span>`;
     b.onclick = () => answer(c, b);
     box.appendChild(b);
@@ -19054,6 +19066,41 @@ const isMathish = t => {
   return !!t && new RegExp("^[" + MATH_CH + "]+$").test(t) && /[0-9A-Za-z]/.test(t);
 };
 const hasJp = t => /[ぁ-んー一-龥]/.test(t || "");
+
+/* 選択肢どうしで、頭とおしりの共通部分を見つける。
+   ちがっているところが、その工程で問われている一点なので、そこを目立たせる
+   （オーナー案・2026-08-10）。「おつりは、出したお金と代金をたして求める」なら、
+   「おつりは、」と「求める」が共通で、真ん中だけがちがう。 */
+function commonEnds(texts) {
+  if (texts.length < 2) return null;
+  const min = Math.min(...texts.map(t => t.length));
+  let pre = 0;
+  while (pre < min && texts.every(t => t[pre] === texts[0][pre])) pre++;
+  let suf = 0;
+  while (pre + suf < min
+         && texts.every(t => t[t.length - 1 - suf] === texts[0][texts[0].length - 1 - suf])) suf++;
+  // 1文字だけ合っていてもうすくする値打ちがないので、頭・おしりそれぞれで切る。
+  // 「書く」の「く」だけが共通、のような中途半端な切り方を避けるため。
+  if (pre < 2) pre = 0;
+  if (suf < 2) suf = 0;
+  if (!pre && !suf) return null;
+  // 真ん中が短くなりすぎるなら、切らない。ちがいが読み取れなくなる。
+  if (texts.some(t => t.slice(pre, t.length - suf).trim().length < 2)) return null;
+  return [pre, suf];
+}
+
+/* 共通部分に .same、ちがう部分に .diff をつける。
+   式を途中で切ると nb() のまとまり判定が崩れるので、日本語の行にだけ掛ける。 */
+function diffHTML(text, ends) {
+  if (!ends || !/[ぁ-んー一-龥]/.test(text)) return nb(text);
+  const [pre, suf] = ends;
+  const head = text.slice(0, pre);
+  const mid = text.slice(pre, text.length - suf);
+  const tail = suf ? text.slice(text.length - suf) : "";
+  return (head ? `<span class="same">${nb(head)}</span>` : "")
+       + `<span class="diff">${nb(mid)}</span>`
+       + (tail ? `<span class="same">${nb(tail)}</span>` : "");
+}
 
 function splitChoice(text) {
   const t = String(text).trim();
