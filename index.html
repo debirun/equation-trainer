@@ -1459,7 +1459,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 00:13</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 00:37</span>
   </p>
 </div>
 
@@ -3227,7 +3227,7 @@ const DATA = {
       {
        "id": "L2-01",
        "difficulty": 1,
-       "question": "1個 120円のりんごを x 個買います。代金を表す式はどれですか。",
+       "question": "1個 120円のりんごを x 個買います。代金を式にしなさい。",
        "answer": "120x",
        "estimated_seconds": 22,
        "mode": "input",
@@ -3270,7 +3270,7 @@ const DATA = {
       {
        "id": "L2-02",
        "difficulty": 2,
-       "question": "1000円出して a 円の品物を買いました。おつりを表す式はどれですか。",
+       "question": "1000円出して a 円の品物を買いました。おつりを式にしなさい。",
        "answer": "1000 - a",
        "estimated_seconds": 25,
        "mode": "input",
@@ -4755,7 +4755,7 @@ const DATA = {
       {
        "id": "L4-A1",
        "difficulty": 0,
-       "question": "式 7x - 2 で、x の係数はどれですか。",
+       "question": "式 7x - 2 の、x の係数を答えなさい。",
        "answer": "7",
        "estimated_seconds": 28,
        "mode": "atom",
@@ -5021,7 +5021,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "3a + 2b のまま（文字がちがうので、まとめられない）",
+           "text": "3a + 2b（文字がちがうので、まとめられない）",
            "correct": true
           },
           {
@@ -5127,7 +5127,7 @@ const DATA = {
       {
        "id": "L4-01",
        "difficulty": 1,
-       "question": "式 3x + 5 で、x の係数はどれですか。",
+       "question": "式 3x + 5 の、x の係数を答えなさい。",
        "answer": "3",
        "estimated_seconds": 32,
        "mode": "input",
@@ -6532,7 +6532,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "-3 と +3 で 0 になり、2x だけが残る",
+           "text": "2x（-3 と +3 で 0 になって）",
            "correct": true
           },
           {
@@ -6866,7 +6866,7 @@ const DATA = {
       {
        "id": "L6-A1",
        "difficulty": 0,
-       "question": "等式 2x - 1 = 7 の右辺はどれですか。",
+       "question": "等式 2x - 1 = 7 の右辺を答えなさい。",
        "answer": "7",
        "estimated_seconds": 30,
        "mode": "atom",
@@ -7114,7 +7114,7 @@ const DATA = {
       {
        "id": "L6-01",
        "difficulty": 1,
-       "question": "等式 3x + 1 = 10 の左辺はどれですか。",
+       "question": "等式 3x + 1 = 10 の左辺を答えなさい。",
        "answer": "3x + 1",
        "estimated_seconds": 40,
        "mode": "input",
@@ -7157,7 +7157,7 @@ const DATA = {
       {
        "id": "L6-02",
        "difficulty": 2,
-       "question": "「x に 4 をたすと 9 になる」を式にすると、どれですか。",
+       "question": "「x に 4 をたすと 9 になる」を式にしなさい。",
        "answer": "x + 4 = 9",
        "estimated_seconds": 42,
        "mode": "input",
@@ -7200,7 +7200,7 @@ const DATA = {
       {
        "id": "L6-03",
        "difficulty": 3,
-       "question": "「x は 5 以下である」を式にすると、どれですか。",
+       "question": "「x は 5 以下である」を式にしなさい。",
        "answer": "x ≦ 5",
        "estimated_seconds": 44,
        "mode": "input",
@@ -15864,7 +15864,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "その道のりが 1200m なので、15x = 1200",
+           "text": "進んだ道のりが 1200m なので、15x = 1200",
            "correct": true
           },
           {
@@ -19012,6 +19012,8 @@ const SAY_ALSO = [
   [/不等式/, "< や ≦ でつないだ式"],
   [/等式/, "= でつないだ式"],
   [/代入/, "文字のところに数を入れること"],
+  [/の解|解である|解ではない/, "式を成り立たせる x の値"],
+  [/文字式/, "文字を使った式"],
   [/項/, "+ や − で区切られたひとかたまり"],
 ];
 const alsoFor = t => (SAY_ALSO.find(([re]) => re.test(t)) || [])[1] || "";
