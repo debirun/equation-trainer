@@ -1453,7 +1453,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 17:02</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 17:22</span>
   </p>
 </div>
 
@@ -4449,34 +4449,58 @@ const DATA = {
       {
        "id": "L5-A1",
        "difficulty": 0,
-       "question": "文字のついた式に、数をかけます。どこにかけますか。",
-       "answer": "数のところ（係数）だけにかける",
-       "estimated_seconds": 20,
+       "question": "3x × 5 を計算しなさい。",
+       "answer": "文字のついた式に数をかけるときは、数のところだけにかける",
+       "estimated_seconds": 30,
        "mode": "atom",
-       "timeout_seconds": 45,
+       "timeout_seconds": 65,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "3x × 5",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "正しいのはどれですか。",
+         "prompt": "3x に 5 をかけます。何にかけますか。",
          "writes": [
-          "数のところ（係数）だけにかける"
+          "15x"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "数のところ（係数）だけにかける",
+           "text": "係数だけにかけて 15x",
            "correct": true
           },
           {
-           "text": "数にも文字にも、両方にかける",
+           "text": "文字にもかけて 15x^2",
            "correct": false,
            "error_type": "E-EXPR-09"
           },
           {
-           "text": "文字のところだけにかける",
+           "text": "3 と 5 をたして 8x",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "文字のついた式に数をかけるときは、数のところだけにかける"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字のついた式に数をかけるときは、数のところ（係数）だけにかける",
+           "correct": true
+          },
+          {
+           "text": "文字のついた式に数をかけるときは、数にも文字にも、両方にかける",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "文字のついた式に数をかけるときは、文字のところだけにかける",
            "correct": false,
            "error_type": "E-EXPR-09"
           }
@@ -4487,34 +4511,58 @@ const DATA = {
       {
        "id": "L5-A2",
        "difficulty": 0,
-       "question": "文字のついた式を、数でわります。どこをわりますか。",
-       "answer": "数のところ（係数）だけをわる",
-       "estimated_seconds": 20,
+       "question": "8x ÷ 4 を計算しなさい。",
+       "answer": "文字のついた式を数でわるときは、数のところだけをわる",
+       "estimated_seconds": 30,
        "mode": "atom",
-       "timeout_seconds": 45,
+       "timeout_seconds": 65,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "8x ÷ 4",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "正しいのはどれですか。",
+         "prompt": "8x を 4 でわります。何をわりますか。",
          "writes": [
-          "数のところ（係数）だけをわる"
+          "2x"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "数のところ（係数）だけをわる",
+           "text": "係数だけをわって 2x",
            "correct": true
           },
           {
-           "text": "数も文字も、両方をわる",
+           "text": "文字もわって 2",
            "correct": false,
            "error_type": "E-EXPR-09"
           },
           {
-           "text": "文字のところだけをわる",
+           "text": "8 から 4 をひいて 4x",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "文字のついた式を数でわるときは、数のところだけをわる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字のついた式を数でわるときは、数のところ（係数）だけをわる",
+           "correct": true
+          },
+          {
+           "text": "文字のついた式を数でわるときは、数も文字も、両方をわる",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "文字のついた式を数でわるときは、文字のところだけをわる",
            "correct": false,
            "error_type": "E-EXPR-09"
           }
@@ -4525,34 +4573,58 @@ const DATA = {
       {
        "id": "L5-A3",
        "difficulty": 0,
-       "question": "かっこの前に数があります。その数は、かっこの中のどこにかかりますか。",
-       "answer": "中のすべての項にかかる",
-       "estimated_seconds": 22,
+       "question": "3(x + 2) のかっこを外しなさい。",
+       "answer": "かっこの前の数は、中のすべての項にかかる",
+       "estimated_seconds": 32,
        "mode": "atom",
-       "timeout_seconds": 48,
+       "timeout_seconds": 70,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "3(x + 2)",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "正しいのはどれですか。",
+         "prompt": "かっこを外します。前の 3 は、中のどこにかかりますか。",
          "writes": [
-          "中のすべての項にかかる"
+          "3x + 6"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "中のすべての項にかかる",
+           "text": "x と 2 の両方にかけて 3x + 6",
            "correct": true
           },
           {
-           "text": "中の、いちばん前の項だけにかかる",
+           "text": "x にだけかけて 3x + 2",
            "correct": false,
            "error_type": "E-DIST-01"
           },
           {
-           "text": "中の、いちばんうしろの項だけにかかる",
+           "text": "2 にだけかけて x + 6",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "かっこの前の数は、中のすべての項にかかる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこの前の数は、中のすべての項にかかる",
+           "correct": true
+          },
+          {
+           "text": "かっこの前の数は、中のいちばん前の項だけにかかる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "かっこの前の数は、中のいちばんうしろの項だけにかかる",
            "correct": false,
            "error_type": "E-DIST-01"
           }
@@ -4563,34 +4635,58 @@ const DATA = {
       {
        "id": "L5-A4",
        "difficulty": 0,
-       "question": "かっこの前についている数が負のとき、かっこの中の符号はどうなりますか。",
-       "answer": "中のすべての項の符号が変わる",
-       "estimated_seconds": 22,
+       "question": "-4(x - 1) のかっこを外しなさい。",
+       "answer": "かっこの前が負のとき、中のすべての項の符号が変わる",
+       "estimated_seconds": 34,
        "mode": "atom",
-       "timeout_seconds": 48,
+       "timeout_seconds": 74,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "-4(x - 1)",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "正しいのはどれですか。",
+         "prompt": "かっこを外します。前が -4 のとき、どうなりますか。",
          "writes": [
-          "中のすべての項の符号が変わる"
+          "-4x + 4"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "中のすべての項の符号が変わる",
+           "text": "符号が変わって -4x + 4",
            "correct": true
           },
           {
-           "text": "符号は何も変わらない",
+           "text": "符号は変わらず -4x - 4",
            "correct": false,
            "error_type": "E-DIST-02"
           },
           {
-           "text": "いちばん前の項の符号だけが変わる",
+           "text": "前の項だけ変わって -4x - 1",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "かっこの前が負のとき、中のすべての項の符号が変わる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこの前が負のとき、中のすべての項の符号が変わる",
+           "correct": true
+          },
+          {
+           "text": "かっこの前が負でも、中の符号は何も変わらない",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "かっこの前が負のとき、いちばん前の項の符号だけが変わる",
            "correct": false,
            "error_type": "E-DIST-02"
           }
@@ -4601,34 +4697,58 @@ const DATA = {
       {
        "id": "L5-A5",
        "difficulty": 0,
-       "question": "かっこのついた式を、数でわります。どこをわりますか。",
-       "answer": "中のすべての項をわる",
-       "estimated_seconds": 22,
+       "question": "(4x + 6) ÷ 2 を計算しなさい。",
+       "answer": "かっこの式を数でわるときは、中のすべての項をわる",
+       "estimated_seconds": 34,
        "mode": "atom",
-       "timeout_seconds": 48,
+       "timeout_seconds": 74,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "(4x + 6) ÷ 2",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "正しいのはどれですか。",
+         "prompt": "かっこを外します。わり算は、中のどこにかかりますか。",
          "writes": [
-          "中のすべての項をわる"
+          "2x + 3"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "中のすべての項をわる",
+           "text": "中のすべての項をわって 2x + 3",
            "correct": true
           },
           {
-           "text": "中の、いちばん前の項だけをわる",
+           "text": "4x だけをわって 2x + 6",
            "correct": false,
            "error_type": "E-DIST-01"
           },
           {
-           "text": "かっこの外に数を書いてから、あとで考える",
+           "text": "6 だけをわって 4x + 3",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "かっこの式を数でわるときは、中のすべての項をわる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこの式を数でわるときは、中のすべての項をわる",
+           "correct": true
+          },
+          {
+           "text": "かっこの式を数でわるときは、中のいちばん前の項だけをわる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "かっこの式を数でわるときは、かっこの外に書いてからあとで考える",
            "correct": false,
            "error_type": "E-DIST-01"
           }
@@ -4639,34 +4759,58 @@ const DATA = {
       {
        "id": "L5-A6",
        "difficulty": 0,
-       "question": "分数の形をした式に、数をかけます。まず何を見ますか。",
-       "answer": "分母とかける数が、やくぶんできるかを見る",
-       "estimated_seconds": 24,
+       "question": "(x + 1)/2 × 4 を計算しなさい。",
+       "answer": "分数の形の式に数をかけるときは、分母とやくぶんする",
+       "estimated_seconds": 36,
        "mode": "atom",
-       "timeout_seconds": 52,
+       "timeout_seconds": 78,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "(x + 1)/2 × 4",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "正しいのはどれですか。",
+         "prompt": "分数の形の式に 4 をかけます。まず何を見ますか。",
          "writes": [
-          "分母とかける数が、やくぶんできるかを見る"
+          "2(x + 1)"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "分母とかける数が、やくぶんできるかを見る",
+           "text": "4 ÷ 2 = 2 なので 2(x + 1)",
            "correct": true
           },
           {
-           "text": "分子と分母の両方に、その数をかける",
+           "text": "分子にも分母にも 4 をかけて (4x + 4)/8",
            "correct": false,
            "error_type": "E-FRAC-02"
           },
           {
-           "text": "先に分母を消してから、あとで考える",
+           "text": "分母だけ消して x + 1",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "分数の形の式に数をかけるときは、分母とやくぶんする"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分数の形の式に数をかけるときは、分母とかける数をやくぶんする",
+           "correct": true
+          },
+          {
+           "text": "分数の形の式に数をかけるときは、分子と分母の両方にかける",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          },
+          {
+           "text": "分数の形の式に数をかけるときは、先に分母を消してから考える",
            "correct": false,
            "error_type": "E-FRAC-02"
           }
@@ -14178,7 +14322,8 @@ function selectNext() {
     const left = all.filter(p => !P.solved.includes(p.id));
     if (left.length) {
       why = `レベル${P.level}で使う方針を、先に確かめます`
-          + `（${all.length - left.length + 1}／${all.length}）。式は出てきません。`;
+          + `（${all.length - left.length + 1}／${all.length}）。`
+          + `1問やってから、それをことばにします。`;
       return left[0];
     }
   }
@@ -15103,14 +15248,14 @@ function renderStep() {
   } else {
     gb.classList.add("hide");
   }
-  $("thinkNote").innerHTML = cur.mode === "atom"
-    ? "どうするのが正しいかを、<b>頭の中で決めてから</b>押してください。"
+  $("thinkNote").innerHTML = (cur.mode === "atom" && stepIdx > 0)
+    ? "いまやったことを、<b>ことばにするとどうなるか</b>を決めてから押してください。"
     : "解答をよく見て、<b>次に何をするか</b>を頭の中で決めてから押してください。";
   const mt = $("modeTag");
   mt.classList.toggle("hide", cur.mode !== "input" && cur.mode !== "atom");
   mt.classList.toggle("atom", cur.mode === "atom");
   mt.textContent = cur.mode === "atom"
-    ? "方針をおぼえる — 式は出てきません"
+    ? "方針をおぼえる — まず1問やってから、ことばにします"
     : "準備 — ことばと式を合わせる";
   $("qText").innerHTML = nb(cur.question);
   // 工程の問いにも式が入る（「2x^2 の 2乗は」など）ので、問題文と同じ整形を通す
