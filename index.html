@@ -1453,7 +1453,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 19:00</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-10 19:05</span>
   </p>
 </div>
 
@@ -15850,21 +15850,24 @@ const hasJp = t => /[ぁ-んー一-龥]/.test(t || "");
 
 function splitChoice(text) {
   const t = String(text).trim();
+  // 方針を下の行に置くので、末尾の読点は落とす。
+  // 「どちらも折り紙の全部の枚数なので、」が行末に残ると宙ぶらりんに見える。
+  const tidy = (expr, op) => ({expr, op: op.replace(/[、。\s]+$/, "")});
   const m1 = t.match(/^(.*?)（([^（）]*)）$/);
   if (m1) {
     const head = m1[1].trim(), inside = m1[2].trim();
-    if (isMathish(head) && hasJp(inside)) return {expr: head, op: inside};
-    if (isMathish(inside) && hasJp(head)) return {expr: inside, op: head};
+    if (isMathish(head) && hasJp(inside)) return tidy(head, inside);
+    if (isMathish(inside) && hasJp(head)) return tidy(inside, head);
   }
   const i = t.indexOf("。");
   if (i >= 0) {
     const head = t.slice(0, i).trim(), tail = t.slice(i + 1).trim();
-    if (isMathish(tail) && hasJp(head)) return {expr: tail, op: head};
+    if (isMathish(tail) && hasJp(head)) return tidy(tail, head);
   }
   const m2 = t.match(new RegExp("([0-9A-Za-z(\\-−][" + MATH_CH + "]*)$"));
   if (m2 && isMathish(m2[1]) && m2[1].trim().length >= 2) {
     const head = t.slice(0, m2.index).trim();
-    if (head && hasJp(head)) return {expr: m2[1].trim(), op: head};
+    if (head && hasJp(head)) return tidy(m2[1].trim(), head);
     if (!head) return {expr: m2[1].trim(), op: ""};
   }
   if (isMathish(t)) return {expr: t, op: ""};
