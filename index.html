@@ -1527,7 +1527,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 05:16</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 05:29</span>
   </p>
 </div>
 
@@ -2823,7 +2823,7 @@ const DATA = {
        "id": "L1-A6",
        "difficulty": 0,
        "question": "-5 と -2 について、大きいのはどちらか、0 からのきょりが大きいのはどちらか、それぞれ答えなさい。",
-       "answer": "大きいのは -2、0 からのきょりが大きいのは -5",
+       "answer": "大きいのは -2 のほう、0 からのきょりが大きいのは -5 のほう",
        "estimated_seconds": 30,
        "mode": "atom",
        "timeout_seconds": 64,
@@ -2848,21 +2848,21 @@ const DATA = {
          "step_no": 1,
          "prompt": "2つを、それぞれくらべて答えなさい。",
          "writes": [
-          "大きいのは -2、0 からのきょりが大きいのは -5"
+          "大きいのは -2 のほう、0 からのきょりが大きいのは -5 のほう"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "大きいのは -2、0 からのきょりが大きいのは -5",
+           "text": "大きいのは -2 のほう、0 からのきょりが大きいのは -5 のほう",
            "correct": true
           },
           {
-           "text": "大きいのは -5、0 からのきょりが大きいのは -2",
+           "text": "大きいのは -5 のほう、0 からのきょりが大きいのは -2 のほう",
            "correct": false,
            "error_type": "E-SIGN-02"
           },
           {
-           "text": "どちらも -5",
+           "text": "どちらも -5 のほう",
            "correct": false,
            "error_type": "E-SIGN-02"
           }
@@ -5625,7 +5625,7 @@ const DATA = {
        "id": "L4-S2",
        "difficulty": 2,
        "question": "ある式を分けたら、(6 + 1) + (-4) になりました。",
-       "answer": "正の項が 6 と 1、負の項が -4",
+       "answer": "正の項は 6 と 1 で、負の項は -4 だけ",
        "estimated_seconds": 31,
        "mode": "solo",
        "timeout_seconds": 67,
@@ -5637,21 +5637,21 @@ const DATA = {
          "step_no": 1,
          "prompt": "どれが正の項で、どれが負の項でしたか。",
          "writes": [
-          "正の項が 6 と 1、負の項が -4"
+          "正の項は 6 と 1 で、負の項は -4 だけ"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "正の項が 6 と 1、負の項が -4",
+           "text": "正の項は 6 と 1 で、負の項は -4 だけ",
            "correct": true
           },
           {
-           "text": "正の項が 6 と 1 と 4、負の項はない",
+           "text": "正の項は 6 と 1 と 4 で、負の項はない",
            "correct": false,
            "error_type": "E-TERM-01"
           },
           {
-           "text": "正の項が 6、負の項が 1 と -4",
+           "text": "正の項は 6 だけで、負の項は 1 と -4 の2つ",
            "correct": false,
            "error_type": "E-TERM-01"
           }
@@ -5995,7 +5995,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "正の項がないので、答えは 0",
+           "text": "正の項がないので、負をたさずに 0",
            "correct": false,
            "error_type": "E-TERM-01"
           },
@@ -14913,16 +14913,16 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "2 と 3",
+           "text": "2 と 3 の2つ",
            "correct": true
           },
           {
-           "text": "5 と -1",
+           "text": "5 と -1 の2つ",
            "correct": false,
            "error_type": "E-EXPR-06"
           },
           {
-           "text": "2x と 3x",
+           "text": "2x と 3x の2つ",
            "correct": false,
            "error_type": "E-EXPR-06"
           }
@@ -26925,16 +26925,16 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "全体が 15km で、進んだのが x km",
+           "text": "全体が 15km で、進んだのが x km のぶん",
            "correct": true
           },
           {
-           "text": "全体が x km で、進んだのが 15km",
+           "text": "全体が x km で、進んだのが 15km のぶん",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "全体が 15km で、残ったのが x km",
+           "text": "全体が 15km で、残ったのが x km のぶん",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -27150,7 +27150,7 @@ const DATA = {
        "id": "L8-A5",
        "difficulty": 0,
        "question": "分速 80m で 5 分歩きました。進んだ道のりと、400m を歩くのにかかる時間を、それぞれ式にしなさい。",
-       "answer": "道のりは 80 × 5、時間は 400 ÷ 80",
+       "answer": "道のりは 80 × 5 で、時間は 400 ÷ 80 と表せる",
        "estimated_seconds": 46,
        "mode": "atom",
        "timeout_seconds": 99,
@@ -27163,21 +27163,21 @@ const DATA = {
          "step_no": 1,
          "prompt": "2つを式にすると、どうなりますか。",
          "writes": [
-          "道のりは 80 × 5、時間は 400 ÷ 80"
+          "道のりは 80 × 5 で、時間は 400 ÷ 80 と表せる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "道のりは 80 × 5、時間は 400 ÷ 80",
+           "text": "道のりは 80 × 5 で、時間は 400 ÷ 80 と表せる",
            "correct": true
           },
           {
-           "text": "道のりは 80 ÷ 5、時間は 400 × 80",
+           "text": "道のりは 80 ÷ 5 で、時間は 400 × 80 と表せる",
            "correct": false,
            "error_type": "E-WORD-05"
           },
           {
-           "text": "道のりは 80 × 5、時間は 80 ÷ 400",
+           "text": "道のりは 80 × 5 で、時間は 80 ÷ 400 と表せる",
            "correct": false,
            "error_type": "E-WORD-05"
           }
