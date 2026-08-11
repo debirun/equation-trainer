@@ -285,6 +285,15 @@
   .nb { white-space: nowrap; }
   /* かけるの記号。文字の x と見分けやすくするため、細く小さく置く。 */
   .mul { color: var(--muted); font-weight: 400; font-size: .82em; padding: 0 .08em; }
+  /* 区切り画面で、おぼえた方針（アトム）を並べるところ。抽象だけを大きく出す */
+  .atomline { display: flex; gap: 10px; align-items: baseline; padding: 9px 0;
+              border-bottom: 1px solid var(--line); }
+  .atomline:last-child { border-bottom: 0; }
+  .atomline .n { flex: 0 0 22px; height: 22px; border-radius: 50%;
+                 background: var(--accentSoft); color: var(--accent);
+                 font-size: .74rem; font-weight: 800;
+                 display: grid; place-items: center; }
+  .atomline .at { font-size: 1.02rem; font-weight: 700; line-height: 1.5; }
   .divi { padding: 0 .1em; }
   sup { font-size: .66em; vertical-align: super; line-height: 0; }
   /* 0段目（方針をおぼえる）の札。準備問題とは色を変える */
@@ -1475,7 +1484,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 15:30</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 16:42</span>
   </p>
 </div>
 
@@ -17497,6 +17506,21 @@ const REVIEW_RULE = {count: 2, cap: 10};
    戻り先のないレベル（いちばん下）では、戻して解き直させることができないため。 */
 const STUCK_RUN = 3;
 
+/* レベルの途中で区切る（中間リザルト）条件。
+   飽きるかどうかは問題数ではなく「手ごたえが来ない時間」で決まる、という
+   オーナー判断（2026-08-11）。1問ごとに「解けた」は出るが、
+   まとまった振り返りが長時間ないと単調になる。
+
+   実際の想定時間はレベルによって大きく違う。
+     2章L1 … 1問27秒・レベル通し 7分
+     3章L7 … 1問122秒・レベル通し 22分
+   問題数で区切ると体感がそろわないので、時間で区切る。
+
+   BREAK_MIN … 前の区切りから何分たったら出すか
+   BREAK_LEAST … ただし、これだけ解くまでは出さない（解くのが遅い子への配慮） */
+const BREAK_MIN = 7;
+const BREAK_LEAST = 3;
+
 /* 経験値。2周目をさせることに効く行動を厚くしている。
    工程より問題、問題より「つまずきの回収」、そして復習中は倍。 */
 const XP = {
@@ -17545,6 +17569,8 @@ const blankProg = () => ({
   goal: null,        // 次のレベルの目標タイム {level, sec, ratio}
   timedNoticed: false,  // 「ここから時間制限」を知らせたか
   chapterShownAt: 0,    // 章の切り上げを出したときの解答数
+  breakAt: 0,        // 前の区切り（リザルト）を出した時刻。ここから時間を測る
+  breaks: 0,         // このレベルで出した区切りの数
   freeReview: false, // 通過したレベルを自分で選んで解いている最中か
   freeBackTo: 0,     // 自由復習から戻る先
 });
@@ -18238,6 +18264,7 @@ const $ = id => document.getElementById(id);
 let wrongChoiceText = "";   // 直前に選んでしまった誤答
 let clearPending = 0;       // この結果画面のあとにリザルトを出すレベル
 let halfPending = 0;        // 「方針がそろいました」を出すレベル（レベルの途中の区切り）
+let halfKind = "境目";      // 区切りの種類。"境目"（つかむ→つかう）か "時間"
 let chapterPending = null;  // この結果画面のあとに章の切り上げを出すか
 let choiceTimer = null;     // 選択肢を出すまでの待ち
 let hintHTML = "";          // その工程で添える用語の意味
@@ -18839,6 +18866,9 @@ function finish(result, errorType) {
     stuckType: result === "unknown" ? stuckType : null,
     timeoutSec: cur.timeout_seconds,
     review: inReview ? P.review.level : null,
+    // 解き終わった時刻。レベルの途中の区切りを時間で決めるのに使う
+    // （2026-08-11）。先生用の一覧で「いつ解いたか」を出すのにも使える。
+    at: Date.now(),
   };
   // 「回収」= 前につまずいた問題を、まだ正解していない状態から解き直した
   const wasMissed = hist().some(h => h.problemId === cur.id && h.result !== "correct");
@@ -19197,14 +19227,26 @@ function renderResult(rec) {
     clearPending = P.level;
     banner.innerHTML += `<p class="sub"><b>レベル${P.level}の問題がそろいました。</b></p>`;
     $("btnNext").textContent = "レベルの結果を見る";
-  } else if (!rec.review && !P.review && !P.freeReview && rec.result === "correct"
-      && isFixed(cur) && !(P.halfDone || []).includes(P.level)) {
-    // 「つかむ・ためす」を全部終えたところで1度だけ区切る。
-    // ここまでが方針をおぼえる段、ここからが使う段（オーナー案・2026-08-11）。
+  } else if (!rec.review && !P.review && !P.freeReview && rec.result === "correct") {
     const fixed = atomsOf(P.level);
-    if (fixed.length && fixed.every(p => P.solved.includes(p.id))) {
-      P.halfDone = (P.halfDone || []).concat(P.level); save();
+    // 「境目」の区切りは、方針が2つ以上そろったときだけ。
+    // 1つしかないレベルだと、始めた直後に区切りが出て意味がない
+    // （3章L5・L7 は 0段目が1問しかない。2026-08-11 に見積もりで判明）。
+    const boundary = isFixed(cur) && fixed.length >= 2
+      && fixed.every(p => P.solved.includes(p.id))
+      && !(P.halfDone || []).includes(P.level);
+    // 前の区切りからの経過。レベルに入った時刻が入っていなければ、ここで置く。
+    if (!P.breakAt) { P.breakAt = Date.now(); }
+    const since = (Date.now() - P.breakAt) / 60000;
+    const doneSince = hist().filter(h => h.at && h.at >= P.breakAt).length;
+    const byTime = since >= BREAK_MIN && doneSince >= BREAK_LEAST;
+
+    if (boundary || byTime) {
+      if (boundary) P.halfDone = (P.halfDone || []).concat(P.level);
+      P.breakAt = Date.now(); P.breaks = (P.breaks || 0) + 1;
+      save();
       halfPending = P.level;
+      halfKind = boundary ? "境目" : "時間";
       $("btnNext").textContent = "ここまでを見る";
     }
   }
@@ -19226,6 +19268,7 @@ function advanceLevel() {
   if (levelOf(next) && levelOf(next).steps_done) {
     P.level = next; P.reached = Math.max(P.reached, next); P.last = null;
     P.lvStartXp = S.xp;   // このレベルで得た量を数えはじめる
+    P.breakAt = Date.now(); P.breaks = 0;   // 区切りの時間を測りなおす
     save();
     startProblem();
     return;
@@ -19529,30 +19572,46 @@ function animatePlBar(fromXp, toXp) {
    （オーナー案・2026-08-11）。
    ここで見せるのは、そこまでにおぼえた方針の一覧。
    バラバラに解いてきたものが1枚に並ぶと、次の「つかう」で引き出しやすい。 */
-function renderHalf(lv) {
+function renderHalf(lv, kind) {
   flushReveal();
   const info = levelOf(lv);
   const fixed = atomsOf(lv);
-  const grasp = fixed.filter(p => p.mode === "atom");
+  // 時間の区切りでは、そこまでに「つかんだ」ものだけを並べる
+  const grasp = fixed.filter(p => p.mode === "atom"
+    && (kind === "境目" || P.solved.includes(p.id)));
   $("hfTitle").textContent = info ? info.title : "";
+  $("hfRibbon").textContent = kind === "境目" ? "方針がそろいました" : "ここまでの ふりかえり";
 
-  // つかむ問題の「ことばにする工程」の正解＝そのアトムの方針
+  // つかむ問題の「ことばにする工程」の正解＝そのアトムの方針。
+  // ここは**抽象だけ**を並べる。問題文（具体）を添えると、
+  // せっかく抽象化したものがまた具体に戻ってしまう（オーナー指摘・2026-08-11）。
   const lines = grasp.map((p, i) => {
     const last = p.steps[p.steps.length - 1];
     const ok = (last.choices || []).find(c => c.correct);
-    return `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
-      + `<span class="ueq">${nb(p.question.replace(/。$/, ""))}</span></div>`
-      + `<div class="op">${nb(ok ? ok.text : "")}</div></div>`;
+    return `<div class="atomline"><span class="n">${i + 1}</span>`
+      + `<span class="at">${nb(ok ? ok.text : "")}</span></div>`;
   }).join("");
-  $("hfList").innerHTML = `<p class="lead" style="margin:0 0 8px">`
-    + `ここまでに、${grasp.length}つの方針をおぼえました。</p>`
-    + `<div class="usedbox">${lines}</div>`;
+  $("hfList").innerHTML = grasp.length
+    ? `<p class="lead" style="margin:0 0 8px">`
+      + `${kind === "境目" ? "ここまでに、" : "このレベルでおぼえた方針は、"}`
+      + `${grasp.length}つ${kind === "境目" ? "の方針をおぼえました。" : "です。"}</p>`
+      + `<div class="usedbox">${lines}</div>`
+    : `<p class="lead" style="margin:0">このレベルの方針を使って解いています。</p>`;
 
-  const rest = poolOf(lv).filter(p => !P.solved.includes(p.id)).length;
-  $("hfNote").innerHTML = `<p style="margin:0"><b>ここからは、使ってみる段です。</b></p>`
-    + `<p class="lead" style="margin:6px 0 0">のこり ${rest} 問。`
-    + `いくつかの方針を組み合わせて解きます。`
-    + `どれを使うかを決めるのが、ここでの仕事です。</p>`;
+  // 数えるのはレベルの全部（つかむ・ためす・つかう）。
+  // 「つかう」だけで数えると、方針をおぼえた段の努力が 0問 と出てしまう。
+  const all = (levelOf(lv) || {problems: []}).problems;
+  const rest = all.filter(p => !P.solved.includes(p.id)).length;
+  const done = all.length - rest;
+  $("hfNote").innerHTML = kind === "境目"
+    ? `<p style="margin:0"><b>ここからは、使ってみる段です。</b></p>`
+      + `<p class="lead" style="margin:6px 0 0">のこり ${rest} 問。`
+      + `いくつかの方針を組み合わせて解きます。`
+      + `どれを使うかを決めるのが、ここでの仕事です。</p>`
+    : `<p style="margin:0"><b>${done} 問できました。のこり ${rest} 問です。</b></p>`
+      + `<p class="lead" style="margin:6px 0 0">`
+      + `ひと息ついてから、続けてください。</p>`;
+  $("btnHalfGo").textContent = kind === "境目" ? "つかってみる" : "つづける";
   Sound.play("levelUp");
   renderHeader();
   show("scHalf");
@@ -20155,7 +20214,7 @@ $("btnDunno").onclick = dunno;
 $("btnThink").onclick = () => { showChoices(true); Sound.play("step"); };
 $("btnNext").onclick = () => {
   if (clearPending) { const lv = clearPending; clearPending = 0; return renderClear(lv); }
-  if (halfPending) { const lv = halfPending; halfPending = 0; return renderHalf(lv); }
+  if (halfPending) { const lv = halfPending; halfPending = 0; return renderHalf(lv, halfKind); }
   if (chapterPending) { const info = chapterPending; chapterPending = null; return renderChapter(info); }
   return P.freeReview ? renderFree() : startProblem();
 };
