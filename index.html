@@ -1488,7 +1488,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 16:51</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 17:12</span>
   </p>
 </div>
 
@@ -2087,6 +2087,49 @@ const DATA = {
        ]
       },
       {
+       "id": "L1-S1",
+       "difficulty": 2,
+       "question": "7a は、もともとどんな式でしたか。",
+       "answer": "7 × a",
+       "estimated_seconds": 20,
+       "mode": "solo",
+       "timeout_seconds": 50,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "7a が表しているのはどれですか。",
+         "writes": [
+          "7 × a"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "7 × a",
+           "correct": true
+          },
+          {
+           "text": "7 + a",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "70 + a",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "7 ÷ a",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L1-A2",
        "difficulty": 0,
        "question": "a ÷ 5 を、文字式の書き方で表しなさい。",
@@ -2149,13 +2192,56 @@ const DATA = {
        ]
       },
       {
+       "id": "L1-S2",
+       "difficulty": 2,
+       "question": "x/3 は、もともとどんな式でしたか。",
+       "answer": "x ÷ 3",
+       "estimated_seconds": 20,
+       "mode": "solo",
+       "timeout_seconds": 50,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "x/3 が表しているのはどれですか。",
+         "writes": [
+          "x ÷ 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x ÷ 3",
+           "correct": true
+          },
+          {
+           "text": "3 ÷ x",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "x × 3",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "x - 3",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L1-A3",
        "difficulty": 0,
        "question": "1 × y を、文字式の書き方で表しなさい。",
        "answer": "y",
        "estimated_seconds": 26,
        "mode": "atom",
-       "timeout_seconds": 57,
+       "timeout_seconds": 58,
        "textbook": "p.67-70",
        "has_work": true,
        "solution_start": "1 × y",
@@ -2203,6 +2289,49 @@ const DATA = {
           },
           {
            "text": "1 をかけているときは、たし算にする",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-S3",
+       "difficulty": 2,
+       "question": "1b と書いてある式があります。",
+       "answer": "b",
+       "estimated_seconds": 20,
+       "mode": "solo",
+       "timeout_seconds": 50,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しい書き方に直すと、どうなりますか。",
+         "writes": [
+          "b"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "b",
+           "correct": true
+          },
+          {
+           "text": "1b",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "b + 1",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "b1",
            "correct": false,
            "error_type": "E-EXPR-03"
           }
@@ -2266,7 +2395,50 @@ const DATA = {
           {
            "text": "文字は、× を残して書く",
            "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-S4",
+       "difficulty": 2,
+       "question": "cb と書いてある式があります。",
+       "answer": "bc",
+       "estimated_seconds": 20,
+       "mode": "solo",
+       "timeout_seconds": 50,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しい書き方に直すと、どうなりますか。",
+         "writes": [
+          "bc"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "bc",
+           "correct": true
+          },
+          {
+           "text": "cb",
+           "correct": false,
            "error_type": "E-EXPR-07"
+          },
+          {
+           "text": "b + c",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "c × b",
+           "correct": false,
+           "error_type": "E-EXPR-03"
           }
          ]
         }
@@ -2335,6 +2507,49 @@ const DATA = {
        ]
       },
       {
+       "id": "L1-S5",
+       "difficulty": 2,
+       "question": "a^2 は、もともとどんな式でしたか。",
+       "answer": "a × a",
+       "estimated_seconds": 22,
+       "mode": "solo",
+       "timeout_seconds": 52,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "a^2 が表しているのはどれですか。",
+         "writes": [
+          "a × a"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "a × a",
+           "correct": true
+          },
+          {
+           "text": "a × 2",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "a + a",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "a + 2",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L1-A6",
        "difficulty": 0,
        "question": "(a + 2) × 5 を、文字式の書き方で表しなさい。",
@@ -2366,7 +2581,7 @@ const DATA = {
           {
            "text": "数をうしろに置いたままで (a + 2)5",
            "correct": false,
-           "error_type": "E-EXPR-08"
+           "error_type": "E-EXPR-03"
           }
          ]
         },
@@ -2390,7 +2605,155 @@ const DATA = {
           {
            "text": "かっこはそのままにして、数をうしろに書く",
            "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-S6",
+       "difficulty": 2,
+       "question": "3(x + 1) は、もともとどんな式でしたか。",
+       "answer": "(x + 1) × 3",
+       "estimated_seconds": 22,
+       "mode": "solo",
+       "timeout_seconds": 52,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "3(x + 1) が表しているのはどれですか。",
+         "writes": [
+          "(x + 1) × 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "(x + 1) × 3",
+           "correct": true
+          },
+          {
+           "text": "3 × x + 1",
+           "correct": false,
            "error_type": "E-EXPR-08"
+          },
+          {
+           "text": "3 + x + 1",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "(x + 1) ÷ 3",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-A7",
+       "difficulty": 0,
+       "question": "a × 3 × b を、文字式の書き方で表しなさい。",
+       "answer": "3ab",
+       "estimated_seconds": 34,
+       "mode": "atom",
+       "timeout_seconds": 75,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "a × 3 × b",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "a × 3 × b を、文字式の書き方に直すとどうなりますか。",
+         "writes": [
+          "3ab"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数を前に出し、文字をアルファベット順にして 3ab",
+           "correct": true
+          },
+          {
+           "text": "出てきた順のままで a3b",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "数をうしろに置いて ab3",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "数を前に、文字はアルファベット順にならべ、×は省く"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数を前に、文字はアルファベット順にならべ、×は省く",
+           "correct": true
+          },
+          {
+           "text": "文字を前に、数はうしろにならべ、×は省く",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "出てきた順にならべ、×だけを省く",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-S7",
+       "difficulty": 3,
+       "question": "5xy は、もともとどんな式でしたか。",
+       "answer": "5 × x × y",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "5xy が表しているのはどれですか。",
+         "writes": [
+          "5 × x × y"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "5 × x × y",
+           "correct": true
+          },
+          {
+           "text": "5 + x + y",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "5 × x + y",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "5 ÷ x ÷ y",
+           "correct": false,
+           "error_type": "E-EXPR-04"
           }
          ]
         }
@@ -2398,179 +2761,12 @@ const DATA = {
       },
       {
        "id": "L1-01",
-       "difficulty": 1,
-       "question": "a × 3 を、文字式の書き方で表すとどうなりますか。",
-       "answer": "3a",
-       "estimated_seconds": 15,
-       "mode": "input",
-       "timeout_seconds": 35,
-       "textbook": "p.67-70",
-       "has_work": true,
-       "solution_start": "a × 3",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "書きかえた式はどれですか。",
-         "writes": [
-          "3a"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "3a",
-           "correct": true
-          },
-          {
-           "text": "a3",
-           "correct": false,
-           "error_type": "E-EXPR-03"
-          },
-          {
-           "text": "a + 3",
-           "correct": false,
-           "error_type": "E-EXPR-03"
-          },
-          {
-           "text": "a × 3",
-           "correct": false,
-           "error_type": "E-EXPR-03"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L1-02",
-       "difficulty": 2,
-       "question": "x ÷ 4 を、文字式の書き方で表すとどうなりますか。",
-       "answer": "x/4",
-       "estimated_seconds": 18,
-       "mode": "input",
-       "timeout_seconds": 40,
-       "textbook": "p.67-70",
-       "has_work": true,
-       "solution_start": "x ÷ 4",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "書きかえた式はどれですか。",
-         "writes": [
-          "x/4"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "x/4",
-           "correct": true
-          },
-          {
-           "text": "4/x",
-           "correct": false,
-           "error_type": "E-EXPR-04"
-          },
-          {
-           "text": "4x",
-           "correct": false,
-           "error_type": "E-EXPR-04"
-          },
-          {
-           "text": "x - 4",
-           "correct": false,
-           "error_type": "E-EXPR-04"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L1-03",
-       "difficulty": 3,
-       "question": "5x は、もともとどんな式でしたか。",
-       "answer": "5 × x",
-       "estimated_seconds": 18,
-       "mode": "input",
-       "timeout_seconds": 40,
-       "textbook": "p.67-70",
-       "has_work": true,
-       "solution_start": "5x",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "5x が表しているのはどれですか。",
-         "writes": [
-          "5x = 5 × x"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "5 × x",
-           "correct": true
-          },
-          {
-           "text": "5 + x",
-           "correct": false,
-           "error_type": "E-EXPR-01"
-          },
-          {
-           "text": "50 + x",
-           "correct": false,
-           "error_type": "E-EXPR-01"
-          },
-          {
-           "text": "5 ÷ x",
-           "correct": false,
-           "error_type": "E-EXPR-01"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L1-04",
        "difficulty": 4,
-       "question": "1 × x を、文字式の書き方で表しなさい。",
-       "answer": "x",
-       "estimated_seconds": 20,
-       "mode": null,
-       "timeout_seconds": 45,
-       "textbook": "p.67-70",
-       "has_work": true,
-       "solution_start": "1 × x",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "1 をかけているとき、1 はどうしますか。",
-         "writes": [
-          "x"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "1 を省いて x と書く",
-           "correct": true
-          },
-          {
-           "text": "1 も書いて 1x と書く",
-           "correct": false,
-           "error_type": "E-EXPR-03"
-          },
-          {
-           "text": "1 をたして x + 1 と書く",
-           "correct": false,
-           "error_type": "E-EXPR-03"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L1-05",
-       "difficulty": 5,
        "question": "b × a を、文字式の書き方で表しなさい。",
        "answer": "ab",
        "estimated_seconds": 24,
        "mode": null,
-       "timeout_seconds": 52,
+       "timeout_seconds": 55,
        "textbook": "p.67-70",
        "has_work": true,
        "solution_start": "b × a",
@@ -2579,145 +2775,73 @@ const DATA = {
          "step_no": 1,
          "prompt": "文字を並べる順番は、どうしますか。",
          "writes": [
+          "a × b"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "アルファベット順に並べて a × b",
+           "correct": true
+          },
+          {
+           "text": "出てきた順のままで b × a",
+           "correct": false,
+           "error_type": "E-EXPR-07"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、× はどうしますか。",
+         "writes": [
           "ab"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "アルファベット順に並べて ab",
+           "text": "省いて ab",
            "correct": true
           },
           {
-           "text": "出てきた順のままで ba",
-           "correct": false,
-           "error_type": "E-EXPR-07"
-          },
-          {
-           "text": "記号を残して b × a",
+           "text": "残して a × b",
            "correct": false,
            "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "たし算にして a + b",
+           "correct": false,
+           "error_type": "E-EXPR-01"
           }
          ]
         }
        ]
       },
       {
-       "id": "L1-06",
-       "difficulty": 6,
-       "question": "x × x を、文字式の書き方で表しなさい。",
-       "answer": "x^2",
-       "estimated_seconds": 27,
-       "mode": null,
-       "timeout_seconds": 58,
-       "textbook": "p.67-70",
-       "has_work": true,
-       "solution_start": "x × x",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "同じ文字のかけ算は、どう書きますか。",
-         "writes": [
-          "x^2"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "右上にかけた回数を書いて x^2",
-           "correct": true
-          },
-          {
-           "text": "回数を前に書いて 2x",
-           "correct": false,
-           "error_type": "E-EXPR-05"
-          },
-          {
-           "text": "文字を2つ並べて xx",
-           "correct": false,
-           "error_type": "E-EXPR-05"
-          },
-          {
-           "text": "たし算にして x + x",
-           "correct": false,
-           "error_type": "E-EXPR-05"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L1-07",
-       "difficulty": 7,
-       "question": "(x + 3) × 4 を、文字式の書き方で表しなさい。",
-       "answer": "4(x + 3)",
+       "id": "L1-02",
+       "difficulty": 5,
+       "question": "1 × b × a を、文字式の書き方で表しなさい。",
+       "answer": "ab",
        "estimated_seconds": 30,
        "mode": null,
-       "timeout_seconds": 65,
+       "timeout_seconds": 66,
        "textbook": "p.67-70",
        "has_work": true,
-       "solution_start": "(x + 3) × 4",
+       "solution_start": "1 × b × a",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "文字式の書き方に直します。かっこは、どうしますか。",
+         "prompt": "はじめの 1 は、どうしますか。",
          "writes": [
-          "4(x + 3)"
+          "b × a"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "かっこを残したまま、数を前に出して 4(x + 3)",
+           "text": "省いて b × a",
            "correct": true
           },
           {
-           "text": "かっこを外して、x にだけかけて 4x + 3",
-           "correct": false,
-           "error_type": "E-EXPR-08"
-          },
-          {
-           "text": "数をうしろに置いたままで (x + 3)4",
-           "correct": false,
-           "error_type": "E-EXPR-08"
-          },
-          {
-           "text": "かっこも記号も外して x + 3 × 4",
-           "correct": false,
-           "error_type": "E-EXPR-08"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L1-08",
-       "difficulty": 8,
-       "question": "b × a × 2 を、文字式の書き方で表しなさい。",
-       "answer": "2ab",
-       "estimated_seconds": 33,
-       "mode": null,
-       "timeout_seconds": 72,
-       "textbook": "p.67-70",
-       "has_work": true,
-       "solution_start": "b × a × 2",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "まず、数の 2 はどこに書きますか。",
-         "writes": [
-          "2 × b × a"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "文字より前に出して 2 × b × a",
-           "correct": true
-          },
-          {
-           "text": "出てきた順のままで b × a × 2",
-           "correct": false,
-           "error_type": "E-EXPR-03"
-          },
-          {
-           "text": "文字のあいだに入れて b × 2 × a",
+           "text": "残して 1 × b × a",
            "correct": false,
            "error_type": "E-EXPR-03"
           }
@@ -2727,21 +2851,35 @@ const DATA = {
          "step_no": 2,
          "prompt": "次に、文字の順番はどうしますか。",
          "writes": [
-          "2ab"
+          "a × b"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "アルファベット順にして 2ab",
+           "text": "アルファベット順にして a × b",
            "correct": true
           },
           {
-           "text": "出てきた順のままで 2ba",
+           "text": "出てきた順のままで b × a",
            "correct": false,
            "error_type": "E-EXPR-07"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後に、× はどうしますか。",
+         "writes": [
+          "ab"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "省いて ab",
+           "correct": true
           },
           {
-           "text": "数を文字のあいだに入れて b2a",
+           "text": "残して a × b",
            "correct": false,
            "error_type": "E-EXPR-03"
           }
@@ -2750,13 +2888,275 @@ const DATA = {
        ]
       },
       {
-       "id": "L1-09",
+       "id": "L1-03",
+       "difficulty": 6,
+       "question": "a × a × 3 を、文字式の書き方で表しなさい。",
+       "answer": "3a^2",
+       "estimated_seconds": 32,
+       "mode": null,
+       "timeout_seconds": 70,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "a × a × 3",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "a × a の部分は、どう書きますか。",
+         "writes": [
+          "a^2 × 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "右上にかけた回数を書いて a^2",
+           "correct": true
+          },
+          {
+           "text": "回数を前に書いて 2a",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "文字を2つ並べて aa",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、数の 3 はどこに書きますか。",
+         "writes": [
+          "3a^2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字の前に出して 3a^2",
+           "correct": true
+          },
+          {
+           "text": "出てきた順のままで a^2 3",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "右上に足して a^5",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-04",
+       "difficulty": 6,
+       "question": "x ÷ 4 + y × 2 を、文字式の書き方で表しなさい。",
+       "answer": "x/4 + 2y",
+       "estimated_seconds": 34,
+       "mode": null,
+       "timeout_seconds": 75,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "x ÷ 4 + y × 2",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まず、x ÷ 4 の部分をどう書きますか。",
+         "writes": [
+          "x/4 + y × 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分数の形にして x/4",
+           "correct": true
+          },
+          {
+           "text": "分母と分子を逆にして 4/x",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          },
+          {
+           "text": "かけ算にして 4x",
+           "correct": false,
+           "error_type": "E-EXPR-04"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、y × 2 の部分をどう書きますか。",
+         "writes": [
+          "x/4 + 2y"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数を前に出して 2y",
+           "correct": true
+          },
+          {
+           "text": "出てきた順のままで y2",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "たし算にして y + 2",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-05",
+       "difficulty": 7,
+       "question": "(x + 3) × 4 を、文字式の書き方で表しなさい。",
+       "answer": "4(x + 3)",
+       "estimated_seconds": 36,
+       "mode": null,
+       "timeout_seconds": 79,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "(x + 3) × 4",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かっこは、どうしますか。",
+         "writes": [
+          "(x + 3) が ひとかたまり"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ひとかたまりのまま残す",
+           "correct": true
+          },
+          {
+           "text": "外して、x にだけ 4 をかける",
+           "correct": false,
+           "error_type": "E-EXPR-08"
+          },
+          {
+           "text": "外して、記号も消す",
+           "correct": false,
+           "error_type": "E-EXPR-08"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、数の 4 はどこに書きますか。",
+         "writes": [
+          "4(x + 3)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこの前に出して 4(x + 3)",
+           "correct": true
+          },
+          {
+           "text": "うしろに置いたままで (x + 3)4",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "かっこの中に入れて (4x + 3)",
+           "correct": false,
+           "error_type": "E-EXPR-08"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-06",
+       "difficulty": 8,
+       "question": "1 × x × y × y を、文字式の書き方で表しなさい。",
+       "answer": "xy^2",
+       "estimated_seconds": 38,
+       "mode": null,
+       "timeout_seconds": 84,
+       "textbook": "p.67-70",
+       "has_work": true,
+       "solution_start": "1 × x × y × y",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "はじめの 1 は、どうしますか。",
+         "writes": [
+          "x × y × y"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "省いて x × y × y",
+           "correct": true
+          },
+          {
+           "text": "残して 1 × x × y × y",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、y × y の部分をどう書きますか。",
+         "writes": [
+          "x × y^2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "右上にかけた回数を書いて y^2",
+           "correct": true
+          },
+          {
+           "text": "回数を前に書いて 2y",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "文字を2つ並べて yy",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "最後に、× はどうしますか。",
+         "writes": [
+          "xy^2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "省いて xy^2",
+           "correct": true
+          },
+          {
+           "text": "残して x × y^2",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L1-07",
        "difficulty": 9,
        "question": "a × 3 + b ÷ 2 を、文字式の書き方で表しなさい。",
        "answer": "3a + b/2",
-       "estimated_seconds": 36,
+       "estimated_seconds": 40,
        "mode": null,
-       "timeout_seconds": 78,
+       "timeout_seconds": 88,
        "textbook": "p.67-70",
        "has_work": true,
        "solution_start": "a × 3 + b ÷ 2",
@@ -2781,7 +3181,7 @@ const DATA = {
           {
            "text": "たし算にして a + 3",
            "correct": false,
-           "error_type": "E-EXPR-03"
+           "error_type": "E-EXPR-01"
           }
          ]
         },
@@ -2812,62 +3212,62 @@ const DATA = {
        ]
       },
       {
-       "id": "L1-10",
+       "id": "L1-08",
        "difficulty": 10,
-       "question": "5 × x × x × y を、文字式の書き方で表しなさい。",
-       "answer": "5x^2y",
-       "estimated_seconds": 40,
+       "question": "(x + 1) × 3 + y ÷ 2 を、文字式の書き方で表しなさい。",
+       "answer": "3(x + 1) + y/2",
+       "estimated_seconds": 45,
        "mode": null,
-       "timeout_seconds": 86,
+       "timeout_seconds": 100,
        "textbook": "p.67-70",
        "has_work": true,
-       "solution_start": "5 × x × x × y",
+       "solution_start": "(x + 1) × 3 + y ÷ 2",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず、x × x の部分をどう書きますか。",
+         "prompt": "まず、(x + 1) × 3 の部分をどう書きますか。",
          "writes": [
-          "5 × x^2 × y"
+          "3(x + 1) + y ÷ 2"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "右上にかけた回数を書いて x^2",
+           "text": "かっこを残して、数を前に出して 3(x + 1)",
            "correct": true
           },
           {
-           "text": "回数を前に書いて 2x",
+           "text": "かっこを外して、x にだけかけて 3x + 1",
            "correct": false,
-           "error_type": "E-EXPR-05"
+           "error_type": "E-EXPR-08"
           },
           {
-           "text": "文字を2つ並べて xx",
+           "text": "数をうしろに置いたままで (x + 1)3",
            "correct": false,
-           "error_type": "E-EXPR-05"
+           "error_type": "E-EXPR-03"
           }
          ]
         },
         {
          "step_no": 2,
-         "prompt": "次に、全体の並べ方はどうしますか。",
+         "prompt": "次に、y ÷ 2 の部分をどう書きますか。",
          "writes": [
-          "5x^2y"
+          "3(x + 1) + y/2"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "数を前、文字はアルファベット順にして 5x^2y",
+           "text": "分数の形にして y/2",
            "correct": true
           },
           {
-           "text": "出てきた順のままで x^2y5",
+           "text": "分母と分子を逆にして 2/y",
            "correct": false,
-           "error_type": "E-EXPR-07"
+           "error_type": "E-EXPR-04"
           },
           {
-           "text": "文字を前、数をうしろにして x^2y × 5",
+           "text": "かけ算にして 2y",
            "correct": false,
-           "error_type": "E-EXPR-03"
+           "error_type": "E-EXPR-04"
           }
          ]
         }
