@@ -193,6 +193,7 @@
 
   /* マスの数はレベルによって変わる（アトム基準にして 17〜23問になった）。
      --n を JS から入れて、幅を分け合う。 */
+  /* 列の指定は JS から入れる（方針の段とつかうの段のあいだに、しきりを1本はさむ）。 */
   .cells { display: grid; grid-template-columns: repeat(var(--n, 10), 1fr); gap: 3px; }
   .cell {
     height: 22px; display: grid; place-items: center; border-radius: 5px;
@@ -201,12 +202,21 @@
     font-size: .68rem; font-weight: 600; font-variant-numeric: tabular-nums;
   }
   .cell { position: relative; }
-  /* つかむ（●）と ためす（○）のマス。つかう（数字）と形で分ける。
-     アトムの段でもキャラクターが1問ずつ進むようにするため
-     （オーナー指摘・2026-08-11。それまで左端で止まっていた）。 */
-  .cell.fx { font-size: .6rem; letter-spacing: -.02em;
-             background: color-mix(in srgb, var(--accentSoft) 60%, transparent);
+  /* マスはぜんぶ通し番号でそろえる（オーナー判断・2026-08-11）。
+     以前は 方針の段だけ ● で、つかうの段だけ数字にしていた。
+     印の種類が2つあると「この ● と 4 は何がちがう？」と迷わせるだけだった。
+     「ここまでが方針、ここからがつかう」は、しきり1本と下の見出しで伝える。 */
+  .cell.fx { background: color-mix(in srgb, var(--accentSoft) 60%, transparent);
              border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
+  /* 方針の段と、つかうの段のあいだのしきり */
+  .sep { align-self: stretch; width: 1px; margin: 1px auto;
+         background: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .celllab { display: grid; gap: 3px; margin-top: 3px; }
+  .celllab span {
+    color: var(--muted); font-size: .58rem; letter-spacing: .08em;
+    white-space: nowrap; overflow: hidden;
+  }
+  .celllab .r { text-align: right; }
   .cell.done { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); font-weight: 800; }
   .cell.miss { background: var(--ng-bg); border-color: var(--ng); color: var(--ng); font-weight: 800; }
   /* 色だけだと区別しにくい人がいるので、形でも分かるようにできる。
@@ -1073,6 +1083,7 @@
         </svg>
       </div></div>
       <div class="cells" id="diffCells"></div>
+      <div class="celllab" id="cellLab"></div>
       <div class="xprow">
         <span class="pl" id="plBadge"><small>PL</small><span id="plNum">1</span></span>
         <span class="plbar" id="plBar"><i></i></span>
@@ -1496,7 +1507,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 18:23</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 18:41</span>
   </p>
 </div>
 
@@ -20014,12 +20025,12 @@ function renderHeader() {
   $("chanceBadge").classList.toggle("hide", !P.review);
   $("xpNum").textContent = S.xp;
   renderPl();
-  renderTrack(done, pool, P.level);
+  renderTrack(pool, P.level);
 }
 
-/* 現在地。レベルの並びと、難易度10段のどこにいるか。
-   難易度と問題は1対1なので、10マス = そのレベルの10問。 */
-function renderTrack(done, pool, shown) {
+/* 現在地。レベルの並びと、そのレベルの何問目にいるか。
+   マス = そのレベルの全問（方針の段 + つかうの段）。通し番号でそろえてある。 */
+function renderTrack(pool, shown) {
   $("lvRow").innerHTML = '<span class="lvlabel">レベル</span>' + LV.map(l => {
     const cls = l.level === shown ? "cur"
       : !l.steps_done ? "na"
@@ -20039,21 +20050,33 @@ function renderTrack(done, pool, shown) {
   const fixedCells = (levelOf(shown) || {problems: []}).problems.filter(isFixed);
   const useCells = pool.slice().sort((a, b) => a.difficulty - b.difficulty);
   const track = fixedCells.concat(useCells);
+  const allDone = track.filter(p => P.solved.includes(p.id)).length;
   const cellEl = $("diffCells");
-  cellEl.style.setProperty("--n", track.length);
-  cellEl.innerHTML = track.map(p => {
+  // マスの印は通し番号でそろえる（オーナー判断・2026-08-11）。
+  // 方針の段だけ ●、つかうの段だけ難易度の数字、という2種類の印は、
+  // 生徒にとって意味のちがいが読み取れず、迷わせるだけだった。
+  // 段の切りかわりは、しきり1本と下の見出しで伝える。
+  const nA = fixedCells.length, nB = useCells.length;
+  const cols = [nA ? `repeat(${nA},1fr)` : "", (nA && nB) ? "9px" : "",
+                nB ? `repeat(${nB},1fr)` : ""].filter(Boolean).join(" ");
+  cellEl.style.gridTemplateColumns = cols;
+  cellEl.innerHTML = track.map((p, i) => {
     let cls = "cell";
     if (isFixed(p)) cls += " fx";
     if (p.difficulty === 10) cls += " boss";     // レベル最後の問題＝ボス
     if (P.solved.includes(p.id)) cls += " done";
     else if (missed.has(p.id)) cls += " miss";
     if (cur && cur.id === p.id) cls += " now";
-    // つかむ と ためす は、生徒には区別がいらない（オーナー判断・2026-08-11）。
-    // 分けて見せると「この ● と ○ は何がちがうんだろう」と余計に迷わせる。
-    // 「方針をおぼえる段」と「むずかしさのついた段」の2種類だけが伝わればよい。
-    const label = isFixed(p) ? "●" : p.difficulty;
-    return `<span class="${cls}" title="${p.id}">${label}</span>`;
+    const cell = `<span class="${cls}" title="${p.id}">${i + 1}</span>`;
+    return (i === nA && nB) ? `<i class="sep"></i>${cell}` : cell;
   }).join("");
+
+  // 「ここまでが方針、ここからがつかう」を、マスの下に出す
+  const labEl = $("cellLab");
+  labEl.style.gridTemplateColumns = cols;
+  labEl.innerHTML = !(nA && nB) ? ""
+    : `<span style="grid-column: span ${nA}">方針をおぼえる</span><i></i>`
+      + `<span class="r" style="grid-column: span ${nB}">つかう</span>`;
 
   // キャラクターを、いまの難易度のマスの上に移動させる
   const ch = $("charPos");
@@ -20063,8 +20086,13 @@ function renderTrack(done, pool, shown) {
   // 難易度の値をそのまま使うと、難易度10・マス8個のときに 119% になってはみ出す
   // （難易度の重複・とびを許した副作用。2026-08-11 に発見）。
   const idx = cur ? track.findIndex(p => p.id === cur.id) : -1;
+  // しきりのぶん幅がずれるので、計算ではなく実際のマスの位置から出す。
+  // まだ画面に出ていない（幅0）ときだけ、割り算で近い場所に置く。
+  const box = cellEl.querySelectorAll(".cell")[idx];
   const left = (idx < 0) ? "0%"
-    : ((idx + 0.5) / track.length * 100).toFixed(2) + "%";
+    : (box && cellEl.offsetWidth)
+      ? ((box.offsetLeft + box.offsetWidth / 2) / cellEl.offsetWidth * 100).toFixed(2) + "%"
+      : ((idx + 0.5) / track.length * 100).toFixed(2) + "%";
   if (ch.style.left !== left) {
     ch.style.left = left;
     ch.classList.remove("hop"); void ch.offsetWidth; ch.classList.add("hop");
@@ -20075,9 +20103,11 @@ function renderTrack(done, pool, shown) {
       + `終わったらレベル${P.review.returnTo}へ`
     : P.freeReview
       ? `回収中 ${cur ? disp(cur.id) : ""} ・ 終わったらレベル${P.freeBackTo || P.level}へ`
+    // マスに通し番号をふったので、ここも同じ数え方でそろえる。
+    // 「いま 1-方針2」より「いま 5問目」のほうが、どのマスにいるか一目で分かる。
     : cur
-      ? `いま ${disp(cur.id)} ・ このレベル ${done}/${pool.length}問 正解`
-      : `難易度1〜${pool.length} ・ 1段につき1問 ・ ${done}/${pool.length}問 正解`;
+      ? `いま ${idx + 1}問目 ・ このレベル ${allDone}/${track.length}問 正解`
+      : `ぜんぶで${track.length}問 ・ ${allDone}/${track.length}問 正解`;
 }
 
 /* 出題できる範囲の一文。スタートと設定の両方で使う。 */
@@ -20765,7 +20795,11 @@ function renderResult(rec) {
     // 「ためす」は1工程しかないので、方針の一覧を出す意味がない。
     // 出すと「1 はじめに 6」のように、演習用のラベルが漏れて意味の通らない
     // 表示になる（2026-08-11 オーナー指摘。2問目で急に見た目が変わって混乱した）。
-    const used = isSolo ? ""
+    // 工程が1つしかない問題では、方針の一覧を出さない。
+    // 1行だけの「一覧」は意味がないうえ、つかう用のラベル「はじめに」が
+    // そのまま出て「1 はじめに 6」のような読めない画面になっていた
+    // （オーナー発見・2026-08-11。ためす だけでなく 準備 でも起きていた）。
+    const used = (isSolo || chosen.length < 2) ? ""
       : isAtom
       ? chosen.map((c, i) =>
           `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
