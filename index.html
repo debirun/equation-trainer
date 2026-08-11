@@ -1459,7 +1459,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 01:59</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 15:17</span>
   </p>
 </div>
 
@@ -8916,33 +8916,34 @@ const DATA = {
        "id": "L2-A1",
        "difficulty": 0,
        "question": "方程式 x - 3 = 5 を解きます。",
-       "answer": "x - 3 + 3 = 5 + 3",
+       "answer": "x = 8",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
        "textbook": "p.82-85",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "x - 3 = 5",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "両辺に同じことをして、左辺を x だけにします。どうなりますか。",
+         "prompt": "左辺を x だけにするために、何をしますか。",
          "writes": [
-          "x - 3 + 3 = 5 + 3"
+          "x - 3 + 3 = 5 + 3",
+          "x = 8"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x - 3 + 3 = 5 + 3（両辺に 3 をたして）",
+           "text": "両辺に 3 をたす",
            "correct": true
           },
           {
-           "text": "x - 3 - 3 = 5 - 3（両辺から 3 をひいて）",
+           "text": "両辺から 3 をひく",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "x - 3 + 3 = 5（左辺だけに 3 をたして）",
+           "text": "左辺だけに 3 をたす",
            "correct": false,
            "error_type": "E-PROP-03"
           }
@@ -8975,36 +8976,80 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-A2",
-       "difficulty": 0,
-       "question": "方程式 x + 2 = 7 を解きます。",
-       "answer": "x + 2 - 2 = 7 - 2",
-       "estimated_seconds": 34,
-       "mode": "atom",
-       "timeout_seconds": 75,
+       "id": "L2-S1",
+       "difficulty": 2,
+       "question": "方程式 x - 8 = 1 を、x - 8 + 8 = 1 + 8 に変えました。",
+       "answer": "両辺に 8 をたした",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 60,
        "textbook": "p.82-85",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "x - 8 = 1",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "左辺の +2 を消します。どうなりますか。",
+         "prompt": "この変形は、何をしたものですか。",
          "writes": [
-          "x + 2 - 2 = 7 - 2"
+          "両辺に 8 をたした"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x + 2 - 2 = 7 - 2（両辺から 2 をひいて）",
+           "text": "両辺に 8 をたした",
            "correct": true
           },
           {
-           "text": "x + 2 + 2 = 7 + 2（両辺に 2 をたして）",
+           "text": "両辺から 8 をひいた",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "x + 2 - 2 = 7（左辺だけから 2 をひいて）",
+           "text": "左辺だけに 8 をたした",
+           "correct": false,
+           "error_type": "E-PROP-03"
+          },
+          {
+           "text": "両辺に 8 をかけた",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A2",
+       "difficulty": 0,
+       "question": "方程式 x + 6 = 10 を解きます。",
+       "answer": "x = 4",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "x + 6 = 10",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにするために、何をしますか。",
+         "writes": [
+          "x + 6 - 6 = 10 - 6",
+          "x = 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺から 6 をひく",
+           "correct": true
+          },
+          {
+           "text": "両辺に 6 をたす",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "左辺だけから 6 をひく",
            "correct": false,
            "error_type": "E-PROP-03"
           }
@@ -9014,23 +9059,66 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "たしてある数はひき、かけてある数はわる"
+          "たしてある数は、両辺からひくと消える"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "たしてある数はひき、かけてある数はわる",
+           "text": "たしてある数は、両辺からひくと消える",
            "correct": true
           },
           {
-           "text": "たしてある数はたし、かけてある数はかける",
+           "text": "たしてある数は、両辺にたすと消える",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "たしてある数もかけてある数も、ひけば消える",
+           "text": "たしてある数は、両辺でわると消える",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-S2",
+       "difficulty": 2,
+       "question": "方程式 x + 4 = 9 を、x + 4 - 4 = 9 - 4 に変えました。",
+       "answer": "両辺から 4 をひいた",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 60,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "x + 4 = 9",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は、何をしたものですか。",
+         "writes": [
+          "両辺から 4 をひいた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺から 4 をひいた",
+           "correct": true
+          },
+          {
+           "text": "両辺に 4 をたした",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "左辺だけから 4 をひいた",
            "correct": false,
            "error_type": "E-PROP-03"
+          },
+          {
+           "text": "両辺を 4 でわった",
+           "correct": false,
+           "error_type": "E-PROP-02"
           }
          ]
         }
@@ -9040,33 +9128,34 @@ const DATA = {
        "id": "L2-A3",
        "difficulty": 0,
        "question": "方程式 5x = 20 を解きます。",
-       "answer": "5x ÷ 5 = 20 ÷ 5",
+       "answer": "x = 4",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
        "textbook": "p.82-85",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "5x = 20",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "両辺に同じことをして、左辺を x だけにします。どうなりますか。",
+         "prompt": "左辺を x だけにするために、何をしますか。",
          "writes": [
-          "5x ÷ 5 = 20 ÷ 5"
+          "5x ÷ 5 = 20 ÷ 5",
+          "x = 4"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "5x ÷ 5 = 20 ÷ 5（両辺を 5 でわって）",
+           "text": "両辺を 5 でわる",
            "correct": true
           },
           {
-           "text": "5x - 5 = 20 - 5（両辺から 5 をひいて）",
+           "text": "両辺から 5 をひく",
            "correct": false,
            "error_type": "E-PROP-02"
           },
           {
-           "text": "5x ÷ 20 = 20 ÷ 20（両辺を 20 でわって）",
+           "text": "両辺を 20 でわる",
            "correct": false,
            "error_type": "E-PROP-04"
           }
@@ -9099,36 +9188,80 @@ const DATA = {
        ]
       },
       {
+       "id": "L2-S3",
+       "difficulty": 2,
+       "question": "方程式 3x = 12 を、3x ÷ 3 = 12 ÷ 3 に変えました。",
+       "answer": "両辺を 3 でわった",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 60,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "3x = 12",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は、何をしたものですか。",
+         "writes": [
+          "両辺を 3 でわった"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺を 3 でわった",
+           "correct": true
+          },
+          {
+           "text": "両辺に 3 をかけた",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺から 3 をひいた",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "両辺を 12 でわった",
+           "correct": false,
+           "error_type": "E-PROP-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L2-A4",
        "difficulty": 0,
        "question": "方程式 x ÷ 3 = 2 を解きます。",
-       "answer": "x ÷ 3 × 3 = 2 × 3",
+       "answer": "x = 6",
        "estimated_seconds": 32,
        "mode": "atom",
        "timeout_seconds": 70,
        "textbook": "p.82-85",
        "has_work": true,
-       "solution_start": "",
+       "solution_start": "x ÷ 3 = 2",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "両辺に同じことをして、左辺を x だけにします。どうなりますか。",
+         "prompt": "左辺を x だけにするために、何をしますか。",
          "writes": [
-          "x ÷ 3 × 3 = 2 × 3"
+          "x ÷ 3 × 3 = 2 × 3",
+          "x = 6"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x ÷ 3 × 3 = 2 × 3（両辺に 3 をかけて）",
+           "text": "両辺に 3 をかける",
            "correct": true
           },
           {
-           "text": "x ÷ 3 ÷ 3 = 2 ÷ 3（両辺を 3 でわって）",
+           "text": "両辺を 3 でわる",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "x ÷ 3 + 3 = 2 + 3（両辺に 3 をたして）",
+           "text": "両辺に 3 をたす",
            "correct": false,
            "error_type": "E-PROP-02"
           }
@@ -9161,38 +9294,86 @@ const DATA = {
        ]
       },
       {
+       "id": "L2-S4",
+       "difficulty": 2,
+       "question": "方程式 x ÷ 5 = 4 を、x ÷ 5 × 5 = 4 × 5 に変えました。",
+       "answer": "両辺に 5 をかけた",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 60,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "x ÷ 5 = 4",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は、何をしたものですか。",
+         "writes": [
+          "両辺に 5 をかけた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "両辺に 5 をかけた",
+           "correct": true
+          },
+          {
+           "text": "両辺を 5 でわった",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺に 5 をたした",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "左辺だけに 5 をかけた",
+           "correct": false,
+           "error_type": "E-PROP-03"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L2-A5",
        "difficulty": 0,
-       "question": "方程式 x + 6 = 10 を解きます。",
-       "answer": "x + 6 - 6 = 10 - 6",
-       "estimated_seconds": 32,
+       "question": "方程式 6x = 18 があります。左辺の 6 を消したいです。",
+       "answer": "6 でわる",
+       "estimated_seconds": 30,
        "mode": "atom",
-       "timeout_seconds": 70,
+       "timeout_seconds": 66,
        "textbook": "p.82-85",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "両辺に同じことをして、左辺を x だけにします。どうなりますか。",
+         "prompt": "この 6 を消すために、何をしますか。",
          "writes": [
-          "x + 6 - 6 = 10 - 6"
+          "6 でわる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x + 6 - 6 = 10 - 6（両辺から 6 をひいて）",
+           "text": "6 でわる",
            "correct": true
           },
           {
-           "text": "x + 6 + 6 = 10 + 6（両辺に 6 をたして）",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          },
-          {
-           "text": "(x + 6) ÷ 6 = 10 ÷ 6（両辺を 6 でわって）",
+           "text": "6 をひく",
            "correct": false,
            "error_type": "E-PROP-02"
+          },
+          {
+           "text": "6 をたす",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "6 をかける",
+           "correct": false,
+           "error_type": "E-PROP-01"
           }
          ]
         },
@@ -9200,21 +9381,21 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "たしてある数は、両辺からひくと消える"
+          "たしてある数はひき、かけてある数はわる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "たしてある数は、両辺からひくと消える",
+           "text": "たしてある数はひき、かけてある数はわる",
            "correct": true
           },
           {
-           "text": "たしてある数は、両辺にたすと消える",
+           "text": "たしてある数はたし、かけてある数はかける",
            "correct": false,
            "error_type": "E-PROP-01"
           },
           {
-           "text": "たしてある数は、両辺でわると消える",
+           "text": "たしてある数もかけてある数も、ひけば消える",
            "correct": false,
            "error_type": "E-PROP-02"
           }
@@ -9223,31 +9404,75 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-A6",
-       "difficulty": 0,
-       "question": "方程式 3x + 1 = 7 を解きます。",
-       "answer": "3x + 1 - 1 = 7 - 1",
-       "estimated_seconds": 40,
-       "mode": "atom",
-       "timeout_seconds": 88,
+       "id": "L2-S5",
+       "difficulty": 2,
+       "question": "ある方程式を解くのに、両辺を 4 でわりました。",
+       "answer": "4 がかけてあった",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 60,
        "textbook": "p.82-85",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "左辺には 3 と +1 があります。先に消すほうを選ぶと、どうなりますか。",
+         "prompt": "左辺の x には、何がしてありましたか。",
          "writes": [
-          "3x + 1 - 1 = 7 - 1"
+          "4 がかけてあった"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "3x + 1 - 1 = 7 - 1（たしてある +1 を先に消して）",
+           "text": "4 がかけてあった",
            "correct": true
           },
           {
-           "text": "(3x + 1) ÷ 3 = 7 ÷ 3（かけてある 3 を先に消して）",
+           "text": "4 がたしてあった",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "4 がひいてあった",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          },
+          {
+           "text": "4 でわってあった",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A6",
+       "difficulty": 0,
+       "question": "方程式 3x + 1 = 7 を解きます。左辺には 3 と +1 があります。",
+       "answer": "3x = 6",
+       "estimated_seconds": 36,
+       "mode": "atom",
+       "timeout_seconds": 79,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "3x + 1 = 7",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "3 と +1 の、どちらを先に消しますか。",
+         "writes": [
+          "3x + 1 - 1 = 7 - 1",
+          "3x = 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "たしてある +1 を先に消す",
+           "correct": true
+          },
+          {
+           "text": "かけてある 3 を先に消す",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -9280,336 +9505,53 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-01",
-       "difficulty": 1,
-       "question": "x + 3 = 8 で「両辺から 3 をひく」と、式はどうなりますか。",
-       "answer": "x = 5",
-       "estimated_seconds": 25,
-       "mode": "input",
-       "timeout_seconds": 65,
-       "textbook": "p.82-85",
-       "has_work": true,
-       "solution_start": "x + 3 = 8",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "両辺から 3 をひいた式はどれですか。",
-         "writes": [
-          "x + 3 - 3 = 8 - 3"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "x + 3 - 3 = 8 - 3",
-           "correct": true
-          },
-          {
-           "text": "x + 3 - 3 = 8",
-           "correct": false,
-           "error_type": "E-PROP-03"
-          },
-          {
-           "text": "x + 3 + 3 = 8 + 3",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          },
-          {
-           "text": "x + 3 = 8 - 3",
-           "correct": false,
-           "error_type": "E-PROP-03"
-          }
-         ]
-        },
-        {
-         "step_no": 2,
-         "prompt": "両辺から 3 をひいたことで、左辺はどうなりましたか。",
-         "writes": [
-          "x = 5"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "+3 が消えて、左辺が x だけになった",
-           "correct": true
-          },
-          {
-           "text": "左辺の x も消えた",
-           "correct": false,
-           "error_type": "E-PROP-05"
-          },
-          {
-           "text": "左辺が 3x になった",
-           "correct": false,
-           "error_type": "E-PROP-05"
-          },
-          {
-           "text": "左辺は何も変わらなかった",
-           "correct": false,
-           "error_type": "E-PROP-05"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L2-02",
-       "difficulty": 2,
-       "question": "x - 4 = 2 を x - 4 + 4 = 2 + 4 に変えました。何をしましたか。",
-       "answer": "x = 6",
-       "estimated_seconds": 30,
-       "mode": "input",
-       "timeout_seconds": 75,
-       "textbook": "p.82-85",
-       "has_work": true,
-       "solution_start": "x - 4 = 2",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "この変形は何をしたものですか。",
-         "writes": [
-          "x - 4 + 4 = 2 + 4"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "両辺に 4 をたした",
-           "correct": true
-          },
-          {
-           "text": "両辺から 4 をひいた",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          },
-          {
-           "text": "左辺に 4 をたした",
-           "correct": false,
-           "error_type": "E-PROP-03"
-          },
-          {
-           "text": "両辺に 4 をかけた",
-           "correct": false,
-           "error_type": "E-PROP-02"
-          }
-         ]
-        },
-        {
-         "step_no": 2,
-         "prompt": "両辺に 4 をたしたことで、左辺はどうなりましたか。",
-         "writes": [
-          "x = 6"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "-4 が消えて、左辺が x だけになった",
-           "correct": true
-          },
-          {
-           "text": "左辺が 4x になった",
-           "correct": false,
-           "error_type": "E-PROP-05"
-          },
-          {
-           "text": "左辺の x が消えた",
-           "correct": false,
-           "error_type": "E-PROP-05"
-          },
-          {
-           "text": "右辺も x になった",
-           "correct": false,
-           "error_type": "E-PROP-05"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L2-03",
+       "id": "L2-S6",
        "difficulty": 3,
-       "question": "方程式 3x = 12 を解きなさい。",
-       "answer": "x = 4",
-       "estimated_seconds": 25,
-       "mode": null,
-       "timeout_seconds": 65,
+       "question": "方程式 2x + 5 = 11 を解きます。2通りのやり方をくらべます。",
+       "answer": "先に +5 を消すと 2x = 6",
+       "estimated_seconds": 34,
+       "mode": "solo",
+       "timeout_seconds": 75,
        "textbook": "p.82-85",
        "has_work": true,
-       "solution_start": "3x = 12",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず何をしますか。",
+         "prompt": "つぎの2つのうち、うまくいくのはどちらですか。",
          "writes": [
-          "x = 4"
+          "先に +5 を消すと 2x = 6"
          ],
-         "show_op": true,
+         "show_op": false,
          "choices": [
           {
-           "text": "両辺を 3 でわる",
+           "text": "先に +5 を消す。2x = 6 になる",
            "correct": true
           },
           {
-           "text": "両辺から 3 をひく",
+           "text": "先に 2 でわる。x + 2.5 = 5.5 になる",
            "correct": false,
-           "error_type": "E-PROP-02"
-          },
-          {
-           "text": "両辺に 3 をかける",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          },
-          {
-           "text": "両辺を 12 でわる",
-           "correct": false,
-           "error_type": "E-PROP-04"
+           "error_type": "E-ORDER-01"
           }
          ]
         }
        ]
       },
       {
-       "id": "L2-04",
+       "id": "L2-01",
        "difficulty": 4,
-       "question": "方程式 x ÷ 4 = 3 を解きなさい。",
-       "answer": "x = 12",
-       "estimated_seconds": 30,
-       "mode": null,
-       "timeout_seconds": 75,
-       "textbook": "p.82-85",
-       "has_work": true,
-       "solution_start": "x ÷ 4 = 3",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "まず何をしますか。",
-         "writes": [
-          "x = 12"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "両辺に 4 をかける",
-           "correct": true
-          },
-          {
-           "text": "両辺を 4 でわる",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          },
-          {
-           "text": "両辺に 4 をたす",
-           "correct": false,
-           "error_type": "E-PROP-02"
-          },
-          {
-           "text": "両辺から 4 をひく",
-           "correct": false,
-           "error_type": "E-PROP-02"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L2-05",
-       "difficulty": 5,
-       "question": "方程式 x + 7 = 2 を解きなさい。",
-       "answer": "x = -5",
-       "estimated_seconds": 30,
-       "mode": null,
-       "timeout_seconds": 75,
-       "textbook": "p.82-85",
-       "has_work": true,
-       "solution_start": "x + 7 = 2",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "まず何をしますか。",
-         "writes": [
-          "x = -5"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "両辺から 7 をひく",
-           "correct": true
-          },
-          {
-           "text": "両辺に 7 をたす",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          },
-          {
-           "text": "左辺から 7 をひく",
-           "correct": false,
-           "error_type": "E-PROP-03"
-          },
-          {
-           "text": "両辺を 7 でわる",
-           "correct": false,
-           "error_type": "E-PROP-02"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L2-06",
-       "difficulty": 6,
-       "question": "方程式 -2x = 10 を解きなさい。",
-       "answer": "x = -5",
-       "estimated_seconds": 35,
-       "mode": null,
-       "timeout_seconds": 90,
-       "textbook": "p.82-85",
-       "has_work": true,
-       "solution_start": "-2x = 10",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "まず何をしますか。",
-         "writes": [
-          "x = -5"
-         ],
-         "show_op": true,
-         "choices": [
-          {
-           "text": "両辺を -2 でわる",
-           "correct": true
-          },
-          {
-           "text": "両辺を 2 でわる",
-           "correct": false,
-           "error_type": "E-CALC-03"
-          },
-          {
-           "text": "両辺に 2 をたす",
-           "correct": false,
-           "error_type": "E-PROP-02"
-          },
-          {
-           "text": "両辺に -2 をかける",
-           "correct": false,
-           "error_type": "E-PROP-01"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L2-07",
-       "difficulty": 7,
        "question": "方程式 2x + 1 = 9 を解きなさい。",
        "answer": "x = 4",
-       "estimated_seconds": 45,
+       "estimated_seconds": 40,
        "mode": null,
-       "timeout_seconds": 115,
+       "timeout_seconds": 90,
        "textbook": "p.82-85",
        "has_work": true,
        "solution_start": "2x + 1 = 9",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず何をしますか。",
+         "prompt": "左辺を x だけにします。まず何をしますか。",
          "writes": [
           "2x = 8"
          ],
@@ -9663,20 +9605,20 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-08",
-       "difficulty": 8,
+       "id": "L2-02",
+       "difficulty": 5,
        "question": "方程式 3x - 5 = 7 を解きなさい。",
        "answer": "x = 4",
-       "estimated_seconds": 50,
+       "estimated_seconds": 42,
        "mode": null,
-       "timeout_seconds": 125,
+       "timeout_seconds": 95,
        "textbook": "p.82-85",
        "has_work": true,
        "solution_start": "3x - 5 = 7",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず何をしますか。",
+         "prompt": "左辺を x だけにします。まず何をしますか。",
          "writes": [
           "3x = 12"
          ],
@@ -9716,9 +9658,9 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺から 3 をひく",
+           "text": "両辺を 12 でわる",
            "correct": false,
-           "error_type": "E-PROP-02"
+           "error_type": "E-PROP-04"
           },
           {
            "text": "両辺に 3 をかける",
@@ -9730,20 +9672,223 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-09",
-       "difficulty": 9,
-       "question": "方程式 4x + 9 = 1 を解きなさい。",
-       "answer": "x = -2",
+       "id": "L2-03",
+       "difficulty": 6,
+       "question": "方程式 x ÷ 2 + 3 = 5 を解きなさい。",
+       "answer": "x = 4",
+       "estimated_seconds": 46,
+       "mode": null,
+       "timeout_seconds": 105,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "x ÷ 2 + 3 = 5",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにします。まず何をしますか。",
+         "writes": [
+          "x ÷ 2 = 2"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺から 3 をひく",
+           "correct": true
+          },
+          {
+           "text": "両辺に 3 をたす",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺に 2 をかける",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "x = 4"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺に 2 をかける",
+           "correct": true
+          },
+          {
+           "text": "両辺を 2 でわる",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺に 2 をたす",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-04",
+       "difficulty": 6,
+       "question": "方程式 5x - 2 = 13 を解きなさい。",
+       "answer": "x = 3",
+       "estimated_seconds": 44,
+       "mode": null,
+       "timeout_seconds": 100,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "5x - 2 = 13",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺を x だけにします。まず何をしますか。",
+         "writes": [
+          "5x = 15"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺に 2 をたす",
+           "correct": true
+          },
+          {
+           "text": "両辺から 2 をひく",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺を 5 でわる",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "x = 3"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺を 5 でわる",
+           "correct": true
+          },
+          {
+           "text": "両辺を 15 でわる",
+           "correct": false,
+           "error_type": "E-PROP-04"
+          },
+          {
+           "text": "両辺に 5 をかける",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-05",
+       "difficulty": 7,
+       "question": "方程式 x ÷ 4 - 1 = 2 を解きなさい。",
+       "answer": "x = 12",
        "estimated_seconds": 55,
        "mode": null,
-       "timeout_seconds": 140,
+       "timeout_seconds": 125,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "x ÷ 4 - 1 = 2",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺には ÷4 と -1 があります。どちらを先に消しますか。",
+         "writes": [],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ひいてある -1 を先に消す",
+           "correct": true
+          },
+          {
+           "text": "わってある 4 を先に消す",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "左辺を x だけにします。まず何をしますか。",
+         "writes": [
+          "x ÷ 4 = 3"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺に 1 をたす",
+           "correct": true
+          },
+          {
+           "text": "両辺から 1 をひく",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺に 4 をかける",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "x = 12"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺に 4 をかける",
+           "correct": true
+          },
+          {
+           "text": "両辺を 4 でわる",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺に 3 をかける",
+           "correct": false,
+           "error_type": "E-PROP-04"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-06",
+       "difficulty": 8,
+       "question": "方程式 4x + 9 = 1 を解きなさい。",
+       "answer": "x = -2",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 115,
        "textbook": "p.82-85",
        "has_work": true,
        "solution_start": "4x + 9 = 1",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず何をしますか。",
+         "prompt": "左辺を x だけにします。まず何をしますか。",
          "writes": [
           "4x = -8"
          ],
@@ -9762,11 +9907,6 @@ const DATA = {
            "text": "両辺を 4 でわる",
            "correct": false,
            "error_type": "E-ORDER-01"
-          },
-          {
-           "text": "左辺から 9 をひく",
-           "correct": false,
-           "error_type": "E-PROP-03"
           }
          ]
         },
@@ -9783,9 +9923,9 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "両辺から 4 をひく",
+           "text": "両辺を -8 でわる",
            "correct": false,
-           "error_type": "E-PROP-02"
+           "error_type": "E-PROP-04"
           },
           {
            "text": "両辺に 4 をかける",
@@ -9797,20 +9937,20 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-10",
-       "difficulty": 10,
+       "id": "L2-07",
+       "difficulty": 9,
        "question": "方程式 -3x + 2 = 11 を解きなさい。",
        "answer": "x = -3",
-       "estimated_seconds": 60,
+       "estimated_seconds": 55,
        "mode": null,
-       "timeout_seconds": 150,
+       "timeout_seconds": 125,
        "textbook": "p.82-85",
        "has_work": true,
        "solution_start": "-3x + 2 = 11",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず何をしますか。",
+         "prompt": "左辺を x だけにします。まず何をしますか。",
          "writes": [
           "-3x = 9"
          ],
@@ -9829,11 +9969,6 @@ const DATA = {
            "text": "両辺を -3 でわる",
            "correct": false,
            "error_type": "E-ORDER-01"
-          },
-          {
-           "text": "左辺から 2 をひく",
-           "correct": false,
-           "error_type": "E-PROP-03"
           }
          ]
         },
@@ -9855,12 +9990,86 @@ const DATA = {
            "error_type": "E-CALC-03"
           },
           {
-           "text": "両辺に 3 をたす",
+           "text": "両辺に -3 をかける",
            "correct": false,
-           "error_type": "E-PROP-02"
+           "error_type": "E-PROP-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-08",
+       "difficulty": 10,
+       "question": "方程式 6x - 7 = 5 を解きなさい。",
+       "answer": "x = 2",
+       "estimated_seconds": 58,
+       "mode": null,
+       "timeout_seconds": 130,
+       "textbook": "p.82-85",
+       "has_work": true,
+       "solution_start": "6x - 7 = 5",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "左辺には 6 と -7 があります。どちらを先に消しますか。",
+         "writes": [],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ひいてある 7 を先に消す",
+           "correct": true
           },
           {
-           "text": "両辺に -3 をかける",
+           "text": "かけてある 6 を先に消す",
+           "correct": false,
+           "error_type": "E-ORDER-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "では、何をしますか。",
+         "writes": [
+          "6x = 12"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺に 7 をたす",
+           "correct": true
+          },
+          {
+           "text": "両辺から 7 をひく",
+           "correct": false,
+           "error_type": "E-PROP-01"
+          },
+          {
+           "text": "両辺を 7 でわる",
+           "correct": false,
+           "error_type": "E-PROP-02"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "次に何をしますか。",
+         "writes": [
+          "x = 2"
+         ],
+         "show_op": true,
+         "choices": [
+          {
+           "text": "両辺を 6 でわる",
+           "correct": true
+          },
+          {
+           "text": "両辺を 12 でわる",
+           "correct": false,
+           "error_type": "E-PROP-04"
+          },
+          {
+           "text": "両辺に 6 をかける",
            "correct": false,
            "error_type": "E-PROP-01"
           }
@@ -17400,11 +17609,16 @@ const hist = () => S.history.filter(h => (h.chapter || "ch3") === S.chapter);
 const playable = () => LV.filter(l => l.steps_done);
 const levelOf = n => LV.find(l => l.level === n);
 /* 難易度つきの10問。適応出題はここだけを見る。 */
-const poolOf = n => ((levelOf(n) || {problems: []}).problems).filter(p => p.mode !== "atom");
+/* レベルの中は「順に出すもの」と「適応で出すもの」に分かれる。
+   順に出す … つかむ（mode: atom）と ためす（mode: solo）。YAML に書いた順。
+   適応で出す … つかう。難易度で上下する。
+   アトム1つにつき つかむ1・ためす1・つかう2 の4回（オーナー判断・2026-08-11）。 */
+const isFixed = p => p.mode === "atom" || p.mode === "solo";
+const poolOf = n => ((levelOf(n) || {problems: []}).problems).filter(p => !isFixed(p));
 /* 0段目。式も数字も使わず、方針そのものを覚える問題。
    レベルに入ったとき、難易度つきの問題より先に、書いてある順で出す。
    ねらいは、生徒がまずアトムをアトムとして受け取ること（オーナー構想・2026-08-10）。 */
-const atomsOf = n => ((levelOf(n) || {problems: []}).problems).filter(p => p.mode === "atom");
+const atomsOf = n => ((levelOf(n) || {problems: []}).problems).filter(isFixed);
 const byId = id => LV.flatMap(l => l.problems).find(p => p.id === id);
 const errName = id => (DATA.errorTypes[id] || {}).name || id;
 // 生徒に見せる問題番号は「1-2」の形にする（L1-02 という書き方は伝わりにくい）
@@ -17517,8 +17731,11 @@ function selectNext() {
   };
 
   if (!last || last.level !== P.level) {
-    why = `レベル${P.level}の最初の問題です。いちばん易しい難易度1から始めます。`;
-    return pool.find(p => p.difficulty === 1) || pool[0];
+    // 難易度は連番でなくてよい（重複・とびを許す）。いちばん易しいものから始める。
+    const easiest = pool.slice().sort((a, b) => a.difficulty - b.difficulty)[0];
+    why = `レベル${P.level}の最初の問題です。`
+        + `いちばん易しい難易度${easiest ? easiest.difficulty : 1}から始めます。`;
+    return easiest || pool[0];
   }
 
   /* 難易度が実際にどう動いたかを、そのまま言う。
@@ -17592,10 +17809,17 @@ function selectNext() {
   }
 
   // 正解
-  const target = Math.min(10, last.difficulty + 1);
+  //
+  // 難易度が重複できるようになった（アトム基準・2026-08-11）ので、
+  // 「いまの難易度＋1 にいちばん近いもの」だと、同じ難易度の2問目を飛ばす。
+  // 実際に L2-04（難易度6が2問目）へ一度も届かなかった。
+  // 「いまの難易度以上で、いちばん易しい未正解」を選ぶ形に変える。
+  // 難易度が重複していないレベルでは、これまでと同じ動きになる。
   const rest = pool.filter(p => !solved.has(p.id));
   if (rest.length) {
-    const pick = nearest(rest, target);
+    const up = rest.filter(p => p.difficulty >= last.difficulty)
+      .sort((a, b) => a.difficulty - b.difficulty);
+    const pick = up.length ? up[0] : nearest(rest, Math.min(10, last.difficulty + 1));
     why = pick.difficulty > last.difficulty
       ? `正解だったので、難易度を${last.difficulty}から${pick.difficulty}に上げました。`
       : pick.difficulty === last.difficulty
@@ -18428,11 +18652,13 @@ function renderStep() {
     ? "いまやったことを、<b>ことばにするとどうなるか</b>を決めてから押してください。"
     : "解答をよく見て、<b>次に何をするか</b>を頭の中で決めてから押してください。";
   const mt = $("modeTag");
-  mt.classList.toggle("hide", cur.mode !== "input" && cur.mode !== "atom");
-  mt.classList.toggle("atom", cur.mode === "atom");
+  mt.classList.toggle("hide", !cur.mode);
+  mt.classList.toggle("atom", cur.mode === "atom" || cur.mode === "solo");
   mt.textContent = cur.mode === "atom"
     ? "方針をおぼえる — まず1問やってから、ことばにします"
-    : "準備 — ことばと式を合わせる";
+    : cur.mode === "solo"
+      ? "方針をたしかめる — 式を見て、何をしたかを言います"
+      : "準備 — ことばと式を合わせる";
   $("qText").innerHTML = nb(cur.question);
   // 工程の問いにも式が入る（「2x^2 の 2乗は」など）ので、問題文と同じ整形を通す
   $("sPrompt").innerHTML = `工程${s.step_no}: ` + nb(s.prompt);
@@ -18797,6 +19023,7 @@ function renderResult(rec) {
     // 0段目は「やってから、ことばにする」の2工程。式のつながりを見せるより、
     // 何をして、それを何と呼ぶのかを並べたほうが分かる（2026-08-10 オーナー指摘）。
     const isAtom = cur.mode === "atom";
+    const isSolo = cur.mode === "solo";
     const used = isAtom
       ? chosen.map((c, i) =>
           `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
@@ -18807,9 +19034,11 @@ function renderResult(rec) {
           + `<span class="ueq">${c.before ? lineHTML(c.before) : "はじめに"}</span></div>`
           + `<div class="op">${nb(c.text)}</div></div>`).join("");
     banner.innerHTML =
-      `<h2>${isAtom ? "方針をおぼえた" : bossKill ? "ボスをたおした" : "x に近づいた"}</h2>`
+      `<h2>${isAtom ? "方針をおぼえた" : isSolo ? "方針をたしかめた"
+              : bossKill ? "ボスをたおした" : "解けた"}</h2>`
       + (used ? `<p class="sub" style="margin-bottom:8px">${
-            isAtom ? "この問題で身につけた方針" : "この問題でつかった方針"}</p>`
+            isAtom ? "この問題で身につけた方針"
+                   : isSolo ? "この問題でたしかめた方針" : "この問題でつかった方針"}</p>`
                 + `<div class="usedbox">${used}</div>` : "")
       + `<p class="sub">${sec}秒（想定 ${rec.estimatedSec}秒）`
       + `${slipped ? " ・ 途中で1回えらび直したので、一発正解にはなりません" : ""}</p>`
@@ -18845,7 +19074,7 @@ function renderResult(rec) {
     // 赤は「あなたが選んだ方針」にだけ使う。判定の帯は落ち着いた色にして、
     // 失敗を罰ではなく「x との距離」として伝える。
     banner.className = "banner miss";
-    banner.innerHTML = `<h2>x が遠のいた</h2>`
+    banner.innerHTML = `<h2>ここでつまずいた</h2>`
       + `<p class="sub">工程${rec.failedStep}で足が止まりました。解答はここまでです。</p>`;
     // 自分が選んだ手と、正しかった手を別々の枠で並べる。
     // 見せるのはつまずいた工程の方針1行だけで、解き方全体は教えない。
@@ -19700,7 +19929,9 @@ function renderJump(lv) {
   const rows = l.problems.slice().sort((a, b) => a.difficulty - b.difficulty).map(p => {
     const done = P.solved.includes(p.id), miss = missed.has(p.id);
     const cls = ["jrow", done ? "done" : miss ? "miss" : "", cur && cur.id === p.id ? "now" : ""].join(" ");
-    const tag = p.mode === "input" ? '<span class="jtag">準備</span>' : "";
+    const tag = p.mode === "input" ? '<span class="jtag">準備</span>'
+      : p.mode === "solo" ? '<span class="jtag">ためす</span>'
+      : p.mode === "atom" ? '<span class="jtag">つかむ</span>' : "";
     const boss = p.difficulty === 10 ? '<span class="jboss">♛ </span>' : "";
     return `<button class="${cls}" data-id="${p.id}">`
       + `<span class="jn">${boss}${p.difficulty}</span>`
