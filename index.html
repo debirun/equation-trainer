@@ -1488,7 +1488,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 17:12</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 17:28</span>
   </p>
 </div>
 
@@ -3654,55 +3654,12 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-01",
-       "difficulty": 1,
-       "question": "1個 120円のりんごを x 個買います。代金を式にしなさい。",
-       "answer": "120x",
-       "estimated_seconds": 22,
-       "mode": "input",
-       "timeout_seconds": 48,
-       "textbook": "p.62-66",
-       "has_work": true,
-       "solution_start": "",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "代金を表す式はどれですか。",
-         "writes": [
-          "代金 = 120x"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "120x",
-           "correct": true
-          },
-          {
-           "text": "120 + x",
-           "correct": false,
-           "error_type": "E-WORD-02"
-          },
-          {
-           "text": "x - 120",
-           "correct": false,
-           "error_type": "E-WORD-02"
-          },
-          {
-           "text": "120 ÷ x",
-           "correct": false,
-           "error_type": "E-WORD-02"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L2-02",
+       "id": "L2-S1",
        "difficulty": 2,
-       "question": "1000円出して a 円の品物を買いました。おつりを式にしなさい。",
-       "answer": "1000 - a",
-       "estimated_seconds": 25,
-       "mode": "input",
+       "question": "1個 90円のガムを x 個買いました。式 90x は、何を表していますか。",
+       "answer": "ガム x 個の代金",
+       "estimated_seconds": 24,
+       "mode": "solo",
        "timeout_seconds": 55,
        "textbook": "p.62-66",
        "has_work": true,
@@ -3710,28 +3667,28 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "おつりを表す式はどれですか。",
+         "prompt": "90x が表しているのはどれですか。",
          "writes": [
-          "おつり = 1000 - a"
+          "ガム x 個の代金"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "1000 - a",
+           "text": "ガム x 個の代金",
            "correct": true
           },
           {
-           "text": "a - 1000",
+           "text": "ガム 1個のねだん",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "1000 + a",
+           "text": "買ったガムの個数",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "1000a",
+           "text": "おつりの金額",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -3740,41 +3697,275 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-03",
+       "id": "L2-S2",
+       "difficulty": 2,
+       "question": "500円出して a 円の品物を買いました。式 500 - a は、何を表していますか。",
+       "answer": "おつり",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "500 - a が表しているのはどれですか。",
+         "writes": [
+          "おつり"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "おつり",
+           "correct": true
+          },
+          {
+           "text": "品物のねだん",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "出したお金",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "品物と出したお金の合計",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-S3",
+       "difficulty": 2,
+       "question": "ある数を x とします。式 x + 7 は、何を表していますか。",
+       "answer": "x より 7 大きい数",
+       "estimated_seconds": 22,
+       "mode": "solo",
+       "timeout_seconds": 52,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "x + 7 が表しているのはどれですか。",
+         "writes": [
+          "x より 7 大きい数"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x より 7 大きい数",
+           "correct": true
+          },
+          {
+           "text": "x より 7 小さい数",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "x の 7倍の数",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "7 を x でわった数",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-S4",
+       "difficulty": 2,
+       "question": "分速 70m で x 分歩きました。式 70x は、何を表していますか。",
+       "answer": "進んだ道のり",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "70x が表しているのはどれですか。",
+         "writes": [
+          "進んだ道のり"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "進んだ道のり",
+           "correct": true
+          },
+          {
+           "text": "歩いた時間",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "歩く速さ",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          },
+          {
+           "text": "残りの道のり",
+           "correct": false,
+           "error_type": "E-WORD-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-S5",
+       "difficulty": 2,
+       "question": "たて a cm、よこ b cm の長方形があります。式 2a + 2b は、何を表していますか。",
+       "answer": "まわりの長さ",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 58,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2a + 2b が表しているのはどれですか。",
+         "writes": [
+          "まわりの長さ"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "まわりの長さ",
+           "correct": true
+          },
+          {
+           "text": "面積",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "たてとよこをたした長さ",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "たての長さだけを二つ分にしたもの",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-S6",
        "difficulty": 3,
-       "question": "「x より 5 大きい数」を式にすると、どれですか。",
-       "answer": "x + 5",
-       "estimated_seconds": 25,
-       "mode": "input",
-       "timeout_seconds": 55,
+       "question": "x 円の品物を買いました。式 0.7x は、何を表していますか。",
+       "answer": "3割引きにしたときの代金",
+       "estimated_seconds": 28,
+       "mode": "solo",
+       "timeout_seconds": 62,
        "textbook": "p.62-66",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "「x より 5 大きい数」を表す式はどれですか。",
+         "prompt": "0.7x が表しているのはどれですか。",
          "writes": [
-          "x + 5"
+          "3割引きにしたときの代金"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x + 5",
+           "text": "3割引きにしたときの代金",
            "correct": true
           },
           {
-           "text": "5x",
+           "text": "7割引きにしたときの代金",
+           "correct": false,
+           "error_type": "E-WORD-06"
+          },
+          {
+           "text": "割り引いた金額そのもの",
+           "correct": false,
+           "error_type": "E-WORD-06"
+          },
+          {
+           "text": "7割ねだんが上がったときの代金",
+           "correct": false,
+           "error_type": "E-WORD-06"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-A7",
+       "difficulty": 0,
+       "question": "1本 x 円のえんぴつを 5本買いました。代金を式にしなさい。",
+       "answer": "5x",
+       "estimated_seconds": 32,
+       "mode": "atom",
+       "timeout_seconds": 70,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "代金を式にすると、どうなりますか。",
+         "writes": [
+          "5x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1本のねだんの 5本ぶんなので 5x",
+           "correct": true
+          },
+          {
+           "text": "1本のねだんと本数をたして x + 5",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "x - 5",
+           "text": "本数を1本のねだんでわって 5 ÷ x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "「いくつ分」ならかけ算、「へる」ならひき算、「ふえる」ならたし算"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "「いくつ分」ならかけ算、「へる」ならひき算、「ふえる」ならたし算",
+           "correct": true
+          },
+          {
+           "text": "「いくつ分」ならたし算、「へる」ならかけ算、「ふえる」ならひき算",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "5 - x",
+           "text": "ことばに関係なく、出てきた数をたす",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -3783,7 +3974,50 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-04",
+       "id": "L2-S7",
+       "difficulty": 3,
+       "question": "1個 a 円のケーキを 4個買って、1000円出しました。式 1000 - 4a は、何を表していますか。",
+       "answer": "おつり",
+       "estimated_seconds": 30,
+       "mode": "solo",
+       "timeout_seconds": 66,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "1000 - 4a が表しているのはどれですか。",
+         "writes": [
+          "おつり"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "おつり",
+           "correct": true
+          },
+          {
+           "text": "ケーキ4個の代金",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "ケーキ1個のねだん",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "はらったお金の合計",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-01",
        "difficulty": 4,
        "question": "1個 a 円のパンを 3個買いました。代金を a を使った式で表しなさい。",
        "answer": "3a",
@@ -3845,7 +4079,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-05",
+       "id": "L2-02",
        "difficulty": 5,
        "question": "分速 80m で x 分歩きました。進んだ道のりを x を使った式で表しなさい。（単位は m）",
        "answer": "80x",
@@ -3907,7 +4141,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-06",
+       "id": "L2-03",
        "difficulty": 6,
        "question": "たて a cm、よこ b cm の長方形があります。まわりの長さを a と b を使った式で表しなさい。",
        "answer": "2a + 2b",
@@ -3969,7 +4203,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-07",
+       "id": "L2-04",
        "difficulty": 7,
        "question": "x 円の品物を 2割引きで買いました。代金を x を使った式で表しなさい。",
        "answer": "0.8x",
@@ -4036,7 +4270,131 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-08",
+       "id": "L2-05",
+       "difficulty": 7,
+       "question": "たて x cm、よこ 5 cm の長方形があります。まわりの長さを x を使った式で表しなさい。",
+       "answer": "2x + 10",
+       "estimated_seconds": 56,
+       "mode": null,
+       "timeout_seconds": 122,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まわりの長さは、どうやって求めますか。",
+         "writes": [
+          "まわり = 2 × x + 2 × 5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "たて2つ分とよこ2つ分をたして 2 × x + 2 × 5",
+           "correct": true
+          },
+          {
+           "text": "たて1つ分とよこ1つ分をたして x + 5",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "たてとよこをかけて x × 5",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "それを文字式の書き方で書くと、どうなりますか。",
+         "writes": [
+          "2x + 10"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "×を省いて 2x + 10",
+           "correct": true
+          },
+          {
+           "text": "全部をかけ算にして 10x",
+           "correct": false,
+           "error_type": "E-EXPR-03"
+          },
+          {
+           "text": "数どうしをたして 7x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-06",
+       "difficulty": 8,
+       "question": "x 円の品物を 4割引きで 2個買いました。代金を x を使った式で表しなさい。",
+       "answer": "1.2x",
+       "estimated_seconds": 59,
+       "mode": null,
+       "timeout_seconds": 128,
+       "textbook": "p.62-66",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "4割引きにすると、1個のねだんはもとの何倍ですか。",
+         "writes": [
+          "1個 0.6x 円"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1 から 0.4 をひいて 0.6倍",
+           "correct": true
+          },
+          {
+           "text": "割り引くぶんだけを見て 0.4倍",
+           "correct": false,
+           "error_type": "E-WORD-06"
+          },
+          {
+           "text": "1 に 0.4 をたして 1.4倍",
+           "correct": false,
+           "error_type": "E-WORD-06"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "2個ぶんの代金は、どうなりますか。",
+         "writes": [
+          "1.2x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "1個のねだんに個数をかけて 1.2x",
+           "correct": true
+          },
+          {
+           "text": "1個のねだんに個数をたして 0.6x + 2",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          },
+          {
+           "text": "個数を1個のねだんでわって 2 ÷ 0.6x",
+           "correct": false,
+           "error_type": "E-WORD-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L2-07",
        "difficulty": 8,
        "question": "1本 x 円のジュースを 6本買って、1000円出しました。おつりを x を使った式で表しなさい。",
        "answer": "1000 - 6x",
@@ -4122,7 +4480,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-09",
+       "id": "L2-08",
        "difficulty": 9,
        "question": "時速 a km で 3時間走り、そのあと b km 歩きました。進んだ道のり全体を a と b を使った式で表しなさい。",
        "answer": "3a + b",
@@ -4208,7 +4566,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L2-10",
+       "id": "L2-09",
        "difficulty": 10,
        "question": "1冊 x 円のノートを 5冊と、200円の箱を買って、1000円出しました。おつりを x を使った式で表しなさい。",
        "answer": "1000 - (5x + 200)",
