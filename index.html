@@ -1507,7 +1507,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 18:41</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 19:04</span>
   </p>
 </div>
 
@@ -8633,6 +8633,44 @@ const DATA = {
        ]
       },
       {
+       "id": "L6-S1",
+       "difficulty": 1,
+       "question": "ある等式は、左辺が 3x + 1 で、右辺が 10 です。",
+       "answer": "3x + 1 = 10",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 56,
+       "textbook": "p.80-81",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "もとの等式はどれですか。",
+         "writes": [
+          "3x + 1 = 10"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3x + 1 = 10（左が 3x + 1）",
+           "correct": true
+          },
+          {
+           "text": "10 = 3x + 1（左が 10）",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "3x + 1 + 10（= がない）",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L6-A2",
        "difficulty": 0,
        "question": "「x から 6 をひくと 4 になる」を式にしなさい。",
@@ -8687,6 +8725,44 @@ const DATA = {
           },
           {
            "text": "「〜になる」「〜と等しい」を かけ算にする",
+           "correct": false,
+           "error_type": "E-REL-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-S2",
+       "difficulty": 1,
+       "question": "x + 7 = 12 という等式ができました。",
+       "answer": "x に 7 をたすと 12 になる",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 56,
+       "textbook": "p.80-81",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この式は、どんなことを表していますか。",
+         "writes": [
+          "x に 7 をたすと 12 になる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x に 7 をたすと 12 になる",
+           "correct": true
+          },
+          {
+           "text": "x から 7 をひくと 12 になる",
+           "correct": false,
+           "error_type": "E-REL-01"
+          },
+          {
+           "text": "x と 7 をかけると 12 になる",
            "correct": false,
            "error_type": "E-REL-01"
           }
@@ -8757,6 +8833,44 @@ const DATA = {
        ]
       },
       {
+       "id": "L6-S3",
+       "difficulty": 2,
+       "question": "x ≧ 8 という不等式ができました。",
+       "answer": "x は 8 以上",
+       "estimated_seconds": 28,
+       "mode": "solo",
+       "timeout_seconds": 60,
+       "textbook": "p.80-81",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この式は、どんなことを表していますか。",
+         "writes": [
+          "x は 8 以上"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x は 8 以上（8 もふくむ）",
+           "correct": true
+          },
+          {
+           "text": "x は 8 より大きい（8 はふくまない）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "x は 8 以下（8 もふくむ）",
+           "correct": false,
+           "error_type": "E-REL-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "id": "L6-A4",
        "difficulty": 0,
        "question": "「x は 5 より小さい」を式にしなさい。",
@@ -8819,84 +8933,98 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-01",
-       "difficulty": 1,
-       "question": "等式 3x + 1 = 10 の左辺を答えなさい。",
-       "answer": "3x + 1",
-       "estimated_seconds": 40,
-       "mode": "input",
-       "timeout_seconds": 86,
-       "textbook": "p.80-81",
-       "has_work": true,
-       "solution_start": "",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "左辺はどれですか。",
-         "writes": [
-          "3x + 1 = 10 の左辺は 3x + 1"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "3x + 1（= の左がわ）",
-           "correct": true
-          },
-          {
-           "text": "10（= の右がわ）",
-           "correct": false,
-           "error_type": "E-REL-01"
-          },
-          {
-           "text": "3x + 1 = 10（式ぜんぶ）",
-           "correct": false,
-           "error_type": "E-REL-01"
-          },
-          {
-           "text": "3x（文字のある項）",
-           "correct": false,
-           "error_type": "E-REL-01"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L6-02",
+       "id": "L6-S4",
        "difficulty": 2,
-       "question": "「x に 4 をたすと 9 になる」を式にしなさい。",
-       "answer": "x + 4 = 9",
-       "estimated_seconds": 42,
-       "mode": "input",
-       "timeout_seconds": 90,
+       "question": "x < 5 という不等式ができました。",
+       "answer": "x は 5 より小さい",
+       "estimated_seconds": 28,
+       "mode": "solo",
+       "timeout_seconds": 60,
        "textbook": "p.80-81",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "式にすると、どれですか。",
+         "prompt": "この式は、どんなことを表していますか。",
          "writes": [
-          "x + 4 = 9"
+          "x は 5 より小さい"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x + 4 = 9",
+           "text": "x は 5 より小さい（5 はふくまない）",
            "correct": true
           },
           {
-           "text": "x + 4 + 9",
+           "text": "x は 5 以下（5 もふくむ）",
            "correct": false,
-           "error_type": "E-REL-01"
+           "error_type": "E-REL-02"
           },
           {
-           "text": "x = 4 + 9",
+           "text": "x は 5 より大きい（5 はふくまない）",
            "correct": false,
-           "error_type": "E-REL-01"
+           "error_type": "E-REL-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L6-A5",
+       "difficulty": 0,
+       "question": "代金 3x 円について、「500円ちょうど」「500円以下」「500円より安い」を、それぞれ式にしなさい。",
+       "answer": "3x = 500、3x ≦ 500、3x < 500",
+       "estimated_seconds": 46,
+       "mode": "atom",
+       "timeout_seconds": 99,
+       "textbook": "p.80-81",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "3つを式にすると、どうなりますか。",
+         "writes": [
+          "3x = 500、3x ≦ 500、3x < 500"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "3x = 500、3x ≦ 500、3x < 500",
+           "correct": true
           },
           {
-           "text": "x + 9 = 4",
+           "text": "3x = 500、3x < 500、3x ≦ 500",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "3x ≦ 500、3x = 500、3x < 500",
+           "correct": false,
+           "error_type": "E-REL-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "ぴったり等しいときは等式、はばがあるときは不等式。「以上・以下」はふくみ、「より」はふくまない"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "ぴったり等しいときは等式、はばがあるときは不等式。「以上・以下」はふくみ、「より」はふくまない",
+           "correct": true
+          },
+          {
+           "text": "ぴったり等しいときは等式、はばがあるときは不等式。「以上・以下」はふくまず、「より」はふくむ",
+           "correct": false,
+           "error_type": "E-REL-02"
+          },
+          {
+           "text": "ぴったり等しいときも、はばがあるときも等式。「以上・以下」も「より」も同じ",
            "correct": false,
            "error_type": "E-REL-01"
           }
@@ -8905,41 +9033,36 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-03",
+       "id": "L6-S5",
        "difficulty": 3,
-       "question": "「x は 5 以下である」を式にしなさい。",
-       "answer": "x ≦ 5",
-       "estimated_seconds": 44,
-       "mode": "input",
-       "timeout_seconds": 95,
+       "question": "x ≧ 8 と x > 8 は、にた形の不等式です。",
+       "answer": "≧ は 8 をふくみ、> は 8 をふくまない",
+       "estimated_seconds": 32,
+       "mode": "solo",
+       "timeout_seconds": 70,
        "textbook": "p.80-81",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "式にすると、どれですか。",
+         "prompt": "この2つは、どこがちがいますか。",
          "writes": [
-          "x ≦ 5"
+          "≧ は 8 をふくみ、> は 8 をふくまない"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x ≦ 5（5 もふくむ）",
+           "text": "≧ は 8 をふくみ、> は 8 をふくまない",
            "correct": true
           },
           {
-           "text": "x < 5（5 はふくまない）",
+           "text": "≧ は 8 をふくまず、> は 8 をふくむ",
            "correct": false,
            "error_type": "E-REL-02"
           },
           {
-           "text": "x ≧ 5（5 以上）",
-           "correct": false,
-           "error_type": "E-REL-02"
-          },
-          {
-           "text": "x = 5（5 とひとしい）",
+           "text": "≧ も > も、どちらも 8 をふくむ",
            "correct": false,
            "error_type": "E-REL-02"
           }
@@ -8948,7 +9071,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-04",
+       "id": "L6-01",
        "difficulty": 4,
        "question": "1個 80円のりんごを x 個買うと、代金は 400円でした。この関係を等式で表しなさい。",
        "answer": "80x = 400",
@@ -9010,69 +9133,69 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-05",
+       "id": "L6-02",
        "difficulty": 5,
-       "question": "x 円の品物を買って 1000円出すと、おつりは 250円でした。この関係を等式で表しなさい。",
-       "answer": "1000 - x = 250",
-       "estimated_seconds": 64,
+       "question": "1個 120円のみかんを x 個買った代金について、120x = 600 という等式を立てました。左辺の 120x は、何を表していますか。",
+       "answer": "みかん x 個の代金",
+       "estimated_seconds": 62,
        "mode": null,
-       "timeout_seconds": 138,
+       "timeout_seconds": 133,
        "textbook": "p.80-81",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず、おつりを x を使って表すと、どうなりますか。",
+         "prompt": "左辺はどれですか。",
          "writes": [
-          "おつり = 1000 - x"
+          "左辺は 120x"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "出したお金から品物のねだんをひいて 1000 - x",
+           "text": "120x（= の左がわ）",
            "correct": true
           },
           {
-           "text": "品物のねだんから出したお金をひいて x - 1000",
+           "text": "600（= の右がわ）",
            "correct": false,
-           "error_type": "E-WORD-02"
+           "error_type": "E-REL-01"
           },
           {
-           "text": "出したお金と品物のねだんをたして 1000 + x",
+           "text": "120x = 600（式ぜんぶ）",
            "correct": false,
-           "error_type": "E-WORD-02"
+           "error_type": "E-REL-01"
           }
          ]
         },
         {
          "step_no": 2,
-         "prompt": "何と何が等しいですか。",
+         "prompt": "その 120x は、何を表していますか。",
          "writes": [
-          "1000 - x = 250"
+          "120x は みかん x 個の代金"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "おつりと 250円が等しいので 1000 - x = 250",
+           "text": "1個のねだんに個数をかけたので、みかん x 個の代金",
            "correct": true
           },
           {
-           "text": "品物のねだんと 250円が等しいので x = 250",
+           "text": "代金を個数でわったので、1個のねだん",
            "correct": false,
-           "error_type": "E-REL-01"
+           "error_type": "E-WORD-02"
           },
           {
-           "text": "出したお金と 250円が等しいので 1000 = 250",
+           "text": "代金を1個のねだんでわったので、みかんの個数",
            "correct": false,
-           "error_type": "E-REL-01"
+           "error_type": "E-WORD-02"
           }
          ]
         }
        ]
       },
       {
-       "id": "L6-06",
+       "id": "L6-03",
        "difficulty": 6,
        "question": "男子 x 人と女子 12人のクラスの人数は、35人以下です。この関係を不等式で表しなさい。",
        "answer": "x + 12 ≦ 35",
@@ -9134,7 +9257,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-07",
+       "id": "L6-04",
        "difficulty": 7,
        "question": "1本 x 円のペンを 3本買うと、代金は 500円より安くなりました。この関係を不等式で表しなさい。",
        "answer": "3x < 500",
@@ -9220,7 +9343,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-08",
+       "id": "L6-05",
        "difficulty": 8,
        "question": "1個 a 円のケーキを 4個と、200円の箱を買うと、代金は 1400円でした。この関係を等式で表しなさい。",
        "answer": "4a + 200 = 1400",
@@ -9306,60 +9429,60 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-09",
+       "id": "L6-06",
        "difficulty": 9,
-       "question": "1冊 x 円のノートを 5冊買って 1000円出したとき、おつりは 100円以上ありました。この関係を不等式で表しなさい。",
-       "answer": "1000 - 5x ≧ 100",
-       "estimated_seconds": 94,
+       "question": "1冊 x 円のノートを 5冊買って 1000円出したとき、1000 - 5x > 100 という不等式を立てました。この式は、どんなことを表していますか。",
+       "answer": "おつりは 100円より多い",
+       "estimated_seconds": 96,
        "mode": null,
-       "timeout_seconds": 202,
+       "timeout_seconds": 206,
        "textbook": "p.80-81",
        "has_work": true,
        "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "まず、ノート 5冊の代金を式にすると、どうなりますか。",
+         "prompt": "左辺はどれですか。",
          "writes": [
-          "ノート5冊 = 5x"
+          "左辺は 1000 - 5x"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "1冊のねだんに冊数をかけて 5x",
+           "text": "1000 - 5x（不等号の左がわ）",
            "correct": true
           },
           {
-           "text": "1冊のねだんに冊数をたして x + 5",
+           "text": "100（不等号の右がわ）",
            "correct": false,
-           "error_type": "E-WORD-02"
+           "error_type": "E-REL-01"
           },
           {
-           "text": "1000 を冊数でわって 1000 ÷ 5",
+           "text": "1000 - 5x > 100（式ぜんぶ）",
            "correct": false,
-           "error_type": "E-WORD-02"
+           "error_type": "E-REL-01"
           }
          ]
         },
         {
          "step_no": 2,
-         "prompt": "次に、おつりを式にすると、どうなりますか。",
+         "prompt": "その 1000 - 5x は、何を表していますか。",
          "writes": [
-          "おつり = 1000 - 5x"
+          "1000 - 5x は おつり"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "出したお金から代金をひいて 1000 - 5x",
+           "text": "出したお金から代金をひいたので、おつり",
            "correct": true
           },
           {
-           "text": "代金から出したお金をひいて 5x - 1000",
+           "text": "出したお金から1冊のねだんをひいたので、1冊買ったあとの残り",
            "correct": false,
            "error_type": "E-WORD-02"
           },
           {
-           "text": "出したお金と代金をたして 1000 + 5x",
+           "text": "出したお金から冊数をひいたので、買える冊数",
            "correct": false,
            "error_type": "E-WORD-02"
           }
@@ -9367,23 +9490,23 @@ const DATA = {
         },
         {
          "step_no": 3,
-         "prompt": "「100円以上」は、どの記号で表しますか。",
+         "prompt": "「> 100」は、どんなことを表していますか。",
          "writes": [
-          "1000 - 5x ≧ 100"
+          "おつりは 100円より多い"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "100 もふくむので ≧ 。1000 - 5x ≧ 100",
+           "text": "100 はふくまないので、おつりは 100円より多い",
            "correct": true
           },
           {
-           "text": "100 をふくまないので > 。1000 - 5x > 100",
+           "text": "100 もふくむので、おつりは 100円以上",
            "correct": false,
            "error_type": "E-REL-02"
           },
           {
-           "text": "100 以下を表す ≦ 。1000 - 5x ≦ 100",
+           "text": "100 はふくまないので、おつりは 100円より少ない",
            "correct": false,
            "error_type": "E-REL-02"
           }
@@ -9392,7 +9515,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L6-10",
+       "id": "L6-07",
        "difficulty": 10,
        "question": "x 円の品物を 2割引きで 3個買うと、代金は 1500円以下でした。この関係を不等式で表しなさい。",
        "answer": "2.4x ≦ 1500",
@@ -21049,6 +21172,9 @@ const SAY_ALSO = [
   [/右辺/, "= の右がわ"],
   [/累乗/, "同じものをかけた回数を右上に書いたもの"],
   [/比例式/, "a:b = c:d の形の式"],
+  // 「不等号」は「等号」を中にふくむので、必ず先に置く（先に当たったほうが勝つ）。
+  [/不等号/, "< や ≦ の記号"],
+  [/等号/, "= の記号"],
   [/不等式/, "< や ≦ でつないだ式"],
   [/等式/, "= でつないだ式"],
   [/代入/, "文字のところに数を入れること"],
