@@ -191,7 +191,9 @@
     100% { transform: translateX(-50%) translateY(0); }
   }
 
-  .cells { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+  /* マスの数はレベルによって変わる（アトム基準にして 17〜23問になった）。
+     --n を JS から入れて、幅を分け合う。 */
+  .cells { display: grid; grid-template-columns: repeat(var(--n, 10), 1fr); gap: 3px; }
   .cell {
     height: 22px; display: grid; place-items: center; border-radius: 5px;
     border: 1px solid var(--line); color: var(--muted);
@@ -199,6 +201,12 @@
     font-size: .68rem; font-weight: 600; font-variant-numeric: tabular-nums;
   }
   .cell { position: relative; }
+  /* つかむ（●）と ためす（○）のマス。つかう（数字）と形で分ける。
+     アトムの段でもキャラクターが1問ずつ進むようにするため
+     （オーナー指摘・2026-08-11。それまで左端で止まっていた）。 */
+  .cell.fx { font-size: .6rem; letter-spacing: -.02em;
+             background: color-mix(in srgb, var(--accentSoft) 60%, transparent);
+             border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
   .cell.done { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); font-weight: 800; }
   .cell.miss { background: var(--ng-bg); border-color: var(--ng); color: var(--ng); font-weight: 800; }
   /* 色だけだと区別しにくい人がいるので、形でも分かるようにできる。
@@ -1488,7 +1496,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 17:28</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 17:48</span>
   </p>
 </div>
 
@@ -4908,22 +4916,108 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-01",
-       "difficulty": 1,
-       "question": "3x の x に 4 をあてはめると、式はどうなりますか。",
-       "answer": "3 × 4",
-       "estimated_seconds": 28,
-       "mode": "input",
-       "timeout_seconds": 62,
+       "id": "L3-S1",
+       "difficulty": 2,
+       "question": "5x の x に数をあてはめたら、5 × 6 になりました。",
+       "answer": "x = 6",
+       "estimated_seconds": 22,
+       "mode": "solo",
+       "timeout_seconds": 52,
        "textbook": "p.71-73",
        "has_work": true,
-       "solution_start": "3x",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "あてはめたあとの式はどれですか。",
+         "prompt": "x にあてはめた数はどれですか。",
          "writes": [
-          "3 × 4 = 12"
+          "x = 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "6",
+           "correct": true
+          },
+          {
+           "text": "5",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          },
+          {
+           "text": "30",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          },
+          {
+           "text": "11",
+           "correct": false,
+           "error_type": "E-SUB-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-S2",
+       "difficulty": 2,
+       "question": "4x の x に -3 をあてはめて、4 × -3 と書きました。",
+       "answer": "4 × (-3)",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "正しい書き方に直すと、どうなりますか。",
+         "writes": [
+          "4 × (-3)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "4 × (-3)",
+           "correct": true
+          },
+          {
+           "text": "4 × -3",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "4 × 3",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "4 - 3",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-S3",
+       "difficulty": 2,
+       "question": "2 + 3 × 4 を計算したら 14 になりました。",
+       "answer": "3 × 4 を先に計算した",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "先に計算したのは、どちらですか。",
+         "writes": [
+          "3 × 4 を先に計算した"
          ],
          "show_op": false,
          "choices": [
@@ -4932,93 +5026,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "3 + 4",
-           "correct": false,
-           "error_type": "E-SUB-01"
-          },
-          {
-           "text": "34",
-           "correct": false,
-           "error_type": "E-SUB-01"
-          },
-          {
-           "text": "3 ÷ 4",
-           "correct": false,
-           "error_type": "E-SUB-01"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L3-02",
-       "difficulty": 2,
-       "question": "2x + 1 の x に -3 をあてはめると、式はどうなりますか。",
-       "answer": "2 × (-3) + 1",
-       "estimated_seconds": 30,
-       "mode": "input",
-       "timeout_seconds": 66,
-       "textbook": "p.71-73",
-       "has_work": true,
-       "solution_start": "2x + 1",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "あてはめたあとの式はどれですか。",
-         "writes": [
-          "2 × (-3) + 1 = -5"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "2 × (-3) + 1",
-           "correct": true
-          },
-          {
-           "text": "2 × 3 + 1",
-           "correct": false,
-           "error_type": "E-SUB-02"
-          },
-          {
-           "text": "2 - 3 + 1",
-           "correct": false,
-           "error_type": "E-SUB-02"
-          },
-          {
-           "text": "2 × (-3 + 1)",
-           "correct": false,
-           "error_type": "E-SUB-01"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L3-03",
-       "difficulty": 3,
-       "question": "2x - 5 の x に 3 をあてはめて 2 × 3 - 5 になりました。次はどの順で計算しますか。",
-       "answer": "1",
-       "estimated_seconds": 32,
-       "mode": "input",
-       "timeout_seconds": 70,
-       "textbook": "p.71-73",
-       "has_work": true,
-       "solution_start": "2 × 3 - 5",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "正しい計算の順はどれですか。",
-         "writes": [
-          "2 × 3 - 5 = 1"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "かけ算が先。6 - 5 = 1",
-           "correct": true
-          },
-          {
-           "text": "ひき算が先。2 × (3 - 5) = -4",
+           "text": "2 + 3",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -5027,7 +5035,150 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-04",
+       "id": "L3-S4",
+       "difficulty": 3,
+       "question": "3x^2 の x に 2 をあてはめたら、3 × 2 × 2 になりました。",
+       "answer": "2乗は x だけにかかっていた",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 58,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2乗は、どこにかかっていましたか。",
+         "writes": [
+          "2乗は x だけにかかっていた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x だけ",
+           "correct": true
+          },
+          {
+           "text": "3x 全体",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          },
+          {
+           "text": "3 だけ",
+           "correct": false,
+           "error_type": "E-EXPR-05"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-A5",
+       "difficulty": 0,
+       "question": "x = -3 のとき、2x + 1 の値を求めなさい。",
+       "answer": "-5",
+       "estimated_seconds": 38,
+       "mode": "atom",
+       "timeout_seconds": 84,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "2x + 1",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "x = -3 のとき、2x + 1 はいくつになりますか。",
+         "writes": [
+          "2 × (-3) + 1 = -5"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "-5（かっこをつけて 2 × (-3) + 1、かけ算が先）",
+           "correct": true
+          },
+          {
+           "text": "7（符号をとって 2 × 3 + 1）",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "-4（たし算を先にして 2 × (-3 + 1)）",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "代入は、文字を数に置きかえるだけ。そのあとは算数と同じ"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "代入は、文字を数に置きかえるだけ。そのあとは算数と同じ",
+           "correct": true
+          },
+          {
+           "text": "代入すると、計算の順の決まりは使わなくてよくなる",
+           "correct": false,
+           "error_type": "E-ORDER-02"
+          },
+          {
+           "text": "代入するときは、負の数の符号を落としてよい",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-S5",
+       "difficulty": 3,
+       "question": "ある式の x に数をあてはめたら、2 × (-3) + 1 になりました。",
+       "answer": "2x + 1 に x = -3 を入れた",
+       "estimated_seconds": 28,
+       "mode": "solo",
+       "timeout_seconds": 62,
+       "textbook": "p.71-73",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "もとの式と、あてはめた数はどれですか。",
+         "writes": [
+          "2x + 1 に x = -3 を入れた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x + 1 に x = -3 を入れた",
+           "correct": true
+          },
+          {
+           "text": "2x + 1 に x = 3 を入れた",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          },
+          {
+           "text": "2 + x + 1 に x = -3 を入れた",
+           "correct": false,
+           "error_type": "E-EXPR-01"
+          },
+          {
+           "text": "2x - 1 に x = 3 を入れた",
+           "correct": false,
+           "error_type": "E-SUB-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L3-01",
        "difficulty": 4,
        "question": "x = 5 のとき、4x の値を求めなさい。",
        "answer": "20",
@@ -5089,7 +5240,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-05",
+       "id": "L3-02",
        "difficulty": 5,
        "question": "x = -2 のとき、3x の値を求めなさい。",
        "answer": "-6",
@@ -5151,7 +5302,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-06",
+       "id": "L3-03",
        "difficulty": 6,
        "question": "x = 3 のとき、2x - 5 の値を求めなさい。",
        "answer": "1",
@@ -5208,7 +5359,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-07",
+       "id": "L3-04",
        "difficulty": 7,
        "question": "x = -4 のとき、x/2 + 3 の値を求めなさい。",
        "answer": "1",
@@ -5289,7 +5440,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-08",
+       "id": "L3-05",
        "difficulty": 8,
        "question": "x = -3 のとき、x^2 + 1 の値を求めなさい。",
        "answer": "10",
@@ -5370,7 +5521,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-09",
+       "id": "L3-06",
        "difficulty": 9,
        "question": "x = 2 のとき、3x^2 - x の値を求めなさい。",
        "answer": "10",
@@ -5451,7 +5602,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L3-10",
+       "id": "L3-07",
        "difficulty": 10,
        "question": "x = -3 のとき、2x^2 + 5x の値を求めなさい。",
        "answer": "3",
@@ -5912,41 +6063,41 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-01",
-       "difficulty": 1,
-       "question": "式 3x + 5 の、x の係数を答えなさい。",
-       "answer": "3",
-       "estimated_seconds": 32,
-       "mode": "input",
-       "timeout_seconds": 70,
+       "id": "L4-S1",
+       "difficulty": 2,
+       "question": "式 6x - 4 があります。",
+       "answer": "6",
+       "estimated_seconds": 22,
+       "mode": "solo",
+       "timeout_seconds": 52,
        "textbook": "p.74-76",
        "has_work": true,
-       "solution_start": "3x + 5",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
          "prompt": "x の係数はどれですか。",
          "writes": [
-          "3x + 5 の x の係数は 3"
+          "6x - 4 の x の係数は 6"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "3（文字の前にかけてある数）",
+           "text": "6",
            "correct": true
           },
           {
-           "text": "5（文字のついていない数）",
+           "text": "-4",
            "correct": false,
            "error_type": "E-EXPR-06"
           },
           {
-           "text": "x（文字そのもの）",
+           "text": "6x",
            "correct": false,
            "error_type": "E-EXPR-06"
           },
           {
-           "text": "3x（数と文字のセット）",
+           "text": "x",
            "correct": false,
            "error_type": "E-EXPR-06"
           }
@@ -5955,36 +6106,41 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-02",
+       "id": "L4-S2",
        "difficulty": 2,
-       "question": "3x + 2x を 5x に変えました。何をしましたか。",
-       "answer": "5x",
-       "estimated_seconds": 34,
-       "mode": "input",
-       "timeout_seconds": 74,
+       "question": "3x + 2x を 5x に変えました。",
+       "answer": "係数をたした",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
        "textbook": "p.74-76",
        "has_work": true,
-       "solution_start": "3x + 2x",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
          "prompt": "この変形は、何をしたものですか。",
          "writes": [
-          "5x"
+          "係数をたした"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "同じ文字の項どうしの係数をたした（3 + 2 = 5）",
+           "text": "係数をたした（3 + 2 = 5）",
            "correct": true
           },
           {
-           "text": "3 と 2 をかけた",
+           "text": "係数をかけた（3 × 2 = 6）",
            "correct": false,
            "error_type": "E-EXPR-02"
           },
           {
-           "text": "x を 2回かけた",
+           "text": "x を2回かけた",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "文字を消した",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -5993,41 +6149,79 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-03",
-       "difficulty": 3,
-       "question": "(2x + 3) + (x - 1) のかっこを外すと、どうなりますか。",
-       "answer": "2x + 3 + x - 1",
-       "estimated_seconds": 36,
-       "mode": "input",
-       "timeout_seconds": 78,
+       "id": "L4-S3",
+       "difficulty": 2,
+       "question": "(4x + 1) + (x - 2) のかっこを外して 4x + 1 + x - 2 にしました。",
+       "answer": "中の符号はそのままにした",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
        "textbook": "p.74-76",
        "has_work": true,
-       "solution_start": "(2x + 3) + (x - 1)",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこを外した式はどれですか。",
+         "prompt": "中の符号は、どうなりましたか。",
          "writes": [
-          "2x + 3 + x - 1"
+          "中の符号はそのままにした"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "2x + 3 + x - 1",
+           "text": "そのまま",
            "correct": true
           },
           {
-           "text": "2x + 3 - x + 1",
+           "text": "すべて変わった",
            "correct": false,
            "error_type": "E-DIST-02"
           },
           {
-           "text": "2x - 3 + x - 1",
+           "text": "うしろのかっこの中だけ変わった",
            "correct": false,
            "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-S4",
+       "difficulty": 2,
+       "question": "7x + 3 - 8 を 7x - 5 にしました。",
+       "answer": "数だけの項どうしをまとめた",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この変形は、何をしたものですか。",
+         "writes": [
+          "数だけの項どうしをまとめた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "数だけの項どうしをまとめた（3 - 8 = -5）",
+           "correct": true
           },
           {
-           "text": "2x + 3x - 1",
+           "text": "7x と 3 をまとめた",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "7x と 8 をまとめた",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "文字を消した",
            "correct": false,
            "error_type": "E-EXPR-02"
           }
@@ -6036,7 +6230,188 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-04",
+       "id": "L4-S5",
+       "difficulty": 2,
+       "question": "4a + 5b を、これ以上まとめようとしました。",
+       "answer": "まとめられない",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まとめられますか。",
+         "writes": [
+          "文字がちがうのでまとめられない"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "文字がちがうので、まとめられない",
+           "correct": true
+          },
+          {
+           "text": "係数をたして 9ab にできる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "係数をたして 9 にできる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-S6",
+       "difficulty": 3,
+       "question": "-(2x - 5) のかっこを外して -2x + 5 にしました。",
+       "answer": "中の符号がすべて変わった",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 58,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "中の符号は、どうなりましたか。",
+         "writes": [
+          "中の符号がすべて変わった"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "すべて変わった",
+           "correct": true
+          },
+          {
+           "text": "そのまま",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "はじめの項だけ変わった",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-A7",
+       "difficulty": 0,
+       "question": "6x + 2 - 4x + 1 を計算しなさい。",
+       "answer": "2x + 3",
+       "estimated_seconds": 38,
+       "mode": "atom",
+       "timeout_seconds": 84,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "6x + 2 - 4x + 1",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "まとめられるのは、どれとどれですか。",
+         "writes": [
+          "2x + 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "6x と -4x、+2 と +1（なかまが同じものどうし）",
+           "correct": true
+          },
+          {
+           "text": "6x と +2、-4x と +1（となりどうし）",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "4つ全部（式の中にあるものは全部）",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "まとめられるのは、同じ文字どうしと、数どうしだけ"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "まとめられるのは、同じ文字どうしと、数どうしだけ",
+           "correct": true
+          },
+          {
+           "text": "まとめられるのは、となりどうしの項だけ",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "式の中の項は、全部まとめられる",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-S7",
+       "difficulty": 3,
+       "question": "5a + 3b - 2a + b を計算して 3a + 4b にしました。",
+       "answer": "なかまが同じものどうしをまとめた",
+       "estimated_seconds": 28,
+       "mode": "solo",
+       "timeout_seconds": 62,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "何と何をまとめましたか。",
+         "writes": [
+          "なかまが同じものどうしをまとめた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "a どうしと、b どうし",
+           "correct": true
+          },
+          {
+           "text": "となりどうしの項",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "係数が大きいものどうし",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "式の中の項を全部",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-01",
        "difficulty": 4,
        "question": "4x - x を計算しなさい。",
        "answer": "3x",
@@ -6098,7 +6473,117 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-05",
+       "id": "L4-02",
+       "difficulty": 5,
+       "question": "(2x + 5) + (3x - 1) を計算しなさい。",
+       "answer": "5x + 4",
+       "estimated_seconds": 50,
+       "mode": null,
+       "timeout_seconds": 110,
+       "textbook": "p.74-76",
+       "has_work": true,
+       "solution_start": "(2x + 5) + (3x - 1)",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "かっこを外します。前が + のとき、中の符号はどうなりますか。",
+         "writes": [
+          "2x + 5 + 3x - 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "そのままで 2x + 5 + 3x - 1",
+           "correct": true
+          },
+          {
+           "text": "すべて変わって 2x - 5 + 3x + 1",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "うしろだけ変わって 2x + 5 - 3x + 1",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "文字の項の係数は、それぞれいくつですか。",
+         "writes": [
+          "係数は 2 と 3"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2 と 3",
+           "correct": true
+          },
+          {
+           "text": "5 と -1",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          },
+          {
+           "text": "2x と 3x",
+           "correct": false,
+           "error_type": "E-EXPR-06"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "文字の項をまとめると、どうなりますか。",
+         "writes": [
+          "5x + 5 - 1"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "係数をたして 5x",
+           "correct": true
+          },
+          {
+           "text": "係数をかけて 6x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "文字もたして 5x^2",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        },
+        {
+         "step_no": 4,
+         "prompt": "数の項をまとめると、どうなりますか。",
+         "writes": [
+          "5x + 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "+5 と -1 をまとめて +4",
+           "correct": true
+          },
+          {
+           "text": "+5 と -1 をまとめて +6",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "5x とまとめて 9x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L4-03",
        "difficulty": 5,
        "question": "5x - 2 - 3x + 6 を計算しなさい。",
        "answer": "2x + 4",
@@ -6160,7 +6645,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-06",
+       "id": "L4-04",
        "difficulty": 6,
        "question": "3a + 2b - a を計算しなさい。",
        "answer": "2a + 2b",
@@ -6222,7 +6707,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-07",
+       "id": "L4-05",
        "difficulty": 7,
        "question": "(3x + 2) + (x - 5) を計算しなさい。",
        "answer": "4x - 3",
@@ -6308,7 +6793,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-08",
+       "id": "L4-06",
        "difficulty": 8,
        "question": "(5x + 1) - (2x + 4) を計算しなさい。",
        "answer": "3x - 3",
@@ -6394,7 +6879,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-09",
+       "id": "L4-07",
        "difficulty": 9,
        "question": "(4x - 3) - (x - 7) + 2x を計算しなさい。",
        "answer": "5x + 4",
@@ -6480,7 +6965,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L4-10",
+       "id": "L4-08",
        "difficulty": 10,
        "question": "3a + 2b - (a - 5b) を計算しなさい。",
        "answer": "2a + 7b",
@@ -19122,16 +19607,26 @@ function renderTrack(done, pool, shown) {
   const missed = new Set(hist()
     .filter(h => h.level === shown && h.result !== "correct")
     .map(h => h.problemId));
-  $("diffCells").innerHTML = pool.slice()
-    .sort((a, b) => a.difficulty - b.difficulty)
-    .map(p => {
-      let cls = "cell";
-      if (p.difficulty === 10) cls += " boss";     // レベル最後の問題＝ボス
-      if (P.solved.includes(p.id)) cls += " done";
-      else if (missed.has(p.id)) cls += " miss";
-      if (cur && cur.id === p.id) cls += " now";
-      return `<span class="${cls}" title="${p.id}">${p.difficulty}</span>`;
-    }).join("");
+  /* マスは、そのレベルの**全問**を出す順に並べる。
+     つかむ・ためす（順に出す）→ つかう（難易度順）。
+     以前は つかう だけを並べていたので、アトムの段では
+     キャラクターがずっと左端にいて、進んでいる感じが出なかった
+     （オーナー指摘・2026-08-11）。 */
+  const fixedCells = (levelOf(shown) || {problems: []}).problems.filter(isFixed);
+  const useCells = pool.slice().sort((a, b) => a.difficulty - b.difficulty);
+  const track = fixedCells.concat(useCells);
+  const cellEl = $("diffCells");
+  cellEl.style.setProperty("--n", track.length);
+  cellEl.innerHTML = track.map(p => {
+    let cls = "cell";
+    if (isFixed(p)) cls += " fx";
+    if (p.difficulty === 10) cls += " boss";     // レベル最後の問題＝ボス
+    if (P.solved.includes(p.id)) cls += " done";
+    else if (missed.has(p.id)) cls += " miss";
+    if (cur && cur.id === p.id) cls += " now";
+    const label = p.mode === "atom" ? "●" : p.mode === "solo" ? "○" : p.difficulty;
+    return `<span class="${cls}" title="${p.id}">${label}</span>`;
+  }).join("");
 
   // キャラクターを、いまの難易度のマスの上に移動させる
   const ch = $("charPos");
@@ -19140,10 +19635,9 @@ function renderTrack(done, pool, shown) {
   // マスの並び（難易度順）の何番目にいるかで置く。
   // 難易度の値をそのまま使うと、難易度10・マス8個のときに 119% になってはみ出す
   // （難易度の重複・とびを許した副作用。2026-08-11 に発見）。
-  const order = pool.slice().sort((a, b) => a.difficulty - b.difficulty);
-  const idx = cur ? order.findIndex(p => p.id === cur.id) : 0;
-  const left = (!cur || cur.difficulty === 0 || idx < 0)
-    ? "0%" : ((idx + 0.5) / order.length * 100).toFixed(2) + "%";
+  const idx = cur ? track.findIndex(p => p.id === cur.id) : -1;
+  const left = (idx < 0) ? "0%"
+    : ((idx + 0.5) / track.length * 100).toFixed(2) + "%";
   if (ch.style.left !== left) {
     ch.style.left = left;
     ch.classList.remove("hop"); void ch.offsetWidth; ch.classList.add("hop");
