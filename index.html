@@ -294,7 +294,11 @@
                  font-size: .74rem; font-weight: 800;
                  display: grid; place-items: center; }
   .atomline .at { font-size: 1.02rem; font-weight: 700; line-height: 1.5; }
-  .divi { padding: 0 .1em; }
+  /* ÷ の前後で折り返されないようにする。
+     .mul と同じく、式のまとまりの中にある記号なので切ってはいけない
+     （2026-08-11、包んだ直後に画面検査が E3 で拾った）。 */
+  .divi { padding: 0 .1em; white-space: nowrap; }
+  .mul, .divi { display: inline-block; }
   sup { font-size: .66em; vertical-align: super; line-height: 0; }
   /* 0段目（方針をおぼえる）の札。準備問題とは色を変える */
   .modeTag.atom {
@@ -1484,7 +1488,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 16:42</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 16:51</span>
   </p>
 </div>
 
@@ -19229,10 +19233,11 @@ function renderResult(rec) {
     $("btnNext").textContent = "レベルの結果を見る";
   } else if (!rec.review && !P.review && !P.freeReview && rec.result === "correct") {
     const fixed = atomsOf(P.level);
-    // 「境目」の区切りは、方針が2つ以上そろったときだけ。
-    // 1つしかないレベルだと、始めた直後に区切りが出て意味がない
-    // （3章L5・L7 は 0段目が1問しかない。2026-08-11 に見積もりで判明）。
-    const boundary = isFixed(cur) && fixed.length >= 2
+    // 「境目」の区切りは、方針が1つしかないレベルでも出す。
+    // 早い（3章L5・L7 は1問目）が、それでよい。
+    // 「アトムをつかむ → 練習する」という構造そのものがこのアプリの肝なので、
+    // 方針が少ないレベルでも、その切りかえは見せる（オーナー判断・2026-08-11）。
+    const boundary = isFixed(cur) && fixed.length
       && fixed.every(p => P.solved.includes(p.id))
       && !(P.halfDone || []).includes(P.level);
     // 前の区切りからの経過。レベルに入った時刻が入っていなければ、ここで置く。
@@ -19591,10 +19596,15 @@ function renderHalf(lv, kind) {
     return `<div class="atomline"><span class="n">${i + 1}</span>`
       + `<span class="at">${nb(ok ? ok.text : "")}</span></div>`;
   }).join("");
+  // 方針が1つのレベルもある（3章L5・L7）。そのときは数を言わない。
+  const head = !grasp.length ? ""
+    : grasp.length === 1
+      ? (kind === "境目" ? "このレベルでおぼえた方針は、これです。"
+                        : "このレベルの方針は、これです。")
+      : (kind === "境目" ? `ここまでに、${grasp.length}つの方針をおぼえました。`
+                        : `このレベルでおぼえた方針は、${grasp.length}つです。`);
   $("hfList").innerHTML = grasp.length
-    ? `<p class="lead" style="margin:0 0 8px">`
-      + `${kind === "境目" ? "ここまでに、" : "このレベルでおぼえた方針は、"}`
-      + `${grasp.length}つ${kind === "境目" ? "の方針をおぼえました。" : "です。"}</p>`
+    ? `<p class="lead" style="margin:0 0 8px">${head}</p>`
       + `<div class="usedbox">${lines}</div>`
     : `<p class="lead" style="margin:0">このレベルの方針を使って解いています。</p>`;
 
@@ -19606,8 +19616,12 @@ function renderHalf(lv, kind) {
   $("hfNote").innerHTML = kind === "境目"
     ? `<p style="margin:0"><b>ここからは、使ってみる段です。</b></p>`
       + `<p class="lead" style="margin:6px 0 0">のこり ${rest} 問。`
-      + `いくつかの方針を組み合わせて解きます。`
-      + `どれを使うかを決めるのが、ここでの仕事です。</p>`
+      + (grasp.length >= 2
+          ? "いくつかの方針を組み合わせて解きます。"
+            + "どれを使うかを決めるのが、ここでの仕事です。"
+          : "いま おぼえた方針を、実際の問題で使います。"
+            + "どこで使うのかを見つけるのが、ここでの仕事です。")
+      + `</p>`
     : `<p style="margin:0"><b>${done} 問できました。のこり ${rest} 問です。</b></p>`
       + `<p class="lead" style="margin:6px 0 0">`
       + `ひと息ついてから、続けてください。</p>`;
