@@ -1496,7 +1496,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 17:48</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-11 18:23</span>
   </p>
 </div>
 
@@ -7431,74 +7431,36 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-01",
-       "difficulty": 1,
-       "question": "4x × 3 を計算すると、どうなりますか。",
-       "answer": "12x",
-       "estimated_seconds": 36,
-       "mode": "input",
-       "timeout_seconds": 78,
-       "textbook": "p.77-79",
-       "has_work": true,
-       "solution_start": "4x × 3",
-       "steps": [
-        {
-         "step_no": 1,
-         "prompt": "4x × 3 を計算します。どうしますか。",
-         "writes": [
-          "12x"
-         ],
-         "show_op": false,
-         "choices": [
-          {
-           "text": "係数だけにかけて 12x",
-           "correct": true
-          },
-          {
-           "text": "文字にもかけて 12x^2",
-           "correct": false,
-           "error_type": "E-EXPR-09"
-          },
-          {
-           "text": "4 と 3 をたして 7x",
-           "correct": false,
-           "error_type": "E-EXPR-09"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "id": "L5-02",
+       "id": "L5-S1",
        "difficulty": 2,
-       "question": "6x ÷ 2 を計算すると、どうなりますか。",
-       "answer": "3x",
-       "estimated_seconds": 38,
-       "mode": "input",
-       "timeout_seconds": 82,
+       "question": "4x × 3 を計算して 12x にしました。",
+       "answer": "係数だけにかけた",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "6x ÷ 2",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "6x ÷ 2 を計算します。どうしますか。",
+         "prompt": "3 は、どこにかけましたか。",
          "writes": [
-          "3x"
+          "係数だけにかけた"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "係数だけをわって 3x",
+           "text": "係数の 4 だけ",
            "correct": true
           },
           {
-           "text": "文字もわって 3",
+           "text": "係数の 4 と 文字の x の両方",
            "correct": false,
            "error_type": "E-EXPR-09"
           },
           {
-           "text": "6 から 2 をひいて 4x",
+           "text": "文字の x だけ",
            "correct": false,
            "error_type": "E-EXPR-09"
           }
@@ -7507,41 +7469,150 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-03",
-       "difficulty": 3,
-       "question": "2(x + 3) のかっこを外すと、どうなりますか。",
-       "answer": "2x + 6",
-       "estimated_seconds": 40,
-       "mode": "input",
-       "timeout_seconds": 86,
+       "id": "L5-S2",
+       "difficulty": 2,
+       "question": "6x ÷ 2 を計算して 3x にしました。",
+       "answer": "係数だけをわった",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
        "textbook": "p.77-79",
        "has_work": true,
-       "solution_start": "2(x + 3)",
+       "solution_start": "",
        "steps": [
         {
          "step_no": 1,
-         "prompt": "かっこを外した式はどれですか。",
+         "prompt": "2 で、どこをわりましたか。",
          "writes": [
-          "2x + 6"
+          "係数だけをわった"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "2x + 6",
+           "text": "係数の 6 だけ",
            "correct": true
           },
           {
-           "text": "2x + 3",
+           "text": "係数の 6 と 文字の x の両方",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "文字の x だけ",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-S3",
+       "difficulty": 2,
+       "question": "2(x + 3) のかっこを外して 2x + 6 にしました。",
+       "answer": "中のすべての項にかけた",
+       "estimated_seconds": 24,
+       "mode": "solo",
+       "timeout_seconds": 55,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2 は、どこにかけましたか。",
+         "writes": [
+          "中のすべての項にかけた"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "x と 3 の両方",
+           "correct": true
+          },
+          {
+           "text": "x だけ",
            "correct": false,
            "error_type": "E-DIST-01"
           },
           {
-           "text": "2x - 6",
+           "text": "3 だけ",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-S4",
+       "difficulty": 3,
+       "question": "-3(x - 2) のかっこを外して -3x + 6 にしました。",
+       "answer": "中の符号がすべて変わった",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 58,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "-2 が +6 になりました。中の符号は、どうなりましたか。",
+         "writes": [
+          "中の符号がすべて変わった"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこの前が負なので、すべて変わった",
+           "correct": true
+          },
+          {
+           "text": "たまたま、うしろの項だけ変わった",
            "correct": false,
            "error_type": "E-DIST-02"
           },
           {
-           "text": "2 + x + 3",
+           "text": "符号は変わらず、数だけが変わった",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-S5",
+       "difficulty": 3,
+       "question": "(6x + 9) ÷ 3 を計算して 2x + 3 にしました。",
+       "answer": "中のすべての項をわった",
+       "estimated_seconds": 26,
+       "mode": "solo",
+       "timeout_seconds": 58,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "3 で、どこをわりましたか。",
+         "writes": [
+          "中のすべての項をわった"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "6x と 9 の両方",
+           "correct": true
+          },
+          {
+           "text": "6x だけ",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "9 だけ",
            "correct": false,
            "error_type": "E-DIST-01"
           }
@@ -7550,7 +7621,150 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-04",
+       "id": "L5-S6",
+       "difficulty": 3,
+       "question": "(x + 1)/2 × 6 を計算して 3(x + 1) にしました。",
+       "answer": "分母とかける数をやくぶんした",
+       "estimated_seconds": 28,
+       "mode": "solo",
+       "timeout_seconds": 62,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "6 と 2 を、どうしましたか。",
+         "writes": [
+          "分母とかける数をやくぶんした"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "6 ÷ 2 = 3 とやくぶんした",
+           "correct": true
+          },
+          {
+           "text": "6 × 2 = 12 とかけた",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          },
+          {
+           "text": "6 + 2 = 8 とたした",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-A7",
+       "difficulty": 0,
+       "question": "2x × 3 と 2(x + 3) では、3 のかかる先がちがいます。",
+       "answer": "かっこがあれば中のぜんぶに、かっこがなければ係数だけにかかる",
+       "estimated_seconds": 40,
+       "mode": "atom",
+       "timeout_seconds": 88,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "2(x + 3) のかっこを外すと、どうなりますか。",
+         "writes": [
+          "2(x + 3) = 2x + 6"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "2x + 6（x と 3 の両方にかける）",
+           "correct": true
+          },
+          {
+           "text": "2x + 3（x だけにかける）",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "6x（かっこの中を先にたす）",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "いまやったことを、ことばにするとどれですか。",
+         "writes": [
+          "かっこがあれば中のぜんぶに、かっこがなければ係数だけにかかる"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこがあれば中のぜんぶに、かっこがなければ係数だけにかかる",
+           "correct": true
+          },
+          {
+           "text": "かっこがあってもなくても、係数だけにかかる",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "かっこがあってもなくても、中のぜんぶにかかる",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-S7",
+       "difficulty": 3,
+       "question": "5x × 2 は 10x に、5(x + 2) は 5x + 10 になりました。",
+       "answer": "かっこがあるかないかでちがう",
+       "estimated_seconds": 30,
+       "mode": "solo",
+       "timeout_seconds": 66,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "この2つで、かける先がちがったのはなぜですか。",
+         "writes": [
+          "かっこがあるかないかでちがう"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "かっこがあるかないかがちがうから",
+           "correct": true
+          },
+          {
+           "text": "かける数がちがうから",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "文字の場所がちがうから",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "たまたま、答えの形がちがっただけ",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-01",
        "difficulty": 4,
        "question": "-2(x - 4) のかっこを外しなさい。",
        "answer": "-2x + 8",
@@ -7612,7 +7826,155 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-05",
+       "id": "L5-02",
+       "difficulty": 5,
+       "question": "3x × 4 + 2x を計算しなさい。",
+       "answer": "14x",
+       "estimated_seconds": 54,
+       "mode": null,
+       "timeout_seconds": 118,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "3x × 4 + 2x",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "3x × 4 を計算すると、どうなりますか。",
+         "writes": [
+          "12x + 2x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "係数だけにかけて 12x",
+           "correct": true
+          },
+          {
+           "text": "文字にもかけて 12x^2",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "3 と 4 をたして 7x",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "次に、文字の項をまとめると、どうなりますか。",
+         "writes": [
+          "14x"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "12x と 2x をまとめて 14x",
+           "correct": true
+          },
+          {
+           "text": "12x と 2x をかけて 24x",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          },
+          {
+           "text": "文字もまとめて 14x^2",
+           "correct": false,
+           "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-03",
+       "difficulty": 6,
+       "question": "6x × 2 - (4x + 8) ÷ 4 を計算しなさい。",
+       "answer": "11x - 2",
+       "estimated_seconds": 60,
+       "mode": null,
+       "timeout_seconds": 130,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "6x × 2 - (4x + 8) ÷ 4",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "6x × 2 を計算すると、どうなりますか。",
+         "writes": [
+          "12x - (4x + 8) ÷ 4"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "係数だけにかけて 12x",
+           "correct": true
+          },
+          {
+           "text": "文字にもかけて 12x^2",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          },
+          {
+           "text": "6 と 2 をたして 8x",
+           "correct": false,
+           "error_type": "E-EXPR-09"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "(4x + 8) ÷ 4 を計算すると、どうなりますか。",
+         "writes": [
+          "12x - (x + 2)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "中のすべての項をわって x + 2",
+           "correct": true
+          },
+          {
+           "text": "4x だけをわって x + 8",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "8 だけをわって 4x + 2",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          }
+         ]
+        },
+        {
+         "step_no": 3,
+         "prompt": "かっこを外します。前が − のとき、中の符号はどうなりますか。",
+         "writes": [
+          "11x - 2"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "すべて変わって 12x - x - 2",
+           "correct": true
+          },
+          {
+           "text": "そのままで 12x - x + 2",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          },
+          {
+           "text": "前の − を無視して 12x + x + 2",
+           "correct": false,
+           "error_type": "E-DIST-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-04",
        "difficulty": 5,
        "question": "(6x + 9) ÷ 3 を計算しなさい。",
        "answer": "2x + 3",
@@ -7674,7 +8036,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-06",
+       "id": "L5-05",
        "difficulty": 6,
        "question": "3(2x + 1) - 4x を計算しなさい。",
        "answer": "2x + 3",
@@ -7736,7 +8098,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-07",
+       "id": "L5-06",
        "difficulty": 7,
        "question": "(8x - 12) ÷ 4 + 3 を計算しなさい。",
        "answer": "2x",
@@ -7822,7 +8184,7 @@ const DATA = {
        ]
       },
       {
-       "id": "L5-08",
+       "id": "L5-07",
        "difficulty": 8,
        "question": "2(x + 3) + 3(x - 1) を計算しなさい。",
        "answer": "5x + 3",
@@ -7902,6 +8264,68 @@ const DATA = {
            "text": "5x とまとめて 8x",
            "correct": false,
            "error_type": "E-EXPR-02"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "L5-08",
+       "difficulty": 9,
+       "question": "(x + 4)/2 × 8 を計算しなさい。",
+       "answer": "4x + 16",
+       "estimated_seconds": 82,
+       "mode": null,
+       "timeout_seconds": 178,
+       "textbook": "p.77-79",
+       "has_work": true,
+       "solution_start": "(x + 4)/2 × 8",
+       "steps": [
+        {
+         "step_no": 1,
+         "prompt": "(x + 4)/2 × 8 を計算すると、どうなりますか。",
+         "writes": [
+          "4(x + 4)"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "分母の 2 と 8 をやくぶんして 4(x + 4)",
+           "correct": true
+          },
+          {
+           "text": "分子にも分母にも 8 をかけて (8x + 32)/16",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          },
+          {
+           "text": "分母だけ消して x + 4",
+           "correct": false,
+           "error_type": "E-FRAC-02"
+          }
+         ]
+        },
+        {
+         "step_no": 2,
+         "prompt": "かっこを外すと、どうなりますか。",
+         "writes": [
+          "4x + 16"
+         ],
+         "show_op": false,
+         "choices": [
+          {
+           "text": "4 を x と 4 の両方にかけて 4x + 16",
+           "correct": true
+          },
+          {
+           "text": "4 を x にだけかけて 4x + 4",
+           "correct": false,
+           "error_type": "E-DIST-01"
+          },
+          {
+           "text": "4 と x をたして x + 8",
+           "correct": false,
+           "error_type": "E-DIST-01"
           }
          ]
         }
@@ -19624,7 +20048,10 @@ function renderTrack(done, pool, shown) {
     if (P.solved.includes(p.id)) cls += " done";
     else if (missed.has(p.id)) cls += " miss";
     if (cur && cur.id === p.id) cls += " now";
-    const label = p.mode === "atom" ? "●" : p.mode === "solo" ? "○" : p.difficulty;
+    // つかむ と ためす は、生徒には区別がいらない（オーナー判断・2026-08-11）。
+    // 分けて見せると「この ● と ○ は何がちがうんだろう」と余計に迷わせる。
+    // 「方針をおぼえる段」と「むずかしさのついた段」の2種類だけが伝わればよい。
+    const label = isFixed(p) ? "●" : p.difficulty;
     return `<span class="${cls}" title="${p.id}">${label}</span>`;
   }).join("");
 
@@ -20335,7 +20762,11 @@ function renderResult(rec) {
     // 何をして、それを何と呼ぶのかを並べたほうが分かる（2026-08-10 オーナー指摘）。
     const isAtom = cur.mode === "atom";
     const isSolo = cur.mode === "solo";
-    const used = isAtom
+    // 「ためす」は1工程しかないので、方針の一覧を出す意味がない。
+    // 出すと「1 はじめに 6」のように、演習用のラベルが漏れて意味の通らない
+    // 表示になる（2026-08-11 オーナー指摘。2問目で急に見た目が変わって混乱した）。
+    const used = isSolo ? ""
+      : isAtom
       ? chosen.map((c, i) =>
           `<div class="useline"><div class="uhead"><span class="n">${i + 1}</span>`
           + `<span class="ueq">${i === 0 ? "やったこと" : "ことばにすると"}</span></div>`
