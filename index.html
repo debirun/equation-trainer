@@ -1527,7 +1527,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 17:54</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 18:00</span>
   </p>
 </div>
 
@@ -14461,8 +14461,8 @@ const DATA = {
       {
        "id": "L4-S1",
        "difficulty": 2,
-       "question": "式 6x - 4 があります。",
-       "answer": "6",
+       "question": "ある式の中に、x の係数が -5 の項があります。",
+       "answer": "-5x",
        "estimated_seconds": 22,
        "mode": "solo",
        "timeout_seconds": 52,
@@ -14472,28 +14472,23 @@ const DATA = {
        "steps": [
         {
          "step_no": 1,
-         "prompt": "x の係数はどれですか。",
+         "prompt": "その項はどれですか。",
          "writes": [
-          "6x - 4 の x の係数は 6"
+          "係数が -5 の項は -5x"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "6",
+           "text": "-5x（文字の前についている数が係数。符号もふくむ）",
            "correct": true
           },
           {
-           "text": "-4",
+           "text": "5x（符号は係数にふくめない）",
            "correct": false,
            "error_type": "E-EXPR-06"
           },
           {
-           "text": "6x",
-           "correct": false,
-           "error_type": "E-EXPR-06"
-          },
-          {
-           "text": "x",
+           "text": "x - 5（係数は文字からひく数）",
            "correct": false,
            "error_type": "E-EXPR-06"
           }
