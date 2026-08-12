@@ -30,6 +30,7 @@
     --gold: #a9741a; --goldSoft: rgba(169,116,26,.14);
     --ok: #1c7a55; --ok-bg: #e4f5ee;
     --ng: #b0453a; --ng-bg: #fceceb;
+    --markbg: #ffdf5e; --markink: #2a2000;  /* 選択肢のちがうところに敷く色（蛍光ペン） */
     --warn: #8a6100; --warn-bg: #fdf3e0;
     --grid: rgba(47,111,208,.07);
     --glow: rgba(47,111,208,.10);
@@ -43,6 +44,7 @@
       --gold: #ffc453; --goldSoft: rgba(255,196,83,.16);
       --ok: #4fd6a0; --ok-bg: rgba(79,214,160,.13);
       --ng: #ff8779; --ng-bg: rgba(255,135,121,.13);
+      --markbg: #ffd54a; --markink: #241b00;
       --warn: #ffcf7a; --warn-bg: rgba(255,207,122,.12);
       --grid: rgba(120,170,255,.055);
       --glow: rgba(90,169,255,.16);
@@ -56,6 +58,7 @@
     --gold: #a9741a; --goldSoft: rgba(169,116,26,.14);
     --ok: #1c7a55; --ok-bg: #e4f5ee;
     --ng: #b0453a; --ng-bg: #fceceb;
+    --markbg: #ffdf5e; --markink: #2a2000;
     --warn: #8a6100; --warn-bg: #fdf3e0;
     --grid: rgba(47,111,208,.07); --glow: rgba(47,111,208,.10);
   }
@@ -67,6 +70,7 @@
     --gold: #ffc453; --goldSoft: rgba(255,196,83,.16);
     --ok: #4fd6a0; --ok-bg: rgba(79,214,160,.13);
     --ng: #ff8779; --ng-bg: rgba(255,135,121,.13);
+    --markbg: #ffd54a; --markink: #241b00;
     --warn: #ffcf7a; --warn-bg: rgba(255,207,122,.12);
     --grid: rgba(120,170,255,.055); --glow: rgba(90,169,255,.16);
   }
@@ -431,10 +435,22 @@
   button.choice.picked .cop { text-decoration: none; }
 
   /* 選択肢どうしで共通している部分はうすく、ちがう部分ははっきり出す。
-     ちがうところが、その工程で問われている一点だから。 */
+     ちがうところが、その工程で問われている一点だから。
+
+     【2026-08-12】色と太さだけでは弱かった（試用した子から
+     「もっと見やすくしてほしい」）。**下じきの色**で塗るようにした。
+     長い文がならんだとき、目がまず黄色に行くので、
+     読む量が「文ぜんぶ」から「ちがうところだけ」に減る。 */
   .choice .same { color: var(--muted); font-weight: 400; }
-  .choice .diff { color: var(--fg); font-weight: 800; }
-  .choice .cop .diff { color: color-mix(in srgb, var(--fg) 88%, var(--muted)); font-weight: 800; }
+  .choice .diff {
+    color: var(--markink); font-weight: 800;
+    background: var(--markbg); border-radius: 4px;
+    padding: 0 .18em; margin: 0 -.04em;
+    box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  }
+  .choice .cop .diff { color: var(--markink); font-weight: 800; }
+  /* 選ばれた選択肢の中では、下じきを弱める（取り消し線と competing しないように） */
+  button.choice.picked .diff { background: transparent; padding: 0; color: var(--fg); }
 
   /* 選択肢の下に添える言い換え */
   .choice .also {
@@ -1527,7 +1543,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 20:39</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 23:09</span>
   </p>
 </div>
 
@@ -2883,21 +2899,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "大きさは数直線の右ほど大きい。0 からのきょりは符号を取ったもので、別のもの"
+          "大きさと 0 からのきょりは、べつのもの"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "大きさは数直線の右ほど大きい。0 からのきょりは符号を取ったもので、別のもの",
+           "text": "大きさと 0 からのきょりは、べつのもの",
            "correct": true
           },
           {
-           "text": "大きさも 0 からのきょりも、符号を取ってくらべるので同じもの",
-           "correct": false,
-           "error_type": "E-SIGN-02"
-          },
-          {
-           "text": "大きさは 0 からのきょりで決まる。数直線は関係ない",
+           "text": "大きさと 0 からのきょりは、同じもの",
            "correct": false,
            "error_type": "E-SIGN-02"
           }
@@ -2926,16 +2937,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "右（大きいほうが右で、0 からも近い）",
+           "text": "右（大きいほうが右にある）",
            "correct": true
           },
           {
-           "text": "左（0 からのきょりが小さいほうが左）",
-           "correct": false,
-           "error_type": "E-SIGN-02"
-          },
-          {
-           "text": "決められない（大きさときょりは関係がない）",
+           "text": "左（大きいほうが左にある）",
            "correct": false,
            "error_type": "E-SIGN-02"
           }
@@ -3934,23 +3940,18 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "同じ符号ならきょりをたす、ちがう符号ならきょりをひく。符号はきょりの大きいほう"
+          "同じ符号ならたす、ちがう符号ならひく"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "同じ符号ならきょりをたす、ちがう符号ならきょりをひく。符号はきょりの大きいほう",
+           "text": "同じ符号ならたす、ちがう符号ならひく",
            "correct": true
           },
           {
-           "text": "同じ符号ならきょりをひく、ちがう符号ならきょりをたす。符号はきょりの大きいほう",
+           "text": "同じ符号ならひく、ちがう符号ならたす",
            "correct": false,
            "error_type": "E-ADD-02"
-          },
-          {
-           "text": "どちらの場合も、きょりをたして、符号は + にする",
-           "correct": false,
-           "error_type": "E-ADD-01"
           }
          ]
         }
@@ -3977,16 +3978,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "同じ符号のとき（きょりをたすので、答えのほうが大きくなる）",
+           "text": "同じ符号のとき（きょりをたすから）",
            "correct": true
           },
           {
-           "text": "ちがう符号のとき（きょりをひくので、答えのほうが大きくなる）",
-           "correct": false,
-           "error_type": "E-ADD-02"
-          },
-          {
-           "text": "どちらのときも同じ（符号は答えの大きさに関係しない）",
+           "text": "ちがう符号のとき（きょりをひくから）",
            "correct": false,
            "error_type": "E-ADD-02"
           }
@@ -4272,7 +4268,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして符号は + で 7",
+           "text": "同じ符号なのできょりをたして、符号は + にして 7",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4296,7 +4292,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -11",
+           "text": "ちがう符号なのできょりをたして -11",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4358,7 +4354,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -14",
+           "text": "ちがう符号なのできょりをたして -14",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4382,7 +4378,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして符号は + で 3",
+           "text": "同じ符号なのできょりをたして、符号は + にして 3",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4444,7 +4440,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -17",
+           "text": "ちがう符号なのできょりをたして -17",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4468,7 +4464,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして符号は + で 10",
+           "text": "同じ符号なのできょりをたして、符号は + にして 10",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4525,7 +4521,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "きょりをたして -14",
+           "text": "ちがう符号なのできょりをたして -14",
            "correct": false,
            "error_type": "E-ADD-01"
           },
@@ -4810,23 +4806,18 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "ひき算は、ひく数の符号を変えてたし算に直す。これ1つでどちらも足りる"
+          "ひき算は、この1つのやり方でぜんぶ足りる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "ひき算は、ひく数の符号を変えてたし算に直す。これ1つでどちらも足りる",
+           "text": "ひき算は、この1つのやり方でぜんぶ足りる",
            "correct": true
           },
           {
-           "text": "ふつうのひき算と、負の数をひくひき算では、直し方がちがう",
+           "text": "ひき算は、場合によってやり方を変える",
            "correct": false,
            "error_type": "E-SUBT-02"
-          },
-          {
-           "text": "ひき算は、たし算に直さずにそのまま計算する",
-           "correct": false,
-           "error_type": "E-SUBT-01"
           }
          ]
         }
@@ -4853,16 +4844,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "どちらも、ひく数の符号を変えてたし算にしただけ",
+           "text": "どちらもひく数の符号を変えただけ",
            "correct": true
           },
           {
-           "text": "A さんは符号を変えたが、B さんはかっこを外しただけ",
-           "correct": false,
-           "error_type": "E-SUBT-02"
-          },
-          {
-           "text": "A さんだけ正しく、B さんの直し方はまちがい",
+           "text": "2人はちがうことをしている",
            "correct": false,
            "error_type": "E-SUBT-02"
           }
@@ -4924,7 +4910,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -15",
+           "text": "ちがう符号なのできょりをたして -15",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -4986,7 +4972,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして符号は − で -9",
+           "text": "同じ符号なのできょりをたして、符号は − にして -9",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -5048,7 +5034,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして符号は + で 8",
+           "text": "同じ符号なのできょりをたして、符号は + にして 8",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -5110,7 +5096,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -13",
+           "text": "ちがう符号なのできょりをたして -13",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -5196,7 +5182,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -11",
+           "text": "ちがう符号なのできょりをたして -11",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -5258,7 +5244,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -19",
+           "text": "ちがう符号なのできょりをたして -19",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -5344,7 +5330,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -8",
+           "text": "ちがう符号なのできょりをたして -8",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -5711,21 +5697,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "ぜんぶたし算に直してから、正どうし・負どうしをまとめる"
+          "たし算に直したから、入れかえてよい"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "ぜんぶたし算に直したから、順番を入れかえてまとめてよい",
+           "text": "たし算に直したから、入れかえてよい",
            "correct": true
           },
           {
-           "text": "ひき算が入っていても、順番を入れかえてまとめてよい",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "順番は変えられないので、前から順に計算するしかない",
+           "text": "ひき算のままでも、入れかえてよい",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -5754,16 +5735,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "先にたし算に直したとき（8 + (-3) なら入れかえてよい）",
+           "text": "たし算に直したとき",
            "correct": true
           },
           {
-           "text": "ひき算のままでも、いつでも入れかえてよい",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "たし算に直しても、入れかえてはいけない",
+           "text": "ひき算のままのとき",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -6011,7 +5987,7 @@ const DATA = {
            "error_type": "E-TERM-01"
           },
           {
-           "text": "きょりをたして符号は + にして 7",
+           "text": "同じ符号なのできょりをたして、符号は + にして 7",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -6787,21 +6763,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "かけ算もわり算も、負の数が偶数個なら +、奇数個なら −。符号を先に決める"
+          "負が偶数個なら +、奇数個なら −"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "かけ算もわり算も、負の数が偶数個なら +、奇数個なら −。符号を先に決める",
+           "text": "負が偶数個なら +、奇数個なら −",
            "correct": true
           },
           {
-           "text": "かけ算とわり算では、符号の決め方がちがう",
-           "correct": false,
-           "error_type": "E-CALC-03"
-          },
-          {
-           "text": "きょりを先に計算して、あとから符号を考える",
+           "text": "負が偶数個なら −、奇数個なら +",
            "correct": false,
            "error_type": "E-MUL-02"
           }
@@ -6830,18 +6801,13 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "かけ算もわり算もまとめて数えると、負が2つで偶数個だから",
+           "text": "まとめて数えて、負が2つで偶数個だから",
            "correct": true
           },
           {
-           "text": "かけ算のぶんだけ数えると、負が1つで奇数個だから",
+           "text": "かけ算だけ数えて、負が1つで奇数個だから",
            "correct": false,
            "error_type": "E-MUL-02"
-          },
-          {
-           "text": "わり算が入ると、答えはいつも正になるから",
-           "correct": false,
-           "error_type": "E-CALC-03"
           }
          ]
         }
@@ -7939,21 +7905,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "かっこの中 → 右上の数 → かけ算・わり算 → たし算・ひき算 の順に計算する"
+          "かっこ → 右上 → かけわり → たしひき の順"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "かっこの中 → 右上の数 → かけ算・わり算 → たし算・ひき算 の順に計算する",
+           "text": "かっこ → 右上 → かけわり → たしひき の順",
            "correct": true
           },
           {
-           "text": "たし算・ひき算 → かけ算・わり算 → 右上の数 → かっこの中 の順に計算する",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "式の左から順に、出てきたとおりに計算する",
+           "text": "たしひき → かけわり → 右上 → かっこ の順",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -7982,16 +7943,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "たし算 1 + 2 = 3、かけ算 3 × 3 = 9、右上 9^2 = 81 の順にした",
+           "text": "たし算 → かけ算 → 右上 の順にした",
            "correct": true
           },
           {
-           "text": "右上 3^2 = 9、かけ算 2 × 9 = 18、たし算 1 + 18 = 19 の順にした",
-           "correct": false,
-           "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "右上 3^2 = 9、たし算 1 + 2 = 3、かけ算 3 × 9 = 27 の順にした",
+           "text": "右上 → かけ算 → たし算 の順にした",
            "correct": false,
            "error_type": "E-ORDER-02"
           }
@@ -8053,7 +8009,7 @@ const DATA = {
            "error_type": "E-MUL-01"
           },
           {
-           "text": "きょりをたして 6",
+           "text": "ちがう符号なのできょりをたして 6",
            "correct": false,
            "error_type": "E-MUL-01"
           }
@@ -8387,7 +8343,7 @@ const DATA = {
            "error_type": "E-MUL-02"
           },
           {
-           "text": "きょりをたして -6",
+           "text": "ちがう符号なのできょりをたして -6",
            "correct": false,
            "error_type": "E-MUL-01"
           }
@@ -8411,7 +8367,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -11",
+           "text": "ちがう符号なのできょりをたして -11",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -8497,7 +8453,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして -6",
+           "text": "ちがう符号なのできょりをたして -6",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -8939,21 +8895,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "素数のかけ算にならべると、共通なぶんが最大公約数、ぜんぶ集めたのが最小公倍数"
+          "共通なぶんが最大公約数、ぜんぶが最小公倍数"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "素数のかけ算にならべると、共通なぶんが最大公約数、ぜんぶ集めたのが最小公倍数",
+           "text": "共通なぶんが最大公約数、ぜんぶが最小公倍数",
            "correct": true
           },
           {
-           "text": "素数のかけ算にならべると、共通なぶんが最小公倍数、ぜんぶ集めたのが最大公約数",
-           "correct": false,
-           "error_type": "E-FACT-02"
-          },
-          {
-           "text": "最大公約数と最小公倍数は、まったくちがうやり方で求める",
+           "text": "共通なぶんが最小公倍数、ぜんぶが最大公約数",
            "correct": false,
            "error_type": "E-FACT-02"
           }
@@ -8982,16 +8933,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "共通なぶんだけ集めたか、ぜんぶ集めたかのちがい",
+           "text": "共通なぶんだけ集めたか、ぜんぶ集めたか",
            "correct": true
           },
           {
-           "text": "たしたか、かけたかのちがい",
-           "correct": false,
-           "error_type": "E-FACT-02"
-          },
-          {
-           "text": "素因数分解のしかた自体がちがう",
+           "text": "たしたか、かけたか",
            "correct": false,
            "error_type": "E-FACT-02"
           }
@@ -9791,23 +9737,18 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "基準からのちがいで考えると、大きい数の計算が小さい数ですむ"
+          "ちがいで考えると、計算がらくになる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "基準からのちがいで考えると、大きい数の計算が小さい数ですむ",
+           "text": "ちがいで考えると、計算がらくになる",
            "correct": true
           },
           {
-           "text": "基準からのちがいで考えても、計算の手間は変わらない",
+           "text": "ちがいで考えても、計算はらくにならない",
            "correct": false,
            "error_type": "E-ORDER-02"
-          },
-          {
-           "text": "基準を決めると、答えも基準のぶんだけずれてしまう",
-           "correct": false,
-           "error_type": "E-SIGN-01"
           }
          ]
         }
@@ -9834,18 +9775,13 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "どちらも 158cm。B さんは小さい数だけで計算できた",
+           "text": "どちらも 158cm になる",
            "correct": true
           },
           {
-           "text": "A さんは 158cm、B さんは -2cm でちがう答えになる",
+           "text": "2人でちがう答えになる",
            "correct": false,
            "error_type": "E-SIGN-01"
-          },
-          {
-           "text": "A さんのやり方だけ正しく、B さんのやり方では出せない",
-           "correct": false,
-           "error_type": "E-ORDER-02"
           }
          ]
         }
@@ -10005,7 +9941,7 @@ const DATA = {
            "error_type": "E-ADD-02"
           },
           {
-           "text": "きょりをたして 14",
+           "text": "ちがう符号なのできょりをたして 14",
            "correct": false,
            "error_type": "E-ADD-01"
           }
@@ -10296,7 +10232,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "きょりをたして 8",
+           "text": "ちがう符号なのできょりをたして 8",
            "correct": false,
            "error_type": "E-ADD-01"
           },
@@ -12371,11 +12307,11 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "「いくつ分」ならかけ算、「へる」ならひき算、「ふえる」ならたし算",
+           "text": "「いくつ分」はかけ算、「へる」はひき算",
            "correct": true
           },
           {
-           "text": "「いくつ分」ならたし算、「へる」ならかけ算、「ふえる」ならひき算",
+           "text": "「いくつ分」はたし算、「へる」はかけ算",
            "correct": false,
            "error_type": "E-WORD-02"
           },
@@ -13524,7 +13460,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "代入は、文字を数に置きかえるだけ。そのあとは算数と同じ",
+           "text": "代入は、文字を数に置きかえるだけ",
            "correct": true
           },
           {
@@ -16105,7 +16041,7 @@ const DATA = {
          "show_op": false,
          "choices": [
           {
-           "text": "かっこがあれば中のぜんぶに、かっこがなければ係数だけにかかる",
+           "text": "かっこがあれば中のぜんぶ、なければ係数だけ",
            "correct": true
           },
           {
@@ -17401,23 +17337,18 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "ぴったり等しいときは等式、はばがあるときは不等式。「以上・以下」はふくみ、「より」はふくまない"
+          "「以上・以下」はふくみ、「より」はふくまない"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "ぴったり等しいときは等式、はばがあるときは不等式。「以上・以下」はふくみ、「より」はふくまない",
+           "text": "「以上・以下」はふくみ、「より」はふくまない",
            "correct": true
           },
           {
-           "text": "ぴったり等しいときは等式、はばがあるときは不等式。「以上・以下」はふくまず、「より」はふくむ",
+           "text": "「以上・以下」はふくまず、「より」はふくむ",
            "correct": false,
            "error_type": "E-REL-02"
-          },
-          {
-           "text": "ぴったり等しいときも、はばがあるときも等式。「以上・以下」も「より」も同じ",
-           "correct": false,
-           "error_type": "E-REL-01"
           }
          ]
         }
@@ -17449,11 +17380,6 @@ const DATA = {
           },
           {
            "text": "≧ は 8 をふくまず、> は 8 をふくむ",
-           "correct": false,
-           "error_type": "E-REL-02"
-          },
-          {
-           "text": "≧ も > も、どちらも 8 をふくむ",
            "correct": false,
            "error_type": "E-REL-02"
           }
@@ -18377,23 +18303,18 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "解かどうかは、あてはめて計算し、左辺と右辺が同じ値になるかで決まる"
+          "あてはめて、左辺と右辺が同じ値になれば解"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "解かどうかは、あてはめて計算し、左辺と右辺が同じ値になるかで決まる",
+           "text": "あてはめて、左辺と右辺が同じ値になれば解",
            "correct": true
           },
           {
-           "text": "解かどうかは、あてはめて計算し、左辺と右辺がちがう値になるかで決まる",
+           "text": "あてはめて、左辺と右辺がちがう値になれば解",
            "correct": false,
            "error_type": "E-MEAN-01"
-          },
-          {
-           "text": "解かどうかは、あてはめずに、式に出てくる数とくらべて決まる",
-           "correct": false,
-           "error_type": "E-MEAN-04"
           }
          ]
         }
@@ -18403,7 +18324,7 @@ const DATA = {
        "id": "L1-S4",
        "difficulty": 3,
        "question": "x = 3 を入れると左辺は 10、右辺も 10 でした。x = 4 を入れると左辺は 13、右辺は 10 でした。",
-       "answer": "x = 3（左辺と右辺が同じ値になったから）",
+       "answer": "x = 3（両辺が同じ値になったから）",
        "estimated_seconds": 32,
        "mode": "solo",
        "timeout_seconds": 70,
@@ -18415,21 +18336,16 @@ const DATA = {
          "step_no": 1,
          "prompt": "解はどちらで、それはなぜですか。",
          "writes": [
-          "x = 3（左辺と右辺が同じ値になったから）"
+          "x = 3（両辺が同じ値になったから）"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x = 3。左辺と右辺が同じ値になったから",
+           "text": "x = 3。両辺が同じ値になったから",
            "correct": true
           },
           {
-           "text": "x = 4。左辺のほうが右辺より大きくなったから",
-           "correct": false,
-           "error_type": "E-MEAN-01"
-          },
-          {
-           "text": "x = 3 も x = 4 も解。どちらも計算できたから",
+           "text": "x = 4。左辺のほうが大きいから",
            "correct": false,
            "error_type": "E-MEAN-01"
           }
@@ -20627,21 +20543,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "移項は、両辺に同じ数をたし引きするのを1回で書いたもの。だから符号が変わる"
+          "移項は、両辺に同じことをするのを1行で書いたもの"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "移項は、両辺に同じ数をたし引きするのを1回で書いたもの。だから符号が変わる",
+           "text": "移項は、両辺に同じことをするのを1行で書いたもの",
            "correct": true
           },
           {
-           "text": "移項は、両辺に同じ数をたし引きするのとは別のやり方。だから符号が変わる",
-           "correct": false,
-           "error_type": "E-TRANS-01"
-          },
-          {
-           "text": "移項は、両辺に同じ数をたし引きするのを1回で書いたもの。だから符号は変わらない",
+           "text": "移項は、両辺に同じことをするのとは別のやり方",
            "correct": false,
            "error_type": "E-TRANS-01"
           }
@@ -20653,7 +20564,7 @@ const DATA = {
        "id": "L3-S3",
        "difficulty": 3,
        "question": "方程式 x - 5 = 2 を、A さんは両辺に 5 をたして解き、B さんは -5 を右辺にうつして解きました。",
-       "answer": "どちらも x = 2 + 5 で、同じことをしている",
+       "answer": "2人は同じことをしている",
        "estimated_seconds": 34,
        "mode": "solo",
        "timeout_seconds": 73,
@@ -20665,21 +20576,16 @@ const DATA = {
          "step_no": 1,
          "prompt": "2人の式は、どうなりますか。",
          "writes": [
-          "どちらも x = 2 + 5 で、同じことをしている"
+          "2人は同じことをしている"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "どちらも x = 2 + 5 になり、同じことをしている",
+           "text": "2人は同じことをしている",
            "correct": true
           },
           {
-           "text": "A さんは x = 2 + 5、B さんは x = 2 - 5 になり、ちがう答えになる",
-           "correct": false,
-           "error_type": "E-TRANS-01"
-          },
-          {
-           "text": "A さんだけ正しく、B さんのうつし方は使えない",
+           "text": "2人はちがうことをしている",
            "correct": false,
            "error_type": "E-TRANS-01"
           }
@@ -21520,21 +21426,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "かっこ・小数・分数は、どれもなくして、うつして解ける形にそろえる"
+          "どれもなくして、同じ形にそろえる"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "かっこ・小数・分数は、どれもなくして、うつして解ける形にそろえる",
+           "text": "どれもなくして、同じ形にそろえる",
            "correct": true
           },
           {
-           "text": "かっこ・小数・分数は、それぞれちがう解き方があり、そろえられない",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          },
-          {
-           "text": "かっこ・小数・分数は、そのままにして、うつすところから始める",
+           "text": "どれもそれぞれちがう解き方になる",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -21546,7 +21447,7 @@ const DATA = {
        "id": "L4-S3",
        "difficulty": 3,
        "question": "3(x - 2) = 9 と 0.3x = 9 と x/3 = 9 は、はじめにすることがちがいます。",
-       "answer": "どれも、なくしてから、うつして解く",
+       "answer": "はじめの一手はちがうが、ねらいは同じ",
        "estimated_seconds": 34,
        "mode": "solo",
        "timeout_seconds": 73,
@@ -21558,21 +21459,16 @@ const DATA = {
          "step_no": 1,
          "prompt": "3つに共通していることは何ですか。",
          "writes": [
-          "どれも、なくしてから、うつして解く"
+          "はじめの一手はちがうが、ねらいは同じ"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "はじめの一手はちがうが、どれもじゃまなものをなくして、うつして解く形にしている",
+           "text": "はじめの一手はちがうが、ねらいは同じ",
            "correct": true
           },
           {
-           "text": "はじめの一手がちがうので、そのあとの解き方もそれぞれちがう",
-           "correct": false,
-           "error_type": "E-ORDER-01"
-          },
-          {
-           "text": "はじめの一手はどれも同じで、両辺を 3 でわっている",
+           "text": "はじめの一手がちがうので、ねらいもちがう",
            "correct": false,
            "error_type": "E-ORDER-01"
           }
@@ -22432,23 +22328,18 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "比例式は、分数の形に直して分母をはらったもの。だから外側どうし、内側どうしをかける"
+          "たすきがけは、分母をはらったのと同じこと"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "比例式は、分数の形に直して分母をはらったもの。だから外側どうし、内側どうしをかける",
+           "text": "たすきがけは、分母をはらったのと同じこと",
            "correct": true
           },
           {
-           "text": "比例式は、分数の形に直して分母をはらったもの。だから外側どうし、内側どうしをたす",
+           "text": "たすきがけは、分母をはらうのとは別の決まり",
            "correct": false,
            "error_type": "E-RATIO-01"
-          },
-          {
-           "text": "比例式は、分数の形に直して分母をはらったもの。だから左どうし、右どうしをかける",
-           "correct": false,
-           "error_type": "E-RATIO-02"
           }
          ]
         }
@@ -22479,12 +22370,7 @@ const DATA = {
            "correct": true
           },
           {
-           "text": "A さんのやり方だけが正しく、B さんのやり方では解けない",
-           "correct": false,
-           "error_type": "E-RATIO-01"
-          },
-          {
-           "text": "同じ式に見えるが、2人で答えがちがってくる",
+           "text": "書き方だけでなく、やっていることもちがう",
            "correct": false,
            "error_type": "E-RATIO-01"
           }
@@ -23837,21 +23723,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "求めたいものを x とおき、ことばを式にして、同じ量どうしを = で結ぶ"
+          "求めたいものを x とおき、同じ量を = で結ぶ"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "求めたいものを x とおき、ことばを式にして、同じ量どうしを = で結ぶ",
+           "text": "求めたいものを x とおき、同じ量を = で結ぶ",
            "correct": true
           },
           {
-           "text": "求めたいものを x とおき、ことばを式にして、ちがう量どうしを = で結ぶ",
-           "correct": false,
-           "error_type": "E-WORD-02"
-          },
-          {
-           "text": "求めたいものは x とおかず、文章に出てくる数だけを = で結ぶ",
+           "text": "出てくる数を x とおき、同じ量を = で結ぶ",
            "correct": false,
            "error_type": "E-WORD-01"
           }
@@ -23863,7 +23744,7 @@ const DATA = {
        "id": "L6-S7",
        "difficulty": 3,
        "question": "「子どもは何人いますか」という問題を、A さんは子どもの人数を x とおき、B さんはあめの個数を x とおきました。A さんは x = 8 と出て、そのまま答えられました。",
-       "answer": "x があめの個数なので、人数はもう一度計算しないと出ないから",
+       "answer": "x が人数でないので、もう一度計算が要るから",
        "estimated_seconds": 36,
        "mode": "solo",
        "timeout_seconds": 78,
@@ -23876,23 +23757,18 @@ const DATA = {
          "step_no": 1,
          "prompt": "B さんは、なぜそのまま答えられなかったのですか。",
          "writes": [
-          "x があめの個数なので、人数はもう一度計算しないと出ないから"
+          "x が人数でないので、もう一度計算が要るから"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "x があめの個数なので、人数はもう一度計算しないと出ないから",
+           "text": "x が人数でないので、もう一度計算が要るから",
            "correct": true
           },
           {
-           "text": "x があめの個数なので、方程式そのものが作れないから",
+           "text": "x が人数でないので、方程式が作れないから",
            "correct": false,
            "error_type": "E-WORD-01"
-          },
-          {
-           "text": "x があめの個数なので、答えが必ずまちがいになるから",
-           "correct": false,
-           "error_type": "E-WORD-03"
           }
          ]
         }
@@ -25334,21 +25210,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "配る人数を x とおき、配るもののほうを2通りに表して = で結ぶ"
+          "人数を x とおき、配るものを2通りに表す"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "配る人数を x とおき、配るもののほうを2通りに表して = で結ぶ",
+           "text": "人数を x とおき、配るものを2通りに表す",
            "correct": true
           },
           {
-           "text": "配るものの数を x とおき、人数のほうを2通りに表して = で結ぶ",
-           "correct": false,
-           "error_type": "E-WORD-01"
-          },
-          {
-           "text": "配り方が2つあるので、方程式も2つ作る",
+           "text": "配るものを x とおき、人数を2通りに表す",
            "correct": false,
            "error_type": "E-WORD-01"
           }
@@ -25360,7 +25231,7 @@ const DATA = {
        "id": "L7-S2",
        "difficulty": 3,
        "question": "過不足の問題で、A さんは子どもの人数を x とおき、B さんはあめの数を x とおきました。A さんは 3x + 5 = 4x - 2 という式を作れました。",
-       "answer": "あめの数を2通りに表せるのは、人数を x とおいたときだから",
+       "answer": "人数を x とおいたから、2通りに表せた",
        "estimated_seconds": 36,
        "mode": "solo",
        "timeout_seconds": 78,
@@ -25373,21 +25244,16 @@ const DATA = {
          "step_no": 1,
          "prompt": "A さんだけ式を作れたのは、なぜですか。",
          "writes": [
-          "あめの数を2通りに表せるのは、人数を x とおいたときだから"
+          "人数を x とおいたから、2通りに表せた"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "あめの数を2通りに表せるのは、人数を x とおいたときだから",
+           "text": "人数を x とおいたから、2通りに表せた",
            "correct": true
           },
           {
-           "text": "あめの数を x とおくと、人数が分からなくなって計算できないから",
-           "correct": false,
-           "error_type": "E-WORD-01"
-          },
-          {
-           "text": "問題が人数を聞いているので、B さんのおき方は必ずまちがいだから",
+           "text": "あめの数を x とおいても、2通りに表せた",
            "correct": false,
            "error_type": "E-WORD-01"
           }
@@ -27193,21 +27059,16 @@ const DATA = {
          "step_no": 2,
          "prompt": "いまやったことを、ことばにするとどれですか。",
          "writes": [
-          "道のり・速さ・時間は、どれか2つが分かれば残り1つが出る"
+          "2つ分かれば、残り1つが出る"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "道のり・速さ・時間は、どれか2つが分かれば残り1つが出る",
+           "text": "2つ分かれば、残り1つが出る",
            "correct": true
           },
           {
-           "text": "道のり・速さ・時間は、それぞれ別の決まりなので、3つとも覚えるしかない",
-           "correct": false,
-           "error_type": "E-WORD-05"
-          },
-          {
-           "text": "道のり・速さ・時間は、どれか1つ分かれば残り2つが出る",
+           "text": "1つ分かれば、残り2つが出る",
            "correct": false,
            "error_type": "E-WORD-05"
           }
@@ -27219,7 +27080,7 @@ const DATA = {
        "id": "L8-S5",
        "difficulty": 3,
        "question": "分速 60m で x 分歩いた道のりは 60x m、x m の道のりを分速 60m で歩いた時間は x/60 分です。",
-       "answer": "どちらも「道のり = 速さ × 時間」を、向きを変えて使っている",
+       "answer": "同じ関係を、向きを変えて使っている",
        "estimated_seconds": 36,
        "mode": "solo",
        "timeout_seconds": 78,
@@ -27232,21 +27093,16 @@ const DATA = {
          "step_no": 1,
          "prompt": "この2つの式は、どういう関係ですか。",
          "writes": [
-          "どちらも「道のり = 速さ × 時間」を、向きを変えて使っている"
+          "同じ関係を、向きを変えて使っている"
          ],
          "show_op": false,
          "choices": [
           {
-           "text": "どちらも「道のり = 速さ × 時間」を、向きを変えて使っている",
+           "text": "同じ関係を、向きを変えて使っている",
            "correct": true
           },
           {
-           "text": "上は「道のり = 速さ × 時間」、下はそれとは別の決まりを使っている",
-           "correct": false,
-           "error_type": "E-WORD-05"
-          },
-          {
-           "text": "どちらも同じ式なので、60x と x/60 は同じ値になる",
+           "text": "べつの関係を、それぞれ使っている",
            "correct": false,
            "error_type": "E-WORD-05"
           }
@@ -30738,6 +30594,13 @@ function commonEnds(texts) {
   if (!pre && !suf) return null;
   // 真ん中が短くなりすぎるなら、切らない。ちがいが読み取れなくなる。
   if (texts.some(t => t.slice(pre, t.length - suf).trim().length < 2)) return null;
+  // **ちがうところが長いなら、塗らない。**
+  // 共通が「左辺」の2文字だけ、というときに全体が黄色くなって、
+  // 塗っていないのと同じになる（2026-08-12。下じきを付けて初めて見えた）。
+  // ひと目で取りこめるのは、ひと続きのことばくらいまで。
+  // それを超えるなら、もともと選択肢の形がちがうので塗る必要がない。
+  const DIFF_MAX = 14;
+  if (texts.some(t => t.length - pre - suf > DIFF_MAX)) return null;
   return [pre, suf];
 }
 
