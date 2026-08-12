@@ -1527,7 +1527,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 18:00</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 20:39</span>
   </p>
 </div>
 
@@ -2239,14 +2239,25 @@ const DATA = {
    "outside": false
   },
   "E-BASE-01": {
-   "name": "小学校の内容でつまずいている",
-   "description": "数直線の読み方、約数・倍数、分数の計算など、小学校で習う内容が まだ手に入っていない。1章より前が無いので、アプリの中に戻り先がない。",
-   "fix": "ここはアプリでは戻れません。先生に相談してください。",
-   "back_to": "先生に相談（小学校の内容）",
+   "name": "数直線が読めていない（小学校）",
+   "description": "数直線の上で数の場所を決められない、めもりを数えられない。 1章より前が無いので、アプリの中に戻り先がない。",
+   "fix": "ここはアプリでは戻れません。数直線の読み方から、先生に相談してください。",
+   "back_to": "先生に相談（小学校 — 数直線と数の大小）",
    "back_to_level": null,
    "back_to_chapter": null,
    "also": {},
-   "back_to_unit": "小学校の内容（アプリの外）",
+   "back_to_unit": "小学校 — 数直線と数の大小",
+   "outside": true
+  },
+  "E-BASE-02": {
+   "name": "約数・倍数が手に入っていない（小学校）",
+   "description": "1 でわっても意味がないこと、2 でわり切れるかどうかの見分けなど、 わり算と約数の考えがまだ手に入っていない。",
+   "fix": "ここはアプリでは戻れません。約数と倍数から、先生に相談してください。",
+   "back_to": "先生に相談（小学校 — 約数と倍数）",
+   "back_to_level": null,
+   "back_to_chapter": null,
+   "also": {},
+   "back_to_unit": "小学校 — 約数と倍数",
    "outside": true
   }
  },
@@ -3387,7 +3398,7 @@ const DATA = {
           {
            "text": "0（まん中にあるから）",
            "correct": false,
-           "error_type": "E-SIGN-03"
+           "error_type": "E-BASE-01"
           }
          ]
         }
@@ -9015,7 +9026,7 @@ const DATA = {
           {
            "text": "1 でわって 20 ÷ 1 = 20",
            "correct": false,
-           "error_type": "E-FACT-01"
+           "error_type": "E-BASE-02"
           },
           {
            "text": "4 でわって 20 ÷ 4 = 5",
@@ -9077,7 +9088,7 @@ const DATA = {
           {
            "text": "2 でわって 45 ÷ 2 = 22.5",
            "correct": false,
-           "error_type": "E-FACT-01"
+           "error_type": "E-BASE-02"
           },
           {
            "text": "5 でわって 45 ÷ 5 = 9 から始める",
@@ -30252,6 +30263,24 @@ function UNIT_LABEL(unit) {
 }
 const UNIT_NAME = new Proxy({}, {get: (_, k) => UNIT_LABEL(k)});
 
+/* このアプリが扱っている範囲と、その外がわ。
+
+   「実装していない範囲は、すべて先生に相談。ただしどの範囲かを明示する」
+   というのがオーナーの決めごと（2026-08-12）。
+   「戻れません」だけでは、生徒も先生も次に何をすればいいか分からない。 */
+function appRangeText() {
+  const cs = DATA.chapters.filter(c => c.ready && c.levels.length);
+  if (!cs.length) return "";
+  return cs.map(c => `${c.chapter_no}章 ${c.title}`).join(" ・ ");
+}
+
+/* アプリの外へ渡すつまずきの、範囲の名前。無ければ空。 */
+function outsideRangeOf(errorTypeId) {
+  const e = DATA.errorTypes[errorTypeId];
+  return (e && e.outside) ? (e.back_to_unit || "このアプリの外") : "";
+}
+
+
 function renderChapter(info) {
   P.chapterShownAt = S.history.length; save();
 
@@ -30283,7 +30312,8 @@ function renderChapter(info) {
           + `いまの章の進み具合はそのまま残るので、いつでも戻ってこられます。</p>`
         : outside
         ? `<p class="lead" style="margin:0"><b>ここはこのアプリでは戻れません。</b>`
-          + `1章より前のところなので、出せる問題がありません。`
+          + `このアプリが扱っているのは ${esc(appRangeText())} です。`
+          + `<b>${esc(to)}</b> は入っていないので、出せる問題がありません。`
           + `<b>先生に相談してください。</b>この記録は先生の一覧に残ります。</p>`
         : `<p class="lead" style="margin:0"><b>この章の問題はまだ用意できていません。</b>`
           + `いまは「このまま続ける」しかできませんが、用意できたら自動でここに移動します。</p>`);
@@ -30496,7 +30526,16 @@ function renderResult(rec) {
       + (at ? `<p class="lead">足りていないのは「${esc(at.name)}」のあたりです。`
               + `${esc(at.fix)}</p>` : "")
       + `<p class="lead">問題を出し続けても身につかないので、`
-      + `<b>ここは先生に相談してください。</b>この記録は先生の一覧に残ります。</p></div>`;
+      + `<b>ここは先生に相談してください。</b>この記録は先生の一覧に残ります。</p>`
+      // どの範囲を相談すればいいのかを、必ず書く（オーナー指示・2026-08-12）。
+      // 「戻れません」だけでは、生徒も先生も次に何をすればいいか分からない。
+      + (outsideRangeOf(rec.stuckType)
+          ? `<p class="lead">相談するところ: <b>${esc(outsideRangeOf(rec.stuckType))}</b>。`
+            + `このアプリが扱っているのは ${esc(appRangeText())} です。`
+            + `そこより前は入っていません。</p>`
+          : `<p class="lead">このアプリが扱っているのは ${esc(appRangeText())} です。`
+            + `原因がこの外にあるなら、アプリでは戻れません。</p>`)
+      + `</div>`;
   }
 
   // 次に何をするかはアプリが決める。生徒には選ばせず、決めたことを伝えるだけ。
