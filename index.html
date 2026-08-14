@@ -1543,7 +1543,7 @@
   </section>
 
   <p class="foot">
-    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-12 23:09</span>
+    中1数学 適応出題 — 試作版（テスト中） ・ 版 <span id="stampText">2026-08-14 11:41</span>
   </p>
 </div>
 
@@ -1880,6 +1880,10 @@ const DATA = {
    "back_to_level": 4,
    "back_to_chapter": "ch3",
    "also": {
+    "ch1": {
+     "level": 6,
+     "label": "レベル6（累乗と計算の順序）"
+    },
     "ch2": {
      "level": 5,
      "label": "レベル5（かっこを外してまとめる）"
@@ -28796,7 +28800,27 @@ const errBack = id => {
 };
 const errBackLevel = id => {
   const a = errAlso(id);
-  return a ? a.level : (DATA.errorTypes[id] || {}).back_to_level;
+  if (a) return a.level;
+  const e = DATA.errorTypes[id] || {};
+  // **別の章のレベルを指しているなら、この章の中では戻れない。**
+  // ここを見ずに返すと、3章で踏んだ「1章レベル5へ」が
+  // **3章レベル5**（比と比例式）への復習になってしまう。番号が同じなだけの別物。
+  // 章をまたぐ戻しは、下の chapterCheck（章の外）が受け持つ（2026-08-14）。
+  if (e.back_to_chapter && e.back_to_chapter !== S.chapter) return null;
+  return e.back_to_level;
+};
+
+/* このつまずきの戻り先が、いまの章の外かどうか。外なら「どの分野か」を返す。
+   back_to_unit（アプリの外）と、別の章を指す back_to_chapter の両方を見る。 */
+const errOutsideUnit = id => {
+  const e = DATA.errorTypes[id];
+  if (!e || errAlso(id)) return "";
+  if (e.back_to_unit) return e.back_to_unit;
+  if (e.back_to_chapter && e.back_to_chapter !== S.chapter) {
+    const ch = DATA.chapters.find(c => c.id === e.back_to_chapter);
+    return ch ? `${ch.id}-${ch.title}` : "";
+  }
+  return "";
 };
 const errBackChapter = id => {
   const a = errAlso(id);
@@ -30091,13 +30115,12 @@ function chapterCheck() {
 
   const units = {};
   const addUnit = id => {
-    const et = DATA.errorTypes[id];
-    if (!et || !et.back_to_unit) return;
-    // この章での戻り先が also で決まっているなら、それは「章の外」ではない。
+    // 章の外を指しているか。also でこの章の戻り先が決まっていれば外ではない。
     // 例: 計算の順序の誤りは既定では1章だが、2章では2章レベル3に戻せばよい。
     // これを見ずに数えると、まだ作っていない章へ切り上げようとしてしまう。
-    if (errAlso(id)) return;
-    units[et.back_to_unit] = (units[et.back_to_unit] || 0) + 1;
+    const u = errOutsideUnit(id);
+    if (!u) return;
+    units[u] = (units[u] || 0) + 1;
   };
   h.slice(-CHAPTER_RULE.window).forEach(r => {
     addUnit(r.errorType);
@@ -30247,7 +30270,8 @@ function updateReview(rec) {
   }
   // 原因がこの分野の外にある → 本来はそこへ戻すべきだが、まだ問題がない
   const et2 = DATA.errorTypes[cause] || et;
-  if (et2.back_to_unit) return {type: "unit", unit: et2.back_to_unit, outside: !!et2.outside};
+  const outUnit = errOutsideUnit(cause);
+  if (outUnit) return {type: "unit", unit: outUnit, outside: !!et2.outside};
   return null;
 }
 
